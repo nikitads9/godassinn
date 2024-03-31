@@ -11,10 +11,17 @@ create table users (
     unique(telegram_nickname)
 );
 
-create table rooms (
+create table offers (
     id bigserial primary key,
-    capacity int not null,
-    name text
+    name text not null,
+    cost integer not null,
+    city text not null,
+    street text not null,
+    house integer not null,
+    rating integer not null,
+    type text not null,
+    beds_count integer not null,
+    short_description text not null
 );
 
 create table bookings (
@@ -24,10 +31,10 @@ create table bookings (
     notify_at interval default '0s',
     created_at timestamp not null,
     updated_at timestamp,
-    suite_id bigint not null,
+    offer_id bigint not null,
     user_id bigint not null,
-    constraint fk_rooms
-        foreign key(suite_id) 
+    constraint fk_offers
+        foreign key(offer_id) 
             references rooms(id) 
             on delete cascade
             on update cascade,
@@ -43,17 +50,13 @@ create index ix_start ON bookings using brin (start_date);
 
 create index ix_end ON bookings using brin (end_date);
 
-create index ix_suite ON bookings using btree (suite_id);
+create index ix_offer ON bookings using btree (offer_id);
 create index ix_owner ON bookings using btree (user_id);
 
 create user otelcol with password 'otelcolpassword';
 grant SELECT on pg_stat_database to otelcol;
 
-insert into rooms (capacity, name) values(3, 'Winston Churchill');
-insert into rooms (capacity, name) values(2, 'Napoleon');
-insert into rooms (capacity, name) values(5, 'Putin');
-
 -- +goose Down
 drop table bookings;
 drop table users;
-drop table rooms;
+drop table offers;
