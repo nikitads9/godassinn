@@ -8,21 +8,21 @@ ENV GOOS linux
 RUN apk update --no-cache && apk add --no-cache tzdata
 RUN apk add make
 
-COPY . /github.com/nikitads9/booking-schedule/
+COPY . /github.com/nikitads9/godassinn/booking-schedule/backend/
 
-WORKDIR /github.com/nikitads9/booking-schedule/
+WORKDIR /github.com/nikitads9/godassinn/booking-schedule/backend/
 
 RUN make build-auth
-RUN chown -R root ./bin/auth
+RUN chown -R root ./godassinn/booking-schedule/backend/bin/auth
 
 FROM alpine:latest
 
 RUN apk add nginx
-ADD ./deploy/nginx/nginx.conf /etc/nginx/nginx.conf
+ADD ./booking-schedule/backend/deploy/nginx/nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /root/
 
-COPY --from=builder /github.com/nikitads9/booking-schedule/bin .
-COPY --from=builder /github.com/nikitads9/booking-schedule/configs/auth_config.yml .
+COPY --from=builder /github.com/nikitads9/godassinn/booking-schedule/backend/bin .
+COPY --from=builder /github.com/nikitads9/godassinn/booking-schedule/backend/configs/auth_config.yml .
 
 CMD [ "./auth", "-config", "auth_config.yml" , "-keyfile", "/etc/ssl/certs/key.pem", "-certfile", "/etc/ssl/certs/cert.pem" ]
