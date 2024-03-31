@@ -67,13 +67,20 @@ func ToApiBookingsInfo(bookings []*model.BookingInfo) []*api.BookingInfo {
 	return res
 }
 
-func ToApiSuites(mod []*model.Offer) []*api.Offer {
+func ToApiOffers(mod []*model.Offer) []*api.Offer {
 	var res []*api.Offer
 	for _, elem := range mod {
 		res = append(res, &api.Offer{
-			OfferID:  elem.OfferID,
-			Capacity: elem.Capacity,
-			Name:     elem.Name,
+			OfferID:          elem.OfferID,
+			Name:             elem.Name,
+			Cost:             elem.Cost,
+			City:             elem.City,
+			Street:           elem.Street,
+			House:            elem.House,
+			Rating:           elem.Rating,
+			Type:             elem.Type,
+			BedsCount:        elem.BedsCount,
+			ShortDescription: elem.ShortDescription,
 		})
 	}
 

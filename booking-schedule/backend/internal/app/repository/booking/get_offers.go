@@ -32,7 +32,7 @@ func (r *repository) GetVacantOffers(ctx context.Context, startDate time.Time, e
 	ctx, span := r.tracer.Start(ctx, op, trace.WithAttributes(attribute.String("request_id", requestID)))
 	defer span.End()
 
-	builder := sq.Select(t.OfferTable+".id AS "+t.OfferID, t.Name, t.Capacity).
+	builder := sq.Select("*").
 		Distinct().
 		From(t.OfferTable).
 		PlaceholderFormat(sq.Dollar)

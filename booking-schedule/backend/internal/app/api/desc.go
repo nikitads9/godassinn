@@ -91,15 +91,29 @@ type GetVacantDatesResponse struct {
 } //@name GetVacantDateResponse
 
 type Offer struct {
-	// Номер апартаментов
+	// Номер объявления
 	OfferID int64 `json:"offerID" example:"1"`
-	// Вместимость в персонах
-	Capacity int8 `json:"capacity" example:"4"`
-	// Название апартаментов
-	Name string `json:"name" example:"Winston Churchill"`
+	// Имя объявления
+	Name string `json:"name" example:"Продам гараж"`
+	// Стоимость за ночь
+	Cost int64 `json:"cost"  example:"4800"`
+	// Город
+	City string `json:"city"  example:"Москва"`
+	// Улица
+	Street string `json:"street"  example:"Пушкина"`
+	// Номер дома
+	House int64 `json:"house"  example:"88"`
+	// Оценка объявления
+	Rating int64 `json:"rating"  example:"5"`
+	// Тип помещения
+	Type string `json:"type"  example:"гараж"`
+	// Количество кроватей
+	BedsCount uint8 `json:"beds_count"  example:"4"`
+	// Краткое описание
+	ShortDescription string `json:"short_description"  example:"продам в хорошие руки"`
 } //@name Offer
 
-type GetVacantRoomsResponse struct {
+type GetVacantOffersResponse struct {
 	Offers []*Offer `json:"offers"`
 } //@name GetVacantRoomsResponse
 

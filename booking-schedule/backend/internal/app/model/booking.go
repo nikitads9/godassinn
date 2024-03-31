@@ -24,9 +24,16 @@ type Interval struct {
 }
 
 type Offer struct {
-	OfferID  int64  `db:"suite_id"`
-	Capacity int8   `db:"capacity"`
-	Name     string `db:"name"`
+	OfferID          int64  `db:"offer_id"`
+	Name             string `db:"name"`
+	Cost             int64  `db:"cost"`
+	City             string `db:"city"`
+	Street           string `db:"street"`
+	House            int64  `db:"house"`
+	Rating           int64  `db:"rating"`
+	Type             string `db:"type"`
+	BedsCount        uint8  `db:"beds_count"`
+	ShortDescription string `db:"short_description"`
 }
 
 type Availibility struct {

@@ -13,7 +13,6 @@ const (
 	CreatedAt        = `created_at`
 	UpdatedAt        = `updated_at`
 	Name             = `name`
-	Capacity         = `capacity`
 	TelegramNickname = `telegram_nickname`
 	TelegramID       = `telegram_id`
 	Password         = `password`
