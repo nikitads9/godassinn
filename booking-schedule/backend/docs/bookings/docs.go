@@ -563,7 +563,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/{suite_id}/get-vacant-dates": {
+        "/{offer_id}/get-vacant-dates": {
             "get": {
                 "description": "Responds with list of vacant intervals within month for selected offer.",
                 "produces": [
@@ -579,8 +579,8 @@ const docTemplate = `{
                         "type": "integer",
                         "format": "int64",
                         "default": 1,
-                        "description": "suite_id",
-                        "name": "suite_id",
+                        "description": "offer_id",
+                        "name": "offer_id",
                         "in": "path",
                         "required": true
                     }
@@ -933,7 +933,7 @@ const docTemplate = `{
     },
     "tags": [
         {
-            "description": "operations with bookings, suites and intervals",
+            "description": "operations with bookings, offers and intervals",
             "name": "bookings"
         },
         {

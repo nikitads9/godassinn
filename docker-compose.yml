@@ -282,7 +282,7 @@ services:
     container_name: search
     build:
       context: ./search
-      dockerfile: ./deploy/dockerfile
+      dockerfile: ./dockerfile
     restart: unless-stopped
     environment:
       - SPRING_DATASOURCE_URL=jdbc:posygtresql://${DB_HOST}:${DB_PORT}/${DB_NAME}

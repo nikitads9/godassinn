@@ -545,9 +545,9 @@ paths:
         offer.
       operationId: getDatesByOfferID
       parameters:
-      - name: suite_id
+      - name: offer_id
         in: path
-        description: suite_id
+        description: offer_id
         required: true
         schema:
           type: integer
@@ -623,7 +623,7 @@ components:
       required:
       - endDate
       - startDate
-      - suiteID
+      - offerID
       type: object
       properties:
         endDate:
@@ -638,7 +638,7 @@ components:
           type: string
           description: Дата и время начала бронировании
           example: 2024-03-28T17:43:00Z
-        suiteID:
+        offerID:
           type: integer
           description: Номер апаратаментов
           example: 1
@@ -673,7 +673,7 @@ components:
           type: string
           description: Дата и время начала бронировании
           example: 2024-03-28T17:43:00Z
-        suiteID:
+        offerID:
           type: integer
           description: Номер апартаментов
           example: 1
@@ -750,25 +750,53 @@ components:
           description: Номер свободен с
           example: 2024-03-10T15:04:05Z
     offer:
-      type: object
-      properties:
-        capacity:
-          type: integer
-          description: Вместимость в персонах
-          example: 4
-        name:
-          type: string
-          description: Название апартаментов
-          example: Winston Churchill
-        suiteID:
-          type: integer
-          description: Номер апартаментов
-          example: 1
+    type: object
+    properties:
+      beds_count:
+        description: Количество кроватей
+        type: integer
+        example: 4
+      city:
+        description: Город
+        type: string
+        example: Москва
+      cost:
+        description: Стоимость за ночь
+        type: integer
+        example: 4800
+      house:
+        description: Номер дома
+        type: integer
+        example: 88
+      name:
+        description: Имя объявления
+        type: string
+        example: Продам гараж
+      offerID:
+        description: Номер объявления
+        type: integer
+        example: 1
+      rating:
+        description: Оценка объявления
+        type: integer
+        example: 5
+      short_description:
+        description: Краткое описание
+        type: string
+        example: продам в хорошие руки
+      street:
+        description: Улица
+        type: string
+        example: Пушкина
+      type:
+        description: Тип помещения
+        type: string
+        example: гараж
     UpdateBookingRequest:
       required:
       - endDate
       - startDate
-      - suiteID
+      - offerID
       type: object
       properties:
         endDate:
@@ -783,7 +811,7 @@ components:
           type: string
           description: Дата и время начала бронировании
           example: 2024-03-28T17:43:00Z
-        suiteID:
+        offerID:
           type: integer
           description: Номер апаратаментов
           example: 1

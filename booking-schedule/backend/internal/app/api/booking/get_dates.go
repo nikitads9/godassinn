@@ -22,12 +22,12 @@ import (
 //	@ID				getDatesByOfferID
 //	@Tags			bookings
 //	@Produce		json
-//	@Param			suite_id path	int	true	"suite_id"	Format(int64) default(1)
+//	@Param			offer_id path	int	true	"offer_id"	Format(int64) default(1)
 //	@Success		200	{object}	api.GetVacantDatesResponse
 //	@Failure		400	{object}	api.errResponse
 //	@Failure		404	{object}	api.errResponse
 //	@Failure		503	{object}	api.errResponse
-//	@Router			/{suite_id}/get-vacant-dates [get]
+//	@Router			/{offer_id}/get-vacant-dates [get]
 func (i *Implementation) GetVacantDates(logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		const op = "api.booking.GetVacantDates"

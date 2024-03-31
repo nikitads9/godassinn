@@ -322,8 +322,8 @@ paths:
       - application/json
       description: 'Updates an existing booking with given BookingID, offerID, startDate,
         endDate values (notificationPeriod being optional). Implemented with the use
-        of transaction: first offer availibility is checked. In case one attempts to
-        alter his previous booking (i.e. widen or tighten its'' limits) the booking
+        of transaction: first offer availibility is checked. In case one attempts
+        to alter his previous booking (i.e. widen or tighten its'' limits) the booking
         is updated.  If it overlaps with smb else''s booking or with clients'' another
         booking the request is considered unsuccessful. startDate parameter  is to
         be before endDate and both should not be expired.'
@@ -368,17 +368,17 @@ paths:
       summary: Updates booking info
       tags:
       - bookings
-  /{suite_id}/get-vacant-dates:
+  /{offer_id}/get-vacant-dates:
     get:
       description: Responds with list of vacant intervals within month for selected
         offer.
       operationId: getDatesByOfferID
       parameters:
       - default: 1
-        description: suite_id
+        description: offer_id
         format: int64
         in: path
-        name: suite_id
+        name: offer_id
         required: true
         type: integer
       produces:
@@ -656,7 +656,7 @@ securityDefinitions:
     type: apiKey
 swagger: "2.0"
 tags:
-- description: operations with bookings, suites and intervals
+- description: operations with bookings, offers and intervals
   name: bookings
 - description: service for viewing profile editing or deleting it
   name: users
