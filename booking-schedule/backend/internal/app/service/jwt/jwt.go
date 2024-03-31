@@ -1,12 +1,13 @@
 package jwt
 
 import (
-	"booking-schedule/internal/logger/sl"
 	"context"
 	"encoding/json"
 	"errors"
 	"log/slog"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/golang-jwt/jwt/v5"

@@ -1,11 +1,12 @@
 package booking
 
 import (
-	"booking-schedule/internal/app/repository/booking"
-	"booking-schedule/internal/app/service/jwt"
-	"booking-schedule/internal/pkg/db"
 	"errors"
 	"log/slog"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/booking"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/service/jwt"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/db"
 
 	"github.com/jackc/pgx/v5/pgconn"
 	"go.opentelemetry.io/otel/trace"

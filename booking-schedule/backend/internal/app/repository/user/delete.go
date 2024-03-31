@@ -1,13 +1,14 @@
 package user
 
 import (
-	"booking-schedule/internal/logger/sl"
-	"booking-schedule/internal/pkg/db"
 	"context"
 	"errors"
 	"log/slog"
 
-	t "booking-schedule/internal/app/repository/table"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/db"
+
+	t "github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/table"
 
 	"github.com/go-chi/chi/middleware"
 	"go.opentelemetry.io/otel/attribute"

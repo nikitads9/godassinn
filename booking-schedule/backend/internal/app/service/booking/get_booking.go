@@ -1,8 +1,9 @@
 package booking
 
 import (
-	"booking-schedule/internal/app/model"
 	"context"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
 
 	"github.com/gofrs/uuid"
 )

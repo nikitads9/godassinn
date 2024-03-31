@@ -1,4 +1,4 @@
-module booking-schedule
+module github.com/nikitads9/godassinn/booking-schedule/backend
 
 go 1.21.0
 

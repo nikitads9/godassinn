@@ -1,11 +1,12 @@
 package user
 
 import (
-	"booking-schedule/internal/app/model"
-	"booking-schedule/internal/pkg/db"
 	"context"
 	"errors"
 	"log/slog"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/db"
 
 	"github.com/jackc/pgx/v5/pgconn"
 	"go.opentelemetry.io/otel/trace"

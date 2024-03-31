@@ -1,11 +1,12 @@
 package main
 
 import (
-	"booking-schedule/internal/pkg/sender"
 	"context"
 	"flag"
 	"log"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/sender"
 
 	_ "go.uber.org/automaxprocs"
 )

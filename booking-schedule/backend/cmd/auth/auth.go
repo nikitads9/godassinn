@@ -5,11 +5,12 @@ import (
 	"time"
 
 	_ "go.uber.org/automaxprocs"
-	//_ "booking-schedule/cmd/auth/docs"
+	//_ github.com/nikitads9/godassinn/booking-schedule/backend/cmd/auth/docs"
 
-	"booking-schedule/internal/pkg/auth"
 	"flag"
 	"log"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/auth"
 )
 
 var configType, pathConfig, pathCert, pathKey string

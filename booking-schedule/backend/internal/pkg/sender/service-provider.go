@@ -1,14 +1,15 @@
 package sender
 
 import (
-	sender "booking-schedule/internal/app/service/sender"
-	"booking-schedule/internal/config"
-	"booking-schedule/internal/logger/sl"
-	"booking-schedule/internal/pkg/rabbit"
 	"context"
 	"log"
 	"log/slog"
 	"os"
+
+	sender "github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/service/sender"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/config"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/rabbit"
 )
 
 const (

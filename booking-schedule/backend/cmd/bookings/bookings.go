@@ -6,8 +6,8 @@ import (
 
 	_ "go.uber.org/automaxprocs"
 
-	//_ "booking-schedule/cmd/bookings/docs"
-	"booking-schedule/internal/pkg/bookings"
+	//_ "github.com/nikitads9/godassinn/booking-schedule/backend/cmd/bookings/docs"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/bookings"
 
 	"flag"
 	"log"

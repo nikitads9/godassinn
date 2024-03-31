@@ -1,14 +1,15 @@
 package bookings
 
 import (
-	"booking-schedule/internal/app/api"
-	"booking-schedule/internal/logger/sl"
-	"booking-schedule/internal/middleware/auth"
-	mwLogger "booking-schedule/internal/middleware/logger"
-	"booking-schedule/internal/middleware/metrics"
-	"booking-schedule/internal/pkg/certificates"
-	"booking-schedule/internal/pkg/observability"
 	"context"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/middleware/auth"
+	mwLogger "github.com/nikitads9/godassinn/booking-schedule/backend/internal/middleware/logger"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/middleware/metrics"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/certificates"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/observability"
 
 	"github.com/go-chi/cors"
 	"github.com/prometheus/client_golang/prometheus/promhttp"

@@ -1,4 +1,3 @@
-include .env
 BIN_SCHEDULER := "./bin/bookings"
 BIN_AUTH := "./bin/auth"
 BIN_NOTIFIER := "./bin/scheduler"
@@ -6,9 +5,6 @@ BIN_SENDER := "./bin/sender"
 
 #GIT_HASH := $(shell git log --format="%h" -n 1)
 #LDFLAGS := -X main.release="develop" -X main.buildDate=$(shell date -u +%Y-%m-%dT%H:%M:%S) -X main.gitHash=$(GIT_HASH)
-
-env:
-	set -o allexport && source ./.env && set +o allexport
 
 migrate-up:
 	export PG_DSN="host=${DB_HOST} port=${DB_PORT} dbname=${DB_NAME} user=${DB_USER} password=${DB_PASSWORD} sslmode=${DB_SSL}"
@@ -42,8 +38,8 @@ install-go-deps: .install-go-deps
 
 .PHONY: generate-swag
 generate-swag:
-	swag init --generalInfo cmd/bookings/bookings.go --parseDependency --parseInternal --tags users,bookings --output ./docs/bookings/
-	swag init --generalInfo cmd/auth/auth.go --parseDependency --parseInternal --tags auth --output ./docs/auth/
+	swag init --generalInfo /cmd/bookings/bookings.go --parseDependency --parseInternal --tags users,bookings --output ./docs/bookings/
+	swag init --generalInfo /cmd/auth/auth.go --parseDependency --parseInternal --tags auth --output ./docs/auth/
 
 .PHONY: coverage
 coverage:

@@ -1,13 +1,14 @@
 package booking
 
 import (
-	t "booking-schedule/internal/app/repository/table"
-	"booking-schedule/internal/logger/sl"
-	"booking-schedule/internal/pkg/db"
 	"context"
 	"errors"
 	"log/slog"
 	"time"
+
+	t "github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/table"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/db"
 
 	sq "github.com/Masterminds/squirrel"
 	"go.opentelemetry.io/otel/codes"

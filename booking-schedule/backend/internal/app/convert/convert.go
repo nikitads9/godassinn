@@ -1,9 +1,10 @@
 package convert
 
 import (
-	"booking-schedule/internal/app/api"
-	"booking-schedule/internal/app/model"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
 )
 
 func ToBookingInfo(req *api.Booking) (*model.BookingInfo, error) {

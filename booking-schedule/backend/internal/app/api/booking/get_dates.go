@@ -1,11 +1,12 @@
 package booking
 
 import (
-	"booking-schedule/internal/app/api"
-	"booking-schedule/internal/logger/sl"
 	"log/slog"
 	"net/http"
 	"strconv"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"

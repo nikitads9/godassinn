@@ -1,14 +1,15 @@
 package booking
 
 import (
-	"booking-schedule/internal/app/model"
-	t "booking-schedule/internal/app/repository/table"
-	"booking-schedule/internal/logger/sl"
-	"booking-schedule/internal/pkg/db"
 	"context"
 	"errors"
 	"log/slog"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
+	t "github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/table"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/db"
 
 	sq "github.com/Masterminds/squirrel"
 	"github.com/georgysavva/scany/pgxscan"
