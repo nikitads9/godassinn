@@ -53,3 +53,6 @@ coverage:
 PHONY: test-coverage
 test-coverage:
 	go test ./... -coverprofile=coverage.out && go tool cover -html=coverage.out
+
+PHONY: docker-compose
+	docker-compose up -d
