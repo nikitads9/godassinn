@@ -44,7 +44,7 @@ services:
       - "PGDATA=${PGDATA}"
     volumes: 
       - postgres-volume:/var/lib/postgresql/data
-    #  - ./booking-schedule/backend/deploy/database/init.sql:/docker-entrypoint-initdb.d/init.sql 
+    #  - ./deploy/database/init.sql:/docker-entrypoint-initdb.d/init.sql 
     ports:
       - "${DB_PORT}:${DB_PORT}"
     expose:
