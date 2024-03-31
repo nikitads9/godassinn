@@ -10,4 +10,4 @@ RUN chmod +x /bin/goose
 
 ADD *.sql /deploy/migrations/
 
-ENTRYPOINT [ "/bin/sh","-c","sleep 2 && goose -dir ${MIGRATION_DIR} down -v" ]
+ENTRYPOINT [ "/bin/sh","-c","sleep 2 && goose -dir ${MIGRATION_DIR} up -v" ]

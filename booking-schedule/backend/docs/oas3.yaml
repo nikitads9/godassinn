@@ -17,7 +17,7 @@ servers:
 - url: https://localhost:5000/auth
 tags:
 - name: bookings
-  description: "operations with bookings, suites and intervals"
+  description: "operations with bookings, offers and intervals"
 - name: users
   description: service for viewing profile editing or deleting it
 - name: auth
@@ -100,7 +100,7 @@ paths:
       summary: Adds booking
       description: "Adds an  associated with user with given parameters. NotificationPeriod\
         \ is optional and must look like {number}s,{number}m or {number}h. Implemented\
-        \ with the use of transaction: first rooms availibility is checked. In case\
+        \ with the use of transaction: first offers availibility is checked. In case\
         \ one's new booking request intersects with and old one(even if belongs to\
         \ him), the request is considered erratic. startDate is to be before endDate\
         \ and both should not be expired."
@@ -205,15 +205,15 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
       - Bearer: []
-  /get-vacant-rooms:
+  /get-vacant-offers:
     get:
       tags:
       - bookings
-      summary: Get list of vacant rooms
+      summary: Get list of vacant offers
       description: Receives two dates as query parameters. start is to be before end
-        and both should not be expired. Responds with list of vacant rooms and their
+        and both should not be expired. Responds with list of vacant offers and their
         parameters for given interval.
-      operationId: getRoomsByDates
+      operationId: getOffersByDates
       parameters:
       - name: start
         in: query
@@ -237,7 +237,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetVacantRoomsResponse'
+                $ref: '#/components/schemas/GetVacantOffersResponse'
         "400":
           description: Bad Request
           content:
@@ -481,9 +481,9 @@ paths:
       tags:
       - bookings
       summary: Updates booking info
-      description: "Updates an existing booking with given BookingID, suiteID, startDate,\
+      description: "Updates an existing booking with given BookingID, offerID, startDate,\
         \ endDate values (notificationPeriod being optional). Implemented with the\
-        \ use of transaction: first room availibility is checked. In case one attempts\
+        \ use of transaction: first offer availibility is checked. In case one attempts\
         \ to alter his previous booking (i.e. widen or tighten its' limits) the booking\
         \ is updated.  If it overlaps with smb else's booking or with clients' another\
         \ booking the request is considered unsuccessful. startDate parameter  is\
@@ -536,14 +536,14 @@ paths:
       security:
       - Bearer: []
       x-codegen-request-body-name: booking
-  /{suite_id}/get-vacant-dates:
+  /{offer_id}/get-vacant-dates:
     get:
       tags:
       - bookings
       summary: Get vacant intervals
       description: Responds with list of vacant intervals within month for selected
-        suite.
-      operationId: getDatesBySuiteID
+        offer.
+      operationId: getDatesByOfferID
       parameters:
       - name: suite_id
         in: path
@@ -731,13 +731,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Interval'
-    GetVacantRoomsResponse:
+    GetVacantOffersResponse:
       type: object
       properties:
-        rooms:
+        offers:
           type: array
           items:
-            $ref: '#/components/schemas/Suite'
+            $ref: '#/components/schemas/Offer'
     Interval:
       type: object
       properties:
@@ -749,7 +749,7 @@ components:
           type: string
           description: Номер свободен с
           example: 2024-03-10T15:04:05Z
-    Suite:
+    offer:
       type: object
       properties:
         capacity:

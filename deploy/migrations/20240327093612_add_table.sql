@@ -35,7 +35,7 @@ create table bookings (
     user_id bigint not null,
     constraint fk_offers
         foreign key(offer_id) 
-            references rooms(id) 
+            references offers(id) 
             on delete cascade
             on update cascade,
     constraint fk_users
@@ -56,9 +56,9 @@ create index ix_owner ON bookings using btree (user_id);
 create user otelcol with password 'otelcolpassword';
 grant SELECT on pg_stat_database to otelcol;
 
-insert into offers values('продам гараж'. 4800, 'Москва', 'Пушкина', 88, 5, 'гараж', 4, 'отдам в хорошие руки');
-insert into offers values('загородный дом'. 8000, 'Москва', 'Подольская', 90, 5, 'дом', 8, 'красивый домик');
-insert into offers values('номер в отеле'. 3500, 'Чебупелинск', 'Варшавская', 14, 4, 'дом', 8, 'номерной');
+insert into offers (name, cost, city,street,house,rating,type,beds_count,short_description) values('продам гараж', 4800, 'Москва', 'Пушкина', 88, 5, 'гараж', 4, 'отдам в хорошие руки');
+insert into offers (name, cost, city,street,house,rating,type,beds_count,short_description) values('загородный дом', 8000, 'Москва', 'Подольская', 90, 5, 'дом', 8, 'красивый домик');
+insert into offers (name, cost, city,street,house,rating,type,beds_count,short_description) values('номер в отеле', 3500, 'Чебупелинск', 'Варшавская', 14, 4, 'дом', 8, 'номерной');
 
 -- +goose Down
 drop table bookings;

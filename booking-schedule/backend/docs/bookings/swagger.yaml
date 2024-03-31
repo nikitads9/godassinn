@@ -10,18 +10,18 @@ definitions:
         description: Интервал времени для предварительного уведомления о бронировании
         example: 24h
         type: string
+      offerID:
+        description: Номер апаратаментов
+        example: 1
+        type: integer
       startDate:
         description: Дата и время начала бронировании
         example: "2024-03-28T17:43:00Z"
         type: string
-      suiteID:
-        description: Номер апаратаментов
-        example: 1
-        type: integer
     required:
     - endDate
+    - offerID
     - startDate
-    - suiteID
     type: object
   AddBookingResponse:
     properties:
@@ -49,14 +49,14 @@ definitions:
         description: Интервал времени для уведомления о бронировании
         example: 24h00m00s
         type: string
+      offerID:
+        description: Номер апартаментов
+        example: 1
+        type: integer
       startDate:
         description: Дата и время начала бронировании
         example: "2024-03-28T17:43:00Z"
         type: string
-      suiteID:
-        description: Номер апартаментов
-        example: 1
-        type: integer
       updatedAt:
         description: Дата и время обновления
         example: "2024-03-27T18:43:00Z"
@@ -120,11 +120,11 @@ definitions:
           $ref: '#/definitions/Interval'
         type: array
     type: object
-  GetVacantRoomsResponse:
+  GetVacantOffersResponse:
     properties:
-      rooms:
+      offers:
         items:
-          $ref: '#/definitions/Suite'
+          $ref: '#/definitions/Offer'
         type: array
     type: object
   Interval:
@@ -138,20 +138,48 @@ definitions:
         example: "2024-03-10T15:04:05Z"
         type: string
     type: object
-  Suite:
+  Offer:
     properties:
-      capacity:
-        description: Вместимость в персонах
+      beds_count:
+        description: Количество кроватей
         example: 4
         type: integer
-      name:
-        description: Название апартаментов
-        example: Winston Churchill
+      city:
+        description: Город
+        example: Москва
         type: string
-      suiteID:
-        description: Номер апартаментов
+      cost:
+        description: Стоимость за ночь
+        example: 4800
+        type: integer
+      house:
+        description: Номер дома
+        example: 88
+        type: integer
+      name:
+        description: Имя объявления
+        example: Продам гараж
+        type: string
+      offerID:
+        description: Номер объявления
         example: 1
         type: integer
+      rating:
+        description: Оценка объявления
+        example: 5
+        type: integer
+      short_description:
+        description: Краткое описание
+        example: продам в хорошие руки
+        type: string
+      street:
+        description: Улица
+        example: Пушкина
+        type: string
+      type:
+        description: Тип помещения
+        example: гараж
+        type: string
     type: object
   UpdateBookingRequest:
     properties:
@@ -163,18 +191,18 @@ definitions:
         description: Интервал времени для предварительного уведомления о бронировании
         example: 24h
         type: string
+      offerID:
+        description: Номер апаратаментов
+        example: 1
+        type: integer
       startDate:
         description: Дата и время начала бронировании
         example: "2024-03-28T17:43:00Z"
         type: string
-      suiteID:
-        description: Номер апаратаментов
-        example: 1
-        type: integer
     required:
     - endDate
+    - offerID
     - startDate
-    - suiteID
     type: object
   UserInfo:
     properties:
@@ -292,9 +320,9 @@ paths:
     patch:
       consumes:
       - application/json
-      description: 'Updates an existing booking with given BookingID, suiteID, startDate,
+      description: 'Updates an existing booking with given BookingID, offerID, startDate,
         endDate values (notificationPeriod being optional). Implemented with the use
-        of transaction: first room availibility is checked. In case one attempts to
+        of transaction: first offer availibility is checked. In case one attempts to
         alter his previous booking (i.e. widen or tighten its'' limits) the booking
         is updated.  If it overlaps with smb else''s booking or with clients'' another
         booking the request is considered unsuccessful. startDate parameter  is to
@@ -343,8 +371,8 @@ paths:
   /{suite_id}/get-vacant-dates:
     get:
       description: Responds with list of vacant intervals within month for selected
-        suite.
-      operationId: getDatesBySuiteID
+        offer.
+      operationId: getDatesByOfferID
       parameters:
       - default: 1
         description: suite_id
@@ -381,7 +409,7 @@ paths:
       - application/json
       description: 'Adds an  associated with user with given parameters. NotificationPeriod
         is optional and must look like {number}s,{number}m or {number}h. Implemented
-        with the use of transaction: first rooms availibility is checked. In case
+        with the use of transaction: first offers availibility is checked. In case
         one''s new booking request intersects with and old one(even if belongs to
         him), the request is considered erratic. startDate is to be before endDate
         and both should not be expired.'
@@ -470,12 +498,12 @@ paths:
       summary: Get several bookings info
       tags:
       - bookings
-  /get-vacant-rooms:
+  /get-vacant-offers:
     get:
       description: Receives two dates as query parameters. start is to be before end
-        and both should not be expired. Responds with list of vacant rooms and their
+        and both should not be expired. Responds with list of vacant offers and their
         parameters for given interval.
-      operationId: getRoomsByDates
+      operationId: getOffersByDates
       parameters:
       - default: 2024-03-28T17:43:00
         description: start
@@ -497,7 +525,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/GetVacantRoomsResponse'
+            $ref: '#/definitions/GetVacantOffersResponse'
         "400":
           description: Bad Request
           schema:
@@ -510,7 +538,7 @@ paths:
           description: Service Unavailable
           schema:
             $ref: '#/definitions/Error'
-      summary: Get list of vacant rooms
+      summary: Get list of vacant offers
       tags:
       - bookings
   /user/delete:

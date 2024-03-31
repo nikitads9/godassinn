@@ -179,12 +179,6 @@ func (a *App) initServer(ctx context.Context) error {
 	a.router = chi.NewRouter()
 
 	a.router.Group(func(r chi.Router) {
-		r.Use(cors.Handler(cors.Options{
-			AllowedOrigins:   []string{a.serviceProvider.GetConfig().GetTracerConfig().EndpointURL},
-			AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"}, //TODO allow only real otlp methods
-			AllowedHeaders:   []string{"*"},
-			AllowCredentials: false,
-		}))
 		r.Handle("/metrics", promhttp.Handler())
 	})
 
@@ -194,11 +188,11 @@ func (a *App) initServer(ctx context.Context) error {
 		r.Use(metrics.NewMetricMiddleware(a.serviceProvider.GetMeter(ctx)))
 		r.Use(mwLogger.New(a.serviceProvider.GetLogger()))
 		r.Use(cors.Handler(cors.Options{
-			AllowedOrigins:   []string{"https://*", "http://*"},
+			AllowedOrigins:   []string{"https://*", "http://localhost:5173", "http://localhost"},
 			AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
 			AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"}, //"X-CSRF-Token" for tokens stored in cookies
 			ExposedHeaders:   []string{"Link"},
-			AllowCredentials: false,
+			AllowCredentials: true,
 			MaxAge:           300,
 		}))
 		r.Use(middleware.Recoverer)

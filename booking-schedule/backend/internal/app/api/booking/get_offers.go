@@ -16,11 +16,11 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-// GetVacantRooms godoc
+// GetVacantOffers godoc
 //
 //	@Summary		Get list of vacant offers
 //	@Description	Receives two dates as query parameters. start is to be before end and both should not be expired. Responds with list of vacant offers and their parameters for given interval.
-//	@ID				getRoomsByDates
+//	@ID				getOffersByDates
 //	@Tags			bookings
 //	@Produce		json
 //	@Param			start	query	string	true	"start"	Format(time.Time) default(2024-03-28T17:43:00)
