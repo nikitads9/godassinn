@@ -15,7 +15,7 @@ func ToBookingInfo(req *api.Booking) (*model.BookingInfo, error) {
 	res := &model.BookingInfo{
 		ID:        req.BookingID,
 		UserID:    req.UserID,
-		SuiteID:   req.SuiteID,
+		OfferID:   req.OfferID,
 		StartDate: req.StartDate,
 		EndDate:   req.EndDate,
 	}
@@ -35,7 +35,7 @@ func ToApiBookingInfo(mod *model.BookingInfo) *api.BookingInfo {
 
 	res := &api.BookingInfo{
 		ID:        mod.ID,
-		SuiteID:   mod.SuiteID,
+		OfferID:   mod.OfferID,
 		StartDate: mod.StartDate,
 		EndDate:   mod.EndDate,
 		CreatedAt: mod.CreatedAt,
@@ -67,13 +67,20 @@ func ToApiBookingsInfo(bookings []*model.BookingInfo) []*api.BookingInfo {
 	return res
 }
 
-func ToApiSuites(mod []*model.Suite) []*api.Suite {
-	var res []*api.Suite
+func ToApiOffers(mod []*model.Offer) []*api.Offer {
+	var res []*api.Offer
 	for _, elem := range mod {
-		res = append(res, &api.Suite{
-			SuiteID:  elem.SuiteID,
-			Capacity: elem.Capacity,
-			Name:     elem.Name,
+		res = append(res, &api.Offer{
+			OfferID:          elem.OfferID,
+			Name:             elem.Name,
+			Cost:             elem.Cost,
+			City:             elem.City,
+			Street:           elem.Street,
+			House:            elem.House,
+			Rating:           elem.Rating,
+			Type:             elem.Type,
+			BedsCount:        elem.BedsCount,
+			ShortDescription: elem.ShortDescription,
 		})
 	}
 

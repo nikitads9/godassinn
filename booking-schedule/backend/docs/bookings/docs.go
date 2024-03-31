@@ -30,7 +30,7 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Adds an  associated with user with given parameters. NotificationPeriod is optional and must look like {number}s,{number}m or {number}h. Implemented with the use of transaction: first rooms availibility is checked. In case one's new booking request intersects with and old one(even if belongs to him), the request is considered erratic. startDate is to be before endDate and both should not be expired.",
+                "description": "Adds an  associated with user with given parameters. NotificationPeriod is optional and must look like {number}s,{number}m or {number}h. Implemented with the use of transaction: first offers availibility is checked. In case one's new booking request intersects with and old one(even if belongs to him), the request is considered erratic. startDate is to be before endDate and both should not be expired.",
                 "consumes": [
                     "application/json"
                 ],
@@ -157,16 +157,16 @@ const docTemplate = `{
                 }
             }
         },
-        "/get-vacant-rooms": {
+        "/get-vacant-offers": {
             "get": {
-                "description": "Receives two dates as query parameters. start is to be before end and both should not be expired. Responds with list of vacant rooms and their parameters for given interval.",
+                "description": "Receives two dates as query parameters. start is to be before end and both should not be expired. Responds with list of vacant offers and their parameters for given interval.",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "bookings"
                 ],
-                "summary": "Get list of vacant rooms",
+                "summary": "Get list of vacant offers",
                 "operationId": "getRoomsByDates",
                 "parameters": [
                     {
@@ -500,7 +500,7 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Updates an existing booking with given BookingID, suiteID, startDate, endDate values (notificationPeriod being optional). Implemented with the use of transaction: first room availibility is checked. In case one attempts to alter his previous booking (i.e. widen or tighten its' limits) the booking is updated.  If it overlaps with smb else's booking or with clients' another booking the request is considered unsuccessful. startDate parameter  is to be before endDate and both should not be expired.",
+                "description": "Updates an existing booking with given BookingID, offerID, startDate, endDate values (notificationPeriod being optional). Implemented with the use of transaction: first room availibility is checked. In case one attempts to alter his previous booking (i.e. widen or tighten its' limits) the booking is updated.  If it overlaps with smb else's booking or with clients' another booking the request is considered unsuccessful. startDate parameter  is to be before endDate and both should not be expired.",
                 "consumes": [
                     "application/json"
                 ],
@@ -565,7 +565,7 @@ const docTemplate = `{
         },
         "/{suite_id}/get-vacant-dates": {
             "get": {
-                "description": "Responds with list of vacant intervals within month for selected suite.",
+                "description": "Responds with list of vacant intervals within month for selected offer.",
                 "produces": [
                     "application/json"
                 ],
@@ -620,7 +620,7 @@ const docTemplate = `{
             "required": [
                 "endDate",
                 "startDate",
-                "suiteID"
+                "offerID"
             ],
             "properties": {
                 "endDate": {
@@ -638,7 +638,7 @@ const docTemplate = `{
                     "type": "string",
                     "example": "2024-03-28T17:43:00Z"
                 },
-                "suiteID": {
+                "offerID": {
                     "description": "Номер апаратаментов",
                     "type": "integer",
                     "example": 1
@@ -684,7 +684,7 @@ const docTemplate = `{
                     "type": "string",
                     "example": "2024-03-28T17:43:00Z"
                 },
-                "suiteID": {
+                "offerID": {
                     "description": "Номер апартаментов",
                     "type": "integer",
                     "example": 1
@@ -785,10 +785,10 @@ const docTemplate = `{
         "GetVacantRoomsResponse": {
             "type": "object",
             "properties": {
-                "rooms": {
+                "offers": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Suite"
+                        "$ref": "#/definitions/Offer"
                     }
                 }
             }
@@ -808,7 +808,7 @@ const docTemplate = `{
                 }
             }
         },
-        "Suite": {
+        "Offer": {
             "type": "object",
             "properties": {
                 "capacity": {
@@ -821,7 +821,7 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Winston Churchill"
                 },
-                "suiteID": {
+                "offerID": {
                     "description": "Номер апартаментов",
                     "type": "integer",
                     "example": 1
@@ -833,7 +833,7 @@ const docTemplate = `{
             "required": [
                 "endDate",
                 "startDate",
-                "suiteID"
+                "offerID"
             ],
             "properties": {
                 "endDate": {
@@ -851,7 +851,7 @@ const docTemplate = `{
                     "type": "string",
                     "example": "2024-03-28T17:43:00Z"
                 },
-                "suiteID": {
+                "offerID": {
                     "description": "Номер апаратаментов",
                     "type": "integer",
                     "example": 1

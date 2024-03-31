@@ -17,7 +17,7 @@ type Booking struct {
 	// Идентификатор пользователя
 	UserID int64
 	// Номер апартаментов
-	SuiteID int64
+	OfferID int64
 	// Дата и время начала бронировании
 	StartDate time.Time
 	// Дата и время окончания бронировании
@@ -28,7 +28,7 @@ type Booking struct {
 
 type AddBookingRequest struct {
 	// Номер апаратаментов
-	SuiteID int64 `json:"suiteID" validate:"required" example:"1"`
+	OfferID int64 `json:"offerID" validate:"required" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" validate:"required" example:"2024-03-28T17:43:00Z"`
 	// Дата и время окончания бронировании
@@ -45,7 +45,7 @@ type BookingInfo struct {
 	// Уникальный идентификатор бронирования
 	ID uuid.UUID `json:"BookingID" example:"550e8400-e29b-41d4-a716-446655440000" format:"uuid"`
 	// Номер апартаментов
-	SuiteID int64 `json:"suiteID" example:"1"`
+	OfferID int64 `json:"offerID" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" example:"2024-03-28T17:43:00Z"`
 	// Дата и время окончания бронировании
@@ -70,7 +70,7 @@ type GetBookingsResponse struct {
 
 type UpdateBookingRequest struct {
 	// Номер апаратаментов
-	SuiteID int64 `json:"suiteID" validate:"required" example:"1"`
+	OfferID int64 `json:"offerID" validate:"required" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" validate:"required" example:"2024-03-28T17:43:00Z"`
 	// Дата и время окончания бронировании
@@ -90,17 +90,31 @@ type GetVacantDatesResponse struct {
 	Intervals []*Interval `json:"intervals"`
 } //@name GetVacantDateResponse
 
-type Suite struct {
-	// Номер апартаментов
-	SuiteID int64 `json:"suiteID" example:"1"`
-	// Вместимость в персонах
-	Capacity int8 `json:"capacity" example:"4"`
-	// Название апартаментов
-	Name string `json:"name" example:"Winston Churchill"`
-} //@name Suite
+type Offer struct {
+	// Номер объявления
+	OfferID int64 `json:"offerID" example:"1"`
+	// Имя объявления
+	Name string `json:"name" example:"Продам гараж"`
+	// Стоимость за ночь
+	Cost int64 `json:"cost"  example:"4800"`
+	// Город
+	City string `json:"city"  example:"Москва"`
+	// Улица
+	Street string `json:"street"  example:"Пушкина"`
+	// Номер дома
+	House int64 `json:"house"  example:"88"`
+	// Оценка объявления
+	Rating int64 `json:"rating"  example:"5"`
+	// Тип помещения
+	Type string `json:"type"  example:"гараж"`
+	// Количество кроватей
+	BedsCount uint8 `json:"beds_count"  example:"4"`
+	// Краткое описание
+	ShortDescription string `json:"short_description"  example:"продам в хорошие руки"`
+} //@name Offer
 
-type GetVacantRoomsResponse struct {
-	Rooms []*Suite `json:"rooms"`
+type GetVacantOffersResponse struct {
+	Offers []*Offer `json:"offers"`
 } //@name GetVacantRoomsResponse
 
 type AuthResponse struct {

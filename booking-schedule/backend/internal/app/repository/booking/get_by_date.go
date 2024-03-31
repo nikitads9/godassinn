@@ -23,7 +23,7 @@ func (r *repository) GetBookingListByDate(ctx context.Context, startDate time.Ti
 	ctx, span := r.tracer.Start(ctx, op)
 	defer span.End()
 
-	builder := sq.Select(t.ID, t.SuiteID, t.StartDate, t.EndDate, t.NotifyAt, t.CreatedAt, t.UpdatedAt, t.UserID).
+	builder := sq.Select(t.ID, t.OfferID, t.StartDate, t.EndDate, t.NotifyAt, t.CreatedAt, t.UpdatedAt, t.UserID).
 		From(t.BookingTable).
 		Where(sq.Or{
 			sq.And{

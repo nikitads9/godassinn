@@ -18,7 +18,7 @@ type Implementation struct {
 var (
 	errNoBookingID = errors.New("received no booking id")
 	errNoInterval  = errors.New("received no time period")
-	errNoSuiteID   = errors.New("received no suite id")
+	errNoSuiteID   = errors.New("received no offer id")
 	//ErrBookingNotFound = errors.New("no booking with this id")
 )
 

@@ -18,21 +18,21 @@ import (
 
 // GetVacantRooms godoc
 //
-//	@Summary		Get list of vacant rooms
-//	@Description	Receives two dates as query parameters. start is to be before end and both should not be expired. Responds with list of vacant rooms and their parameters for given interval.
+//	@Summary		Get list of vacant offers
+//	@Description	Receives two dates as query parameters. start is to be before end and both should not be expired. Responds with list of vacant offers and their parameters for given interval.
 //	@ID				getRoomsByDates
 //	@Tags			bookings
 //	@Produce		json
 //	@Param			start	query	string	true	"start"	Format(time.Time) default(2024-03-28T17:43:00)
 //	@Param			end	query	string	true	"end"	Format(time.Time) default(2024-03-29T17:43:00)
-//	@Success		200	{object}	api.GetVacantRoomsResponse
+//	@Success		200	{object}	api.GetVacantOffersResponse
 //	@Failure		400	{object}	api.errResponse
 //	@Failure		404	{object}	api.errResponse
 //	@Failure		503	{object}	api.errResponse
-//	@Router			/get-vacant-rooms [get]
-func (i *Implementation) GetVacantRooms(logger *slog.Logger) http.HandlerFunc {
+//	@Router			/get-vacant-offers [get]
+func (i *Implementation) GetVacantOffers(logger *slog.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		const op = "api.booking.GetVacantRooms"
+		const op = "api.booking.GetVacantOffers"
 
 		ctx := r.Context()
 		requestID := middleware.GetReqID(ctx)
@@ -96,7 +96,7 @@ func (i *Implementation) GetVacantRooms(logger *slog.Logger) http.HandlerFunc {
 
 		span.AddEvent("dates verified")
 
-		rooms, err := i.booking.GetVacantRooms(ctx, startDate, endDate)
+		offers, err := i.booking.GetVacantOffers(ctx, startDate, endDate)
 		if err != nil {
 			span.RecordError(err)
 			span.SetStatus(codes.Error, err.Error())
@@ -105,12 +105,12 @@ func (i *Implementation) GetVacantRooms(logger *slog.Logger) http.HandlerFunc {
 			return
 		}
 
-		span.AddEvent("vacant rooms acquired", trace.WithAttributes(attribute.Int("quantity", len(rooms))))
-		log.Info("vacant rooms acquired", slog.Int("quantity: ", len(rooms)))
+		span.AddEvent("vacant offers acquired", trace.WithAttributes(attribute.Int("quantity", len(offers))))
+		log.Info("vacant offers acquired", slog.Int("quantity: ", len(offers)))
 
 		render.Status(r, http.StatusCreated)
-		api.WriteWithStatus(w, http.StatusOK, api.GetVacantRoomsResponse{
-			Rooms: convert.ToApiSuites(rooms),
+		api.WriteWithStatus(w, http.StatusOK, api.GetVacantOffersResponse{
+			Offers: convert.ToApiOffers(offers),
 		})
 	}
 }

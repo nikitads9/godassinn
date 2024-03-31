@@ -34,7 +34,7 @@ func (r *repository) CheckAvailibility(ctx context.Context, mod *model.BookingIn
 	subQuery := sq.Select("1").From(t.BookingTable).Where(sq.And{
 		sq.And{
 			sq.Or{
-				sq.And{sq.Eq{t.SuiteID: mod.SuiteID},
+				sq.And{sq.Eq{t.OfferID: mod.OfferID},
 					sq.Or{sq.Eq{t.UserID: mod.UserID}},
 				},
 				sq.Eq{t.ID: mod.ID},
@@ -57,7 +57,7 @@ func (r *repository) CheckAvailibility(ctx context.Context, mod *model.BookingIn
 
 	query, args, err := sq.Select("1").From(t.BookingTable).Where(sq.And{
 		sq.And{
-			sq.Eq{t.SuiteID: mod.SuiteID},
+			sq.Eq{t.OfferID: mod.OfferID},
 			sq.Or{
 				sq.And{
 					sq.GtOrEq{t.StartDate: mod.StartDate},

@@ -14,7 +14,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-func (s *Service) GetVacantDates(ctx context.Context, suiteID int64) ([]*api.Interval, error) {
+func (s *Service) GetVacantDates(ctx context.Context, offerID int64) ([]*api.Interval, error) {
 	const op = "service.booking.GetVacantDates"
 
 	requestID := middleware.GetReqID(ctx)
@@ -27,7 +27,7 @@ func (s *Service) GetVacantDates(ctx context.Context, suiteID int64) ([]*api.Int
 	ctx, span := s.tracer.Start(ctx, op, trace.WithAttributes(attribute.String("request_id", requestID)))
 	defer span.End()
 
-	dates, err := s.bookingRepository.GetBusyDates(ctx, suiteID)
+	dates, err := s.bookingRepository.GetBusyDates(ctx, offerID)
 	if err != nil {
 		span.RecordError(err)
 		span.SetStatus(codes.Error, err.Error())

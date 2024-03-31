@@ -32,7 +32,7 @@ func (r *repository) GetBookings(ctx context.Context, startDate time.Time, endDa
 	ctx, span := r.tracer.Start(ctx, op, trace.WithAttributes(attribute.String("request_id", requestID)))
 	defer span.End()
 
-	builder := sq.Select(t.ID, t.SuiteID, t.StartDate, t.EndDate, t.NotifyAt, t.CreatedAt, t.UpdatedAt, t.UserID).
+	builder := sq.Select(t.ID, t.OfferID, t.StartDate, t.EndDate, t.NotifyAt, t.CreatedAt, t.UpdatedAt, t.UserID).
 		From(t.BookingTable).
 		Where(sq.And{
 			sq.Eq{t.UserID: userID},

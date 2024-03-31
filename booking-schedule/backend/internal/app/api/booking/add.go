@@ -23,7 +23,7 @@ import (
 // AddBooking godoc
 //
 //	@Summary		Adds booking
-//	@Description	Adds an  associated with user with given parameters. NotificationPeriod is optional and must look like {number}s,{number}m or {number}h. Implemented with the use of transaction: first rooms availibility is checked. In case one's new booking request intersects with and old one(even if belongs to him), the request is considered erratic. startDate is to be before endDate and both should not be expired.
+//	@Description	Adds an  associated with user with given parameters. NotificationPeriod is optional and must look like {number}s,{number}m or {number}h. Implemented with the use of transaction: first offers availibility is checked. In case one's new booking request intersects with and old one(even if belongs to him), the request is considered erratic. startDate is to be before endDate and both should not be expired.
 //	@ID				addByBookingJSON
 //	@Tags			bookings
 //	@Accept			json
@@ -87,7 +87,7 @@ func (i *Implementation) AddBooking(logger *slog.Logger) http.HandlerFunc {
 		//TODO: getters
 		mod, err := convert.ToBookingInfo(&api.Booking{
 			UserID:    userID,
-			SuiteID:   req.SuiteID,
+			OfferID:   req.OfferID,
 			StartDate: req.StartDate,
 			EndDate:   req.EndDate,
 			NotifyAt:  req.NotifyAt,
