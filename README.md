@@ -11,7 +11,14 @@ docker-compose up -d
 <summary> 
 Запуск с сбором логов в ELK
 </summary>
-В случае, если хотим запустить версию с ELK:
+В случае, если хотим запустить версию с ELK,то необходимо раскомментировать следующие строчки в файле **docker-compose.yml** в конфигурации Jaeger:
+    
+- `- SPAN_STORAGE_TYPE=elasticsearch`
+- `- ES_TAGS_AS_FIELDS_ALL=true`
+- `- ES_SERVER_URLS=http://elasticsearch:9200`
+- `- ES_USERNAME=elastic`
+- `- ES_PASSWORD=${ELASTIC_PASSWORD}`
+    
 ```
 set -o allexport && source ./.env && set +o allexport
 docker-compose-elk up setup -d
