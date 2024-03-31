@@ -8,6 +8,7 @@ volumes:
   elasticsearch:
 
 services:
+
   logstash:
     container_name: logstash
     image: logstash:${ELASTIC_VERSION}

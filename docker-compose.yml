@@ -3,6 +3,8 @@ version: "3.8"
 networks:
   app_net:
     driver: bridge
+  elk:
+    driver: bridge
 
 
 volumes:
