@@ -18,7 +18,7 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-func (r *repository) GetBusyDates(ctx context.Context, suiteID int64) ([]*model.Interval, error) {
+func (r *repository) GetBusyDates(ctx context.Context, offerID int64) ([]*model.Interval, error) {
 	const op = "repository.booking.GetBusyDates"
 
 	requestID := middleware.GetReqID(ctx)
@@ -37,7 +37,7 @@ func (r *repository) GetBusyDates(ctx context.Context, suiteID int64) ([]*model.
 	builder := sq.Select(t.StartDate+` as start`, t.EndDate+` as end`).
 		From(t.BookingTable).
 		Where(sq.And{
-			sq.Eq{t.SuiteID: suiteID},
+			sq.Eq{t.OfferID: offerID},
 			sq.And{
 				sq.Gt{t.EndDate: now},
 				sq.Lt{t.StartDate: month},

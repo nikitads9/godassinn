@@ -9,7 +9,7 @@ import (
 
 type BookingInfo struct {
 	ID        uuid.UUID     `db:"id"`
-	SuiteID   int64         `db:"suite_id"`
+	OfferID   int64         `db:"suite_id"`
 	StartDate time.Time     `db:"start_date"`
 	EndDate   time.Time     `db:"end_date"`
 	NotifyAt  time.Duration `db:"notify_at"`
@@ -23,10 +23,17 @@ type Interval struct {
 	EndDate   time.Time `db:"end"`
 }
 
-type Suite struct {
-	SuiteID  int64  `db:"suite_id"`
-	Capacity int8   `db:"capacity"`
-	Name     string `db:"name"`
+type Offer struct {
+	OfferID          int64  `db:"offer_id"`
+	Name             string `db:"name"`
+	Cost             int64  `db:"cost"`
+	City             string `db:"city"`
+	Street           string `db:"street"`
+	House            int64  `db:"house"`
+	Rating           int64  `db:"rating"`
+	Type             string `db:"type"`
+	BedsCount        uint8  `db:"beds_count"`
+	ShortDescription string `db:"short_description"`
 }
 
 type Availibility struct {

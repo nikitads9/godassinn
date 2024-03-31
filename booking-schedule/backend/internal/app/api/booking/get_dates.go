@@ -18,7 +18,7 @@ import (
 // GetVacantDates godoc
 //
 //	@Summary		Get vacant intervals
-//	@Description	Responds with list of vacant intervals within month for selected suite.
+//	@Description	Responds with list of vacant intervals within month for selected offer.
 //	@ID				getDatesBySuiteID
 //	@Tags			bookings
 //	@Produce		json
@@ -42,8 +42,8 @@ func (i *Implementation) GetVacantDates(logger *slog.Logger) http.HandlerFunc {
 		ctx, span := i.tracer.Start(ctx, op, trace.WithAttributes(attribute.String("request_id", requestID)))
 		defer span.End()
 
-		suiteID := chi.URLParam(r, "suite_id")
-		if suiteID == "" {
+		offerID := chi.URLParam(r, "suite_id")
+		if offerID == "" {
 			span.RecordError(errNoSuiteID)
 			span.SetStatus(codes.Error, errNoSuiteID.Error())
 			log.Error("invalid request", sl.Err(errNoSuiteID))
@@ -51,9 +51,9 @@ func (i *Implementation) GetVacantDates(logger *slog.Logger) http.HandlerFunc {
 			return
 		}
 
-		span.AddEvent("suiteID extracted from path", trace.WithAttributes(attribute.String("id", suiteID)))
+		span.AddEvent("offerID extracted from path", trace.WithAttributes(attribute.String("id", offerID)))
 
-		id, err := strconv.ParseInt(suiteID, 10, 64)
+		id, err := strconv.ParseInt(offerID, 10, 64)
 		if err != nil {
 			span.RecordError(err)
 			span.SetStatus(codes.Error, err.Error())
@@ -70,7 +70,7 @@ func (i *Implementation) GetVacantDates(logger *slog.Logger) http.HandlerFunc {
 			return
 		}
 
-		span.AddEvent("suiteID parsed")
+		span.AddEvent("offerID parsed")
 
 		dates, err := i.booking.GetVacantDates(ctx, id)
 		if err != nil {

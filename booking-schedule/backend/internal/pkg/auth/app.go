@@ -177,7 +177,7 @@ func (a *App) initServer(ctx context.Context) error {
 			AllowedOrigins:   []string{a.serviceProvider.GetConfig().GetTracerConfig().EndpointURL},
 			AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"}, //TODO allow only real otlp methods
 			AllowedHeaders:   []string{"*"},
-			AllowCredentials: false,
+			AllowCredentials: true,
 		}))
 		r.Handle("/metrics", promhttp.Handler())
 	})

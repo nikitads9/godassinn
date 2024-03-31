@@ -65,7 +65,7 @@ func (s *Service) receiveBookings(msg amqp.Delivery) error {
 
 	log.Info(fmt.Sprintf(
 		"Booking:  %d \n "+
-			"SuiteID: %d \n "+
+			"OfferID: %d \n "+
 			"StartDate: %v \n "+
 			"EndDate: :%v \n "+
 			"NotifyAt: %v \n "+
@@ -73,7 +73,7 @@ func (s *Service) receiveBookings(msg amqp.Delivery) error {
 			"CreatedAt: %v \n "+
 			"UpdatedAt: %v \n\n ",
 		booking.ID,
-		booking.SuiteID,
+		booking.OfferID,
 		booking.StartDate,
 		booking.EndDate,
 		booking.NotifyAt,
