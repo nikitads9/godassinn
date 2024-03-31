@@ -1,0 +1,182 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a basic auth service for booking API.",
+        "title": "auth API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Nikita Denisenok",
+            "url": "https://vk.com/ndenisenok"
+        },
+        "license": {
+            "name": "GNU 3.0",
+            "url": "https://www.gnu.org/licenses/gpl-3.0.ru.html"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:5000",
+    "basePath": "/auth",
+    "paths": {
+        "/sign-in": {
+            "get": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "description": "Get auth token to access user restricted api methods. Requires nickname and password passed via basic auth.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Sign in",
+                "operationId": "getOauthToken",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/AuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/sign-up": {
+            "post": {
+                "description": "Creates user with given tg id, nickname, name and password hashed by bcrypto. Every parameter is required. Returns jwt token.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Sign up",
+                "operationId": "signUpUserJson",
+                "parameters": [
+                    {
+                        "description": "User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SignUpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/AuthResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AuthResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "description": "JWT токен для доступа",
+                    "type": "string"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "some error message"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 400
+                }
+            }
+        },
+        "SignUpRequest": {
+            "type": "object",
+            "required": [
+                "name",
+                "password",
+                "telegramID",
+                "telegramNickname"
+            ],
+            "properties": {
+                "name": {
+                    "description": "Имя пользователя",
+                    "type": "string",
+                    "example": "Pavel Durov"
+                },
+                "password": {
+                    "description": "Пароль",
+                    "type": "string",
+                    "example": "12345"
+                },
+                "telegramID": {
+                    "description": "Телеграм ID пользователя",
+                    "type": "integer",
+                    "example": 1235678
+                },
+                "telegramNickname": {
+                    "description": "Никнейм пользователя в телеграме",
+                    "type": "string",
+                    "example": "pavel_durov"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    },
+    "tags": [
+        {
+            "description": "sign in and sign up operations",
+            "name": "auth"
+        }
+    ]
+}

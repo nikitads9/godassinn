@@ -1,0 +1,634 @@
+basePath: /bookings
+definitions:
+  AddBookingRequest:
+    properties:
+      endDate:
+        description: Дата и время окончания бронировании
+        example: "2024-03-29T17:43:00Z"
+        type: string
+      notifyAt:
+        description: Интервал времени для предварительного уведомления о бронировании
+        example: 24h
+        type: string
+      startDate:
+        description: Дата и время начала бронировании
+        example: "2024-03-28T17:43:00Z"
+        type: string
+      suiteID:
+        description: Номер апаратаментов
+        example: 1
+        type: integer
+    required:
+    - endDate
+    - startDate
+    - suiteID
+    type: object
+  AddBookingResponse:
+    properties:
+      bookingID:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        format: uuid
+        type: string
+    type: object
+  BookingInfo:
+    properties:
+      BookingID:
+        description: Уникальный идентификатор бронирования
+        example: 550e8400-e29b-41d4-a716-446655440000
+        format: uuid
+        type: string
+      createdAt:
+        description: Дата и время создания
+        example: "2024-03-27T17:43:00Z"
+        type: string
+      endDate:
+        description: Дата и время окончания бронировании
+        example: "2024-03-29T17:43:00Z"
+        type: string
+      notifyAt:
+        description: Интервал времени для уведомления о бронировании
+        example: 24h00m00s
+        type: string
+      startDate:
+        description: Дата и время начала бронировании
+        example: "2024-03-28T17:43:00Z"
+        type: string
+      suiteID:
+        description: Номер апартаментов
+        example: 1
+        type: integer
+      updatedAt:
+        description: Дата и время обновления
+        example: "2024-03-27T18:43:00Z"
+        type: string
+      userID:
+        description: Идентификатор владельца бронирования
+        example: 1
+        type: integer
+    type: object
+  EditMyProfileRequest:
+    properties:
+      name:
+        description: Имя пользователя
+        example: Kolya Durov
+        type: string
+      password:
+        description: Пароль
+        example: "123456"
+        type: string
+      telegramID:
+        description: Телеграм ID пользователя
+        example: 1235678
+        type: integer
+      telegramNickname:
+        description: Никнейм пользователя в телеграме
+        example: kolya_durov
+        type: string
+    type: object
+  Error:
+    properties:
+      message:
+        example: some error message
+        type: string
+      status:
+        example: 400
+        type: integer
+    type: object
+  GetBookingResponse:
+    properties:
+      booking:
+        $ref: '#/definitions/BookingInfo'
+    type: object
+  GetBookingsResponse:
+    properties:
+      bookings:
+        items:
+          $ref: '#/definitions/BookingInfo'
+        type: array
+    type: object
+  GetMyProfileResponse:
+    properties:
+      profile:
+        allOf:
+        - $ref: '#/definitions/UserInfo'
+        description: Профиль пользователя
+    type: object
+  GetVacantDateResponse:
+    properties:
+      intervals:
+        items:
+          $ref: '#/definitions/Interval'
+        type: array
+    type: object
+  GetVacantRoomsResponse:
+    properties:
+      rooms:
+        items:
+          $ref: '#/definitions/Suite'
+        type: array
+    type: object
+  Interval:
+    properties:
+      end:
+        description: Номер свободен по
+        example: "2024-04-10T15:04:05Z"
+        type: string
+      start:
+        description: Номер свободен с
+        example: "2024-03-10T15:04:05Z"
+        type: string
+    type: object
+  Suite:
+    properties:
+      capacity:
+        description: Вместимость в персонах
+        example: 4
+        type: integer
+      name:
+        description: Название апартаментов
+        example: Winston Churchill
+        type: string
+      suiteID:
+        description: Номер апартаментов
+        example: 1
+        type: integer
+    type: object
+  UpdateBookingRequest:
+    properties:
+      endDate:
+        description: Дата и время окончания бронировании
+        example: "2024-03-29T17:43:00Z"
+        type: string
+      notifyAt:
+        description: Интервал времени для предварительного уведомления о бронировании
+        example: 24h
+        type: string
+      startDate:
+        description: Дата и время начала бронировании
+        example: "2024-03-28T17:43:00Z"
+        type: string
+      suiteID:
+        description: Номер апаратаментов
+        example: 1
+        type: integer
+    required:
+    - endDate
+    - startDate
+    - suiteID
+    type: object
+  UserInfo:
+    properties:
+      createdAt:
+        description: Дата и время регистрации
+        type: string
+      id:
+        description: ID пользователя в системе
+        type: integer
+      name:
+        description: Имя пользователя
+        type: string
+      telegramID:
+        description: Телеграм ID пользователя
+        type: integer
+      telegramNickname:
+        description: Никнейм пользователя в телеграме
+        type: string
+      updatedAt:
+        description: Дата и время обновления профиля
+        type: string
+    type: object
+host: 127.0.0.1:3000
+info:
+  contact:
+    name: Nikita Denisenok
+    url: https://vk.com/ndenisenok
+  description: This is a service for writing and reading booking entries.
+  license:
+    name: GNU 3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.ru.html
+  termsOfService: http://swagger.io/terms/
+  title: booking-schedule API
+  version: "1.0"
+paths:
+  /{booking_id}/delete:
+    delete:
+      description: Deletes an booking with given UUID.
+      operationId: removeByBookingID
+      parameters:
+      - default: 550e8400-e29b-41d4-a716-446655440000
+        description: booking_id
+        format: uuid
+        in: path
+        name: booking_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - Bearer: []
+      summary: Deletes an booking
+      tags:
+      - bookings
+  /{booking_id}/get:
+    get:
+      description: Responds with booking info for booking with given BookingID.
+      operationId: getBookingbyTag
+      parameters:
+      - default: 550e8400-e29b-41d4-a716-446655440000
+        description: booking_id
+        format: uuid
+        in: path
+        name: booking_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GetBookingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - Bearer: []
+      summary: Get booking info
+      tags:
+      - bookings
+  /{booking_id}/update:
+    patch:
+      consumes:
+      - application/json
+      description: 'Updates an existing booking with given BookingID, suiteID, startDate,
+        endDate values (notificationPeriod being optional). Implemented with the use
+        of transaction: first room availibility is checked. In case one attempts to
+        alter his previous booking (i.e. widen or tighten its'' limits) the booking
+        is updated.  If it overlaps with smb else''s booking or with clients'' another
+        booking the request is considered unsuccessful. startDate parameter  is to
+        be before endDate and both should not be expired.'
+      operationId: modifyBookingByJSON
+      parameters:
+      - default: 550e8400-e29b-41d4-a716-446655440000
+        description: booking_id
+        format: uuid
+        in: path
+        name: booking_id
+        required: true
+        type: string
+      - description: BookingEntry
+        in: body
+        name: booking
+        required: true
+        schema:
+          $ref: '#/definitions/UpdateBookingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - Bearer: []
+      summary: Updates booking info
+      tags:
+      - bookings
+  /{suite_id}/get-vacant-dates:
+    get:
+      description: Responds with list of vacant intervals within month for selected
+        suite.
+      operationId: getDatesBySuiteID
+      parameters:
+      - default: 1
+        description: suite_id
+        format: int64
+        in: path
+        name: suite_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GetVacantDateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      summary: Get vacant intervals
+      tags:
+      - bookings
+  /add:
+    post:
+      consumes:
+      - application/json
+      description: 'Adds an  associated with user with given parameters. NotificationPeriod
+        is optional and must look like {number}s,{number}m or {number}h. Implemented
+        with the use of transaction: first rooms availibility is checked. In case
+        one''s new booking request intersects with and old one(even if belongs to
+        him), the request is considered erratic. startDate is to be before endDate
+        and both should not be expired.'
+      operationId: addByBookingJSON
+      parameters:
+      - description: BookingEntry
+        in: body
+        name: booking
+        required: true
+        schema:
+          $ref: '#/definitions/AddBookingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/AddBookingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - Bearer: []
+      summary: Adds booking
+      tags:
+      - bookings
+  /get-bookings:
+    get:
+      description: Responds with series of booking info objects within given time
+        period. The query parameters are start date and end date (start is to be before
+        end and both should not be expired).
+      operationId: getMultipleBookingsByTag
+      parameters:
+      - default: 2024-03-28T17:43:00
+        description: start
+        format: time.Time
+        in: query
+        name: start
+        required: true
+        type: string
+      - default: 2024-03-29T17:43:00
+        description: end
+        format: time.Time
+        in: query
+        name: end
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GetBookingsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - Bearer: []
+      summary: Get several bookings info
+      tags:
+      - bookings
+  /get-vacant-rooms:
+    get:
+      description: Receives two dates as query parameters. start is to be before end
+        and both should not be expired. Responds with list of vacant rooms and their
+        parameters for given interval.
+      operationId: getRoomsByDates
+      parameters:
+      - default: 2024-03-28T17:43:00
+        description: start
+        format: time.Time
+        in: query
+        name: start
+        required: true
+        type: string
+      - default: 2024-03-29T17:43:00
+        description: end
+        format: time.Time
+        in: query
+        name: end
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GetVacantRoomsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      summary: Get list of vacant rooms
+      tags:
+      - bookings
+  /user/delete:
+    delete:
+      description: Deletes user and all bookings associated with him
+      operationId: deleteMyInfo
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - Bearer: []
+      summary: Delete my profile
+      tags:
+      - users
+  /user/edit:
+    patch:
+      consumes:
+      - application/json
+      description: Updates user's profile with provided values. If no values provided,
+        an error is returned. If new telegram id is set, the telegram nickname is
+        also to be provided and vice versa. All provided body parameters should not
+        be blank (i.e. empty string).
+      operationId: modifyUserByJSON
+      parameters:
+      - description: EditMyProfileRequest
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/EditMyProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - Bearer: []
+      summary: Modify profile
+      tags:
+      - users
+  /user/me:
+    get:
+      description: Responds with account info for signed in user.
+      operationId: getMyUserAuth
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/GetMyProfileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Error'
+      security:
+      - Bearer: []
+      summary: Get info for current user
+      tags:
+      - users
+schemes:
+- http
+- https
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
+tags:
+- description: operations with bookings, suites and intervals
+  name: bookings
+- description: service for viewing profile editing or deleting it
+  name: users

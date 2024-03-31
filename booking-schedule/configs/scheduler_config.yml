@@ -1,0 +1,22 @@
+env: "dev"
+
+scheduler: 
+    check_period_sec: 60
+    booking_ttl_days: 365
+    
+database:
+  database: "bookings_db"
+  host: "db"
+  port: "5433"
+  user: "postgres"
+  password: "bookings_pass"
+  ssl: "disable"
+  max_opened_connections: 10
+
+tracer:
+  endpoint_url: "http://otelcol:4318"
+  sampling_rate: 1.0
+
+rabbit_producer:
+  dsn: "amqp://guest:guest@queue:5672/bookings"
+  queue_name: "bookings"
