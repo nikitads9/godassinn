@@ -5,7 +5,7 @@
 В классическом случае (без ELK-стека) для запуска применяем:
 ```
 set -o allexport && source ./.env && set +o allexport
-docker-compose up -d
+docker-compose -f docker-compose.yml  up -d
 ```
 <details>
 <summary> 
@@ -21,8 +21,8 @@ docker-compose up -d
     
 ```
 set -o allexport && source ./.env && set +o allexport
-docker-compose-elk up setup -d
-docker-compose-elk up -d
+docker-compose -f docker-compose-elk.yml  up setup -d
+docker-compose -f docker-compose-elk.yml  up -d
 ```
 Команду `docker-compose-elk up setup -d` нужно применять только при первоначальной настройке.
 
