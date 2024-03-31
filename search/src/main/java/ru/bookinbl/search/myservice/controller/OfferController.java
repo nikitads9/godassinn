@@ -8,8 +8,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bookinbl.search.myservice.model.Booking;
-import ru.bookinbl.search.myservice.service.BookingService;
+import ru.bookinbl.search.myservice.model.Offer;
+import ru.bookinbl.search.myservice.service.OfferService;
 import ru.bookinbl.search.myservice.service.OtherServiceClient;
 
 import javax.validation.constraints.Positive;
@@ -22,21 +22,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-public class BookingController {
+public class OfferController {
 
-    private final BookingService bookingService;
+    private final OfferService offerService;
     private final OtherServiceClient otherServiceClient;
 
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATETIME_FORMAT);
 
     @GetMapping("/MyBookings")
-    public List<Booking> getBookings(@RequestParam(required = false, defaultValue = "") String city,
-                                     @RequestParam(required = false, defaultValue = "0") Integer rating,
-                                     @RequestParam(defaultValue = "0") @PositiveOrZero int from,
-                                     @RequestParam(defaultValue = "10") @Positive int size) {
+    public List<Offer> getBookings(@RequestParam(required = false, defaultValue = "") String city,
+                                   @RequestParam(required = false, defaultValue = "0") Integer rating,
+                                   @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                   @RequestParam(defaultValue = "10") @Positive int size) {
         log.debug("Вызван метод getBookings");
-        return bookingService.getBookings(city, rating, from, size);
+        return offerService.getBookings(city, rating, from, size);
     }
 
     @GetMapping("/MyBookings/time")
