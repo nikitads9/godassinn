@@ -47,12 +47,12 @@ func (r *repository) AddBooking(ctx context.Context, mod *model.BookingInfo) (uu
 
 	if mod.NotifyAt != 0 {
 		builder = sq.Insert(t.BookingTable).
-			Columns(t.ID, t.UserID, t.SuiteID, t.StartDate, t.EndDate, t.CreatedAt, t.NotifyAt).
-			Values(newID, mod.UserID, mod.SuiteID, mod.StartDate, mod.EndDate, time.Now(), mod.NotifyAt)
+			Columns(t.ID, t.UserID, t.OfferID, t.StartDate, t.EndDate, t.CreatedAt, t.NotifyAt).
+			Values(newID, mod.UserID, mod.OfferID, mod.StartDate, mod.EndDate, time.Now(), mod.NotifyAt)
 	} else {
 		builder = sq.Insert(t.BookingTable).
-			Columns(t.ID, t.UserID, t.SuiteID, t.StartDate, t.EndDate, t.CreatedAt).
-			Values(newID, mod.UserID, mod.SuiteID, mod.StartDate, mod.EndDate, time.Now())
+			Columns(t.ID, t.UserID, t.OfferID, t.StartDate, t.EndDate, t.CreatedAt).
+			Values(newID, mod.UserID, mod.OfferID, mod.StartDate, mod.EndDate, time.Now())
 	}
 
 	query, args, err := builder.PlaceholderFormat(sq.Dollar).ToSql()

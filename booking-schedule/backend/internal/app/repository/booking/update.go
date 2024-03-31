@@ -35,7 +35,7 @@ func (r *repository) UpdateBooking(ctx context.Context, mod *model.BookingInfo) 
 		Set(t.UpdatedAt, time.Now()).
 		Set("start_date", mod.StartDate).
 		Set("end_date", mod.EndDate).
-		Set("suite_id", mod.SuiteID).
+		Set("suite_id", mod.OfferID).
 		Where(sq.And{
 			sq.Eq{t.ID: mod.ID},
 			sq.Eq{t.UserID: mod.UserID},

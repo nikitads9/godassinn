@@ -23,7 +23,7 @@ import (
 // UpdateBooking godoc
 //
 //	@Summary		Updates booking info
-//	@Description	Updates an existing booking with given BookingID, suiteID, startDate, endDate values (notificationPeriod being optional). Implemented with the use of transaction: first room availibility is checked. In case one attempts to alter his previous booking (i.e. widen or tighten its' limits) the booking is updated.  If it overlaps with smb else's booking or with clients' another booking the request is considered unsuccessful. startDate parameter  is to be before endDate and both should not be expired.
+//	@Description	Updates an existing booking with given BookingID, offerID, startDate, endDate values (notificationPeriod being optional). Implemented with the use of transaction: first room availibility is checked. In case one attempts to alter his previous booking (i.e. widen or tighten its' limits) the booking is updated.  If it overlaps with smb else's booking or with clients' another booking the request is considered unsuccessful. startDate parameter  is to be before endDate and both should not be expired.
 //	@ID				modifyBookingByJSON
 //	@Tags			bookings
 //	@Accept			json
@@ -118,7 +118,7 @@ func (i *Implementation) UpdateBooking(logger *slog.Logger) http.HandlerFunc {
 		mod, err := convert.ToBookingInfo(&api.Booking{
 			BookingID: bookingUUID,
 			UserID:    userID,
-			SuiteID:   req.SuiteID,
+			OfferID:   req.OfferID,
 			StartDate: req.StartDate,
 			EndDate:   req.EndDate,
 			NotifyAt:  req.NotifyAt,

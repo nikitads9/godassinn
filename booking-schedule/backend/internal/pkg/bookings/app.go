@@ -213,7 +213,7 @@ func (a *App) initServer(ctx context.Context) error {
 				})
 
 			})
-			r.Get("/get-vacant-rooms", bookingImpl.GetVacantRooms(a.serviceProvider.GetLogger()))
+			r.Get("/get-vacant-offers", bookingImpl.GetVacantRooms(a.serviceProvider.GetLogger()))
 			r.Get("/{suite_id}/get-vacant-dates", bookingImpl.GetVacantDates(a.serviceProvider.GetLogger()))
 			r.Group(func(r chi.Router) {
 				r.Use(auth.Auth(a.serviceProvider.GetLogger(), a.serviceProvider.GetJWTService(ctx)))

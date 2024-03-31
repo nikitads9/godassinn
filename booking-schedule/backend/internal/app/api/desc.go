@@ -17,7 +17,7 @@ type Booking struct {
 	// Идентификатор пользователя
 	UserID int64
 	// Номер апартаментов
-	SuiteID int64
+	OfferID int64
 	// Дата и время начала бронировании
 	StartDate time.Time
 	// Дата и время окончания бронировании
@@ -28,7 +28,7 @@ type Booking struct {
 
 type AddBookingRequest struct {
 	// Номер апаратаментов
-	SuiteID int64 `json:"suiteID" validate:"required" example:"1"`
+	OfferID int64 `json:"offerID" validate:"required" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" validate:"required" example:"2024-03-28T17:43:00Z"`
 	// Дата и время окончания бронировании
@@ -45,7 +45,7 @@ type BookingInfo struct {
 	// Уникальный идентификатор бронирования
 	ID uuid.UUID `json:"BookingID" example:"550e8400-e29b-41d4-a716-446655440000" format:"uuid"`
 	// Номер апартаментов
-	SuiteID int64 `json:"suiteID" example:"1"`
+	OfferID int64 `json:"offerID" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" example:"2024-03-28T17:43:00Z"`
 	// Дата и время окончания бронировании
@@ -70,7 +70,7 @@ type GetBookingsResponse struct {
 
 type UpdateBookingRequest struct {
 	// Номер апаратаментов
-	SuiteID int64 `json:"suiteID" validate:"required" example:"1"`
+	OfferID int64 `json:"offerID" validate:"required" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" validate:"required" example:"2024-03-28T17:43:00Z"`
 	// Дата и время окончания бронировании
@@ -90,17 +90,17 @@ type GetVacantDatesResponse struct {
 	Intervals []*Interval `json:"intervals"`
 } //@name GetVacantDateResponse
 
-type Suite struct {
+type Offer struct {
 	// Номер апартаментов
-	SuiteID int64 `json:"suiteID" example:"1"`
+	OfferID int64 `json:"offerID" example:"1"`
 	// Вместимость в персонах
 	Capacity int8 `json:"capacity" example:"4"`
 	// Название апартаментов
 	Name string `json:"name" example:"Winston Churchill"`
-} //@name Suite
+} //@name Offer
 
 type GetVacantRoomsResponse struct {
-	Rooms []*Suite `json:"rooms"`
+	Offers []*Offer `json:"offers"`
 } //@name GetVacantRoomsResponse
 
 type AuthResponse struct {

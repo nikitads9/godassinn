@@ -9,7 +9,7 @@ import (
 
 type BookingInfo struct {
 	ID        uuid.UUID     `db:"id"`
-	SuiteID   int64         `db:"suite_id"`
+	OfferID   int64         `db:"suite_id"`
 	StartDate time.Time     `db:"start_date"`
 	EndDate   time.Time     `db:"end_date"`
 	NotifyAt  time.Duration `db:"notify_at"`
@@ -23,8 +23,8 @@ type Interval struct {
 	EndDate   time.Time `db:"end"`
 }
 
-type Suite struct {
-	SuiteID  int64  `db:"suite_id"`
+type Offer struct {
+	OfferID  int64  `db:"suite_id"`
 	Capacity int8   `db:"capacity"`
 	Name     string `db:"name"`
 }

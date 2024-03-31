@@ -19,8 +19,8 @@ import (
 	"go.opentelemetry.io/otel/trace"
 )
 
-func (r *repository) GetVacantRooms(ctx context.Context, startDate time.Time, endDate time.Time) ([]*model.Suite, error) {
-	const op = "repository.booking.GetVacantRooms"
+func (r *repository) GetVacantOffers(ctx context.Context, startDate time.Time, endDate time.Time) ([]*model.Offer, error) {
+	const op = "repository.booking.GetVacantOffers"
 
 	requestID := middleware.GetReqID(ctx)
 
@@ -32,14 +32,14 @@ func (r *repository) GetVacantRooms(ctx context.Context, startDate time.Time, en
 	ctx, span := r.tracer.Start(ctx, op, trace.WithAttributes(attribute.String("request_id", requestID)))
 	defer span.End()
 
-	builder := sq.Select(t.SuiteTable+".id AS "+t.SuiteID, t.Name, t.Capacity).
+	builder := sq.Select(t.OfferTable+".id AS "+t.OfferID, t.Name, t.Capacity).
 		Distinct().
-		From(t.SuiteTable).
+		From(t.OfferTable).
 		PlaceholderFormat(sq.Dollar)
 	subQuery, subQueryArgs, err := sq.Select("1").
 		From(t.BookingTable + " AS e").
 		Where(sq.And{
-			sq.ConcatExpr("e."+t.SuiteID+"=", t.SuiteTable+".id"),
+			sq.ConcatExpr("e."+t.OfferID+"=", t.OfferTable+".id"),
 			sq.Or{sq.And{
 				sq.Lt{"e." + t.StartDate: startDate},
 				sq.Gt{"e." + t.EndDate: endDate},
@@ -58,7 +58,7 @@ func (r *repository) GetVacantRooms(ctx context.Context, startDate time.Time, en
 		return nil, ErrQueryBuild
 	}
 
-	builder = builder.Where("NOT EXISTS ("+subQuery+") OR NOT EXISTS (SELECT DISTINCT "+t.SuiteID+" FROM "+t.BookingTable+")", subQueryArgs...)
+	builder = builder.Where("NOT EXISTS ("+subQuery+") OR NOT EXISTS (SELECT DISTINCT "+t.OfferID+" FROM "+t.BookingTable+")", subQueryArgs...)
 
 	query, args, err := builder.ToSql()
 	if err != nil {
@@ -73,7 +73,7 @@ func (r *repository) GetVacantRooms(ctx context.Context, startDate time.Time, en
 		QueryRaw: query,
 	}
 
-	var res []*model.Suite
+	var res []*model.Offer
 	err = r.client.DB().SelectContext(ctx, &res, q, args...)
 	if err != nil {
 		span.RecordError(err)
@@ -83,7 +83,7 @@ func (r *repository) GetVacantRooms(ctx context.Context, startDate time.Time, en
 			return nil, ErrNoConnection
 		}
 		if pgxscan.NotFound(err) {
-			log.Error("no vacant rooms within this period", sl.Err(err))
+			log.Error("no vacant offers within this period", sl.Err(err))
 			return nil, ErrNotFound
 		}
 		log.Error("query execution error", sl.Err(err))
