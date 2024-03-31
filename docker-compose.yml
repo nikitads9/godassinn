@@ -24,7 +24,7 @@ services:
       TZ: "Europe/Moscow"
     volumes:
       - certificates-volume:/etc/ssl/certs
-      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./booking-schedule/backend/deploy/nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
       - 443:443
@@ -45,7 +45,7 @@ services:
       - "PGDATA=${PGDATA}"
     volumes: 
       - postgres-volume:/var/lib/postgresql/data
-    #  - ./deploy/database/init.sql:/docker-entrypoint-initdb.d/init.sql 
+    #  - ./booking-schedule/backend/deploy/database/init.sql:/docker-entrypoint-initdb.d/init.sql 
     ports:
       - "${DB_PORT}:${DB_PORT}"
     expose:
@@ -59,7 +59,7 @@ services:
     container_name: booking
     build:
       context: .
-      dockerfile: ./deploy/bookings/Dockerfile
+      dockerfile: ./booking-schedule/backend/deploy/bookings/Dockerfile
     image: nikitads9/booking-schedule:booking
     volumes:
       - certificates-volume:/etc/ssl/certs
@@ -86,7 +86,7 @@ services:
     container_name: auth
     build:
       context: .
-      dockerfile: ./deploy/auth/Dockerfile
+      dockerfile: ./booking-schedule/backend/deploy/auth/Dockerfile
     image: nikitads9/booking-schedule:auth
     volumes:
       - certificates-volume:/etc/ssl/certs
@@ -128,7 +128,7 @@ services:
     container_name: scheduler
     build:
       context: .
-      dockerfile: ./deploy/scheduler/Dockerfile
+      dockerfile: ./booking-schedule/backend/deploy/scheduler/Dockerfile
     image: nikitads9/booking-schedule:scheduler
     restart: unless-stopped
     environment:
@@ -157,7 +157,7 @@ services:
     container_name: sender
     build:
       context: .
-      dockerfile: ./deploy/sender/Dockerfile
+      dockerfile: ./booking-schedule/backend/deploy/sender/Dockerfile
     image: nikitads9/booking-schedule:sender
     restart: unless-stopped
     depends_on:
@@ -245,7 +245,7 @@ services:
       - '--storage.tsdb.retention.size=1GB'
       - '--enable-feature=otlp-write-receiver'
     volumes:
-      - ./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./booking-schedule/backend/deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-volume:/prometheus
     ports:
       - '9090:9090'
@@ -267,7 +267,7 @@ services:
       - DB_MONITOR_PASSWORD=${DB_MONITOR_PASSWORD}
       - DB_NAME=${DB_NAME}
     volumes:
-      - ./deploy/otelcollector/otelcol-config.yml:/etc/otelcol-config.yml
+      - ./booking-schedule/backend/deploy/otelcollector/otelcol-config.yml:/etc/otelcol-config.yml
     expose:
       - '4318'
     ports:
@@ -285,8 +285,8 @@ services:
     #  args:
     #    ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./deploy/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
-      - ./deploy/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./booking-schedule/backend/deploy/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./booking-schedule/backend/deploy/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
     ports:
       - 12201:12201/udp
       - 5044:5044
@@ -315,7 +315,7 @@ services:
     #  args:
     #    ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./deploy//elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./booking-schedule/backend/deploy//elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
       - elasticsearch:/usr/share/elasticsearch/data:Z
     ports:
       - 9200:9200
@@ -342,7 +342,7 @@ services:
     #  args:
     #    ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./deploy//kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+      - ./booking-schedule/backend/deploy//kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
     ports:
       - 5601:5601
     environment:
@@ -372,14 +372,14 @@ services:
     profiles:
       - setup
     build:
-      context: deploy/elksetup/
+      context: ./booking-schedule/backend/deploy/elksetup/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     init: true
     volumes:
-      - ./deploy/elksetup/entrypoint.sh:/entrypoint.sh:ro,Z
-      - ./deploy/elksetup/lib.sh:/lib.sh:ro,Z
-      - ./deploy/elksetup/roles:/roles:ro,Z
+      - ./booking-schedule/backend/deploy/elksetup/entrypoint.sh:/entrypoint.sh:ro,Z
+      - ./booking-schedule/backend/deploy/elksetup/lib.sh:/lib.sh:ro,Z
+      - ./booking-schedule/backend/deploy/elksetup/roles:/roles:ro,Z
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
