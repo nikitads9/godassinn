@@ -24,7 +24,7 @@ type Interval struct {
 }
 
 type Offer struct {
-	OfferID          int64  `db:"offer_id"`
+	OfferID          int64  `db:"id"`
 	Name             string `db:"name"`
 	Cost             int64  `db:"cost"`
 	City             string `db:"city"`

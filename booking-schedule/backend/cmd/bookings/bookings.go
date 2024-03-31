@@ -41,7 +41,7 @@ func init() {
 //	@Tags			bookings users
 //
 // @tag.name bookings
-// @tag.description operations with bookings, suites and intervals
+// @tag.description operations with bookings, offers and intervals
 // @tag.name users
 // @tag.description service for viewing profile editing or deleting it
 //

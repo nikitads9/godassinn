@@ -19,7 +19,7 @@ import (
 //
 //	@Summary		Get vacant intervals
 //	@Description	Responds with list of vacant intervals within month for selected offer.
-//	@ID				getDatesBySuiteID
+//	@ID				getDatesByOfferID
 //	@Tags			bookings
 //	@Produce		json
 //	@Param			suite_id path	int	true	"suite_id"	Format(int64) default(1)
@@ -44,10 +44,10 @@ func (i *Implementation) GetVacantDates(logger *slog.Logger) http.HandlerFunc {
 
 		offerID := chi.URLParam(r, "suite_id")
 		if offerID == "" {
-			span.RecordError(errNoSuiteID)
-			span.SetStatus(codes.Error, errNoSuiteID.Error())
-			log.Error("invalid request", sl.Err(errNoSuiteID))
-			api.WriteWithError(w, http.StatusBadRequest, errNoSuiteID.Error())
+			span.RecordError(errNoOfferID)
+			span.SetStatus(codes.Error, errNoOfferID.Error())
+			log.Error("invalid request", sl.Err(errNoOfferID))
+			api.WriteWithError(w, http.StatusBadRequest, errNoOfferID.Error())
 			return
 		}
 
@@ -63,10 +63,10 @@ func (i *Implementation) GetVacantDates(logger *slog.Logger) http.HandlerFunc {
 		}
 
 		if id == 0 {
-			span.RecordError(errNoSuiteID)
-			span.SetStatus(codes.Error, errNoSuiteID.Error())
-			log.Error("invalid request", sl.Err(errNoSuiteID))
-			api.WriteWithError(w, http.StatusBadRequest, errNoSuiteID.Error())
+			span.RecordError(errNoOfferID)
+			span.SetStatus(codes.Error, errNoOfferID.Error())
+			log.Error("invalid request", sl.Err(errNoOfferID))
+			api.WriteWithError(w, http.StatusBadRequest, errNoOfferID.Error())
 			return
 		}
 

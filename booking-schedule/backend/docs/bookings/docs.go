@@ -167,7 +167,7 @@ const docTemplate = `{
                     "bookings"
                 ],
                 "summary": "Get list of vacant offers",
-                "operationId": "getRoomsByDates",
+                "operationId": "getOffersByDates",
                 "parameters": [
                     {
                         "type": "string",
@@ -192,7 +192,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/GetVacantRoomsResponse"
+                            "$ref": "#/definitions/GetVacantOffersResponse"
                         }
                     },
                     "400": {
@@ -500,7 +500,7 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Updates an existing booking with given BookingID, offerID, startDate, endDate values (notificationPeriod being optional). Implemented with the use of transaction: first room availibility is checked. In case one attempts to alter his previous booking (i.e. widen or tighten its' limits) the booking is updated.  If it overlaps with smb else's booking or with clients' another booking the request is considered unsuccessful. startDate parameter  is to be before endDate and both should not be expired.",
+                "description": "Updates an existing booking with given BookingID, offerID, startDate, endDate values (notificationPeriod being optional). Implemented with the use of transaction: first offer availibility is checked. In case one attempts to alter his previous booking (i.e. widen or tighten its' limits) the booking is updated.  If it overlaps with smb else's booking or with clients' another booking the request is considered unsuccessful. startDate parameter  is to be before endDate and both should not be expired.",
                 "consumes": [
                     "application/json"
                 ],
@@ -573,7 +573,7 @@ const docTemplate = `{
                     "bookings"
                 ],
                 "summary": "Get vacant intervals",
-                "operationId": "getDatesBySuiteID",
+                "operationId": "getDatesByOfferID",
                 "parameters": [
                     {
                         "type": "integer",
@@ -619,8 +619,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "endDate",
-                "startDate",
-                "offerID"
+                "offerID",
+                "startDate"
             ],
             "properties": {
                 "endDate": {
@@ -633,15 +633,15 @@ const docTemplate = `{
                     "type": "string",
                     "example": "24h"
                 },
-                "startDate": {
-                    "description": "Дата и время начала бронировании",
-                    "type": "string",
-                    "example": "2024-03-28T17:43:00Z"
-                },
                 "offerID": {
                     "description": "Номер апаратаментов",
                     "type": "integer",
                     "example": 1
+                },
+                "startDate": {
+                    "description": "Дата и время начала бронировании",
+                    "type": "string",
+                    "example": "2024-03-28T17:43:00Z"
                 }
             }
         },
@@ -679,15 +679,15 @@ const docTemplate = `{
                     "type": "string",
                     "example": "24h00m00s"
                 },
-                "startDate": {
-                    "description": "Дата и время начала бронировании",
-                    "type": "string",
-                    "example": "2024-03-28T17:43:00Z"
-                },
                 "offerID": {
                     "description": "Номер апартаментов",
                     "type": "integer",
                     "example": 1
+                },
+                "startDate": {
+                    "description": "Дата и время начала бронировании",
+                    "type": "string",
+                    "example": "2024-03-28T17:43:00Z"
                 },
                 "updatedAt": {
                     "description": "Дата и время обновления",
@@ -782,7 +782,7 @@ const docTemplate = `{
                 }
             }
         },
-        "GetVacantRoomsResponse": {
+        "GetVacantOffersResponse": {
             "type": "object",
             "properties": {
                 "offers": {
@@ -811,20 +811,55 @@ const docTemplate = `{
         "Offer": {
             "type": "object",
             "properties": {
-                "capacity": {
-                    "description": "Вместимость в персонах",
+                "beds_count": {
+                    "description": "Количество кроватей",
                     "type": "integer",
                     "example": 4
                 },
-                "name": {
-                    "description": "Название апартаментов",
+                "city": {
+                    "description": "Город",
                     "type": "string",
-                    "example": "Winston Churchill"
+                    "example": "Москва"
+                },
+                "cost": {
+                    "description": "Стоимость за ночь",
+                    "type": "integer",
+                    "example": 4800
+                },
+                "house": {
+                    "description": "Номер дома",
+                    "type": "integer",
+                    "example": 88
+                },
+                "name": {
+                    "description": "Имя объявления",
+                    "type": "string",
+                    "example": "Продам гараж"
                 },
                 "offerID": {
-                    "description": "Номер апартаментов",
+                    "description": "Номер объявления",
                     "type": "integer",
                     "example": 1
+                },
+                "rating": {
+                    "description": "Оценка объявления",
+                    "type": "integer",
+                    "example": 5
+                },
+                "short_description": {
+                    "description": "Краткое описание",
+                    "type": "string",
+                    "example": "продам в хорошие руки"
+                },
+                "street": {
+                    "description": "Улица",
+                    "type": "string",
+                    "example": "Пушкина"
+                },
+                "type": {
+                    "description": "Тип помещения",
+                    "type": "string",
+                    "example": "гараж"
                 }
             }
         },
@@ -832,8 +867,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "endDate",
-                "startDate",
-                "offerID"
+                "offerID",
+                "startDate"
             ],
             "properties": {
                 "endDate": {
@@ -846,15 +881,15 @@ const docTemplate = `{
                     "type": "string",
                     "example": "24h"
                 },
-                "startDate": {
-                    "description": "Дата и время начала бронировании",
-                    "type": "string",
-                    "example": "2024-03-28T17:43:00Z"
-                },
                 "offerID": {
                     "description": "Номер апаратаментов",
                     "type": "integer",
                     "example": 1
+                },
+                "startDate": {
+                    "description": "Дата и время начала бронировании",
+                    "type": "string",
+                    "example": "2024-03-28T17:43:00Z"
                 }
             }
         },
@@ -914,7 +949,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "127.0.0.1:3000",
 	BasePath:         "/bookings",
 	Schemes:          []string{"http", "https"},
-	Title:            "github.com/nikitads9/godassinn/booking-schedule/backend API",
+	Title:            "booking-schedule API",
 	Description:      "This is a service for writing and reading booking entries.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

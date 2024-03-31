@@ -34,7 +34,7 @@ create table bookings (
     user_id bigint not null,
     constraint fk_offers
         foreign key(offer_id) 
-            references rooms(id) 
+            references offers(id) 
             on delete cascade
             on update cascade,
     constraint fk_users

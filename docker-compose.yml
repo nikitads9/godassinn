@@ -277,12 +277,12 @@ services:
       resources:
         limits:
           memory: 200M
-  
+
   search:
     container_name: search
     build:
-      context: .
-      dockerfile: ./search/deploy/dockerfile
+      context: ./search
+      dockerfile: ./deploy/dockerfile
     restart: unless-stopped
     environment:
       - SPRING_DATASOURCE_URL=jdbc:posygtresql://${DB_HOST}:${DB_PORT}/${DB_NAME}

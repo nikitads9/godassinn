@@ -115,7 +115,7 @@ type Offer struct {
 
 type GetVacantOffersResponse struct {
 	Offers []*Offer `json:"offers"`
-} //@name GetVacantRoomsResponse
+} //@name GetVacantOffersResponse
 
 type AuthResponse struct {
 	// JWT токен для доступа
