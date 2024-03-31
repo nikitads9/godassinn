@@ -1,11 +1,12 @@
 package booking
 
 import (
-	"booking-schedule/internal/app/model"
-	"booking-schedule/internal/logger/sl"
 	"context"
 	"errors"
 	"log/slog"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/gofrs/uuid"

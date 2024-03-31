@@ -1,8 +1,9 @@
 package sender
 
 import (
-	"booking-schedule/internal/pkg/rabbit"
 	"log/slog"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/rabbit"
 )
 
 type Service struct {

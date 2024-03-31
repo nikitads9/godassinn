@@ -1,10 +1,11 @@
 package scheduler
 
 import (
-	"booking-schedule/internal/app/repository/booking"
-	"booking-schedule/internal/pkg/rabbit"
 	"log/slog"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/booking"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/rabbit"
 
 	"go.opentelemetry.io/otel/trace"
 )

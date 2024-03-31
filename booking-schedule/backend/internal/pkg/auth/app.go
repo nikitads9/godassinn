@@ -1,12 +1,6 @@
 package auth
 
 import (
-	"booking-schedule/internal/app/api"
-	"booking-schedule/internal/logger/sl"
-	mwLogger "booking-schedule/internal/middleware/logger"
-	"booking-schedule/internal/middleware/metrics"
-	"booking-schedule/internal/pkg/certificates"
-	"booking-schedule/internal/pkg/observability"
 	"context"
 	"errors"
 	"log/slog"
@@ -14,6 +8,13 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	mwLogger "github.com/nikitads9/godassinn/booking-schedule/backend/internal/middleware/logger"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/middleware/metrics"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/certificates"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/observability"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/riandyrn/otelchi"

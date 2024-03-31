@@ -4,9 +4,10 @@ import (
 	"context"
 	"time"
 
-	"booking-schedule/internal/pkg/scheduler"
 	"flag"
 	"log"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/scheduler"
 
 	_ "go.uber.org/automaxprocs"
 )

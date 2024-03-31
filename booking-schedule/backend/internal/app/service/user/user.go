@@ -1,10 +1,11 @@
 package user
 
 import (
-	"booking-schedule/internal/app/repository/user"
-	"booking-schedule/internal/app/service/jwt"
 	"errors"
 	"log/slog"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/user"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/service/jwt"
 
 	"go.opentelemetry.io/otel/trace"
 )

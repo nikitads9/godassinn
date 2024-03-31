@@ -1,12 +1,13 @@
 package booking
 
 import (
-	"booking-schedule/internal/app/api"
-	"booking-schedule/internal/app/convert"
-	"booking-schedule/internal/logger/sl"
-	"booking-schedule/internal/middleware/auth"
 	"errors"
 	"log/slog"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/convert"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/middleware/auth"
 
 	"net/http"
 

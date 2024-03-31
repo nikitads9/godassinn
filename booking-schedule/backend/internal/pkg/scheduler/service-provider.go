@@ -1,18 +1,19 @@
 package scheduler
 
 import (
-	bookingRepository "booking-schedule/internal/app/repository/booking"
-	schedulerService "booking-schedule/internal/app/service/scheduler"
-	"booking-schedule/internal/config"
-	"booking-schedule/internal/logger/sl"
-	"booking-schedule/internal/pkg/db"
-	"booking-schedule/internal/pkg/observability"
-	"booking-schedule/internal/pkg/rabbit"
 	"context"
 	"log"
 	"log/slog"
 	"os"
 	"time"
+
+	bookingRepository "github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/booking"
+	schedulerService "github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/service/scheduler"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/config"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/db"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/observability"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/rabbit"
 
 	"go.opentelemetry.io/otel/trace"
 )

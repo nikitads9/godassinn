@@ -1,10 +1,11 @@
 package auth
 
 import (
-	"booking-schedule/internal/app/api"
-	"booking-schedule/internal/logger/sl"
 	"log/slog"
 	"net/http"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
 
 	"github.com/go-chi/chi/middleware"
 	"go.opentelemetry.io/otel/attribute"

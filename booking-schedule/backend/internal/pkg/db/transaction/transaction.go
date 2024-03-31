@@ -1,8 +1,9 @@
 package transaction
 
 import (
-	"booking-schedule/internal/pkg/db"
 	"context"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/db"
 
 	pgx "github.com/jackc/pgx/v5"
 	"github.com/pkg/errors"

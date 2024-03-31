@@ -1,11 +1,12 @@
 package observability
 
 import (
-	"booking-schedule/internal/logger/sl"
 	"context"
 	"log/slog"
 	"runtime"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
 
 	"github.com/shirou/gopsutil/cpu"
 

@@ -1,9 +1,10 @@
 package booking
 
 import (
-	"booking-schedule/internal/app/model"
 	"context"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
 )
 
 func (s *Service) GetBookings(ctx context.Context, startDate time.Time, endDate time.Time, id int64) ([]*model.BookingInfo, error) {

@@ -8,12 +8,12 @@ ENV GOOS linux
 RUN apk update --no-cache && apk add --no-cache tzdata
 RUN apk add make
 
-COPY . /github.com/nikitads9/godassinn/booking-schedule/backend/
+COPY ./booking-schedule/backend /github.com/nikitads9/godassinn/booking-schedule/backend/
 
 WORKDIR /github.com/nikitads9/godassinn/booking-schedule/backend/
 
 RUN make build-auth
-RUN chown -R root ./godassinn/booking-schedule/backend/bin/auth
+RUN chown -R root ./bin/auth
 
 FROM alpine:latest
 

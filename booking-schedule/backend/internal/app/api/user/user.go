@@ -1,9 +1,10 @@
 package user
 
 import (
-	userRepo "booking-schedule/internal/app/repository/user"
-	"booking-schedule/internal/app/service/user"
 	"net/http"
+
+	userRepo "github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/user"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/service/user"
 
 	"go.opentelemetry.io/otel/trace"
 )

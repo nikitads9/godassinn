@@ -1,8 +1,9 @@
 package user
 
 import (
-	"booking-schedule/internal/app/model"
 	"context"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
 )
 
 func (s *Service) EditUser(ctx context.Context, user *model.UpdateUserInfo) error {

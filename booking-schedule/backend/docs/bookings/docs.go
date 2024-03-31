@@ -914,7 +914,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "127.0.0.1:3000",
 	BasePath:         "/bookings",
 	Schemes:          []string{"http", "https"},
-	Title:            "booking-schedule API",
+	Title:            "github.com/nikitads9/godassinn/booking-schedule/backend API",
 	Description:      "This is a service for writing and reading booking entries.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

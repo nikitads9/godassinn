@@ -1,12 +1,13 @@
 package user
 
 import (
-	"booking-schedule/internal/app/api"
-	"booking-schedule/internal/app/convert"
-	"booking-schedule/internal/logger/sl"
-	"booking-schedule/internal/middleware/auth"
 	"log/slog"
 	"net/http"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/convert"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/middleware/auth"
 
 	"github.com/go-chi/chi/middleware"
 	"go.opentelemetry.io/otel/attribute"

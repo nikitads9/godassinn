@@ -1,13 +1,14 @@
 package sender
 
 import (
-	"booking-schedule/internal/app/model"
-	"booking-schedule/internal/logger/sl"
 	"context"
 	"encoding/json"
 	"fmt"
 	"log/slog"
 	"os"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
 
 	"github.com/streadway/amqp"
 )

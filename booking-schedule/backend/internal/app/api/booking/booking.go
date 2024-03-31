@@ -1,10 +1,11 @@
 package booking
 
 import (
-	bookingRepo "booking-schedule/internal/app/repository/booking"
-	"booking-schedule/internal/app/service/booking"
 	"errors"
 	"net/http"
+
+	bookingRepo "github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/repository/booking"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/service/booking"
 
 	"go.opentelemetry.io/otel/trace"
 )

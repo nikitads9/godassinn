@@ -8,7 +8,7 @@ ENV GOOS linux
 RUN apk update --no-cache && apk add --no-cache tzdata
 RUN apk add make
 
-COPY . /github.com/nikitads9/godassinn/booking-schedule/backend/
+COPY ./booking-schedule/backend /github.com/nikitads9/godassinn/booking-schedule/backend/
 
 WORKDIR /github.com/nikitads9/godassinn/booking-schedule/backend/
 

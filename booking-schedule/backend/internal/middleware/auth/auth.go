@@ -1,13 +1,14 @@
 package auth
 
 import (
-	"booking-schedule/internal/app/api"
-	"booking-schedule/internal/app/service/jwt"
 	"context"
 	"errors"
 	"log/slog"
 	"net/http"
 	"strings"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/service/jwt"
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"

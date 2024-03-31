@@ -1,12 +1,13 @@
 package booking
 
 import (
-	"booking-schedule/internal/app/model"
-	"booking-schedule/internal/pkg/db"
 	"context"
 	"errors"
 	"log/slog"
 	"time"
+
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/pkg/db"
 
 	"github.com/gofrs/uuid"
 	"github.com/jackc/pgx/v5/pgconn"
