@@ -64,3 +64,23 @@ docker-compose -f docker-compose-elk.yml  up -d
 Также необходимо прописать и откат этих изменений (обратные операции), предварив их ` -- +goose Down `. <br />
 
 Чтобы применить изменения, просто пропишите, хотите ли вы накатить миграцию (up) или откатить миграцию (down) в скрипте ` deploy/migrations/migration.sh ` и запустите ранее созданный контейнер **migrator**. В логах контейнера вы увидите статус исполнения миграции.
+В идеале лучше пользоваться **docker-compose** или приложением Docker Desktop. Но  можно и из консоли: собрать образ (если еще не создан) с помощью команды:
+```shell
+docker build -t migrator -f ./deploy/migrations/Dockerfile  ./deploy/migrations
+```
+Запустить контейнер на основании образа можно командой:
+```shell
+set -o allexport && source ./.env && set +o allexport
+docker run -d -e GOOSE_DRIVER=postgres \
+-e DB_HOST=${DB_HOST} -e DB_PORT=${DB_PORT} -e DB_NAME=${DB_NAME} \
+-e DB_USER=${DB_USER} -e DB_PASSWORD=${DB_PASSWORD} -e DB_SSL=${DB_SSL} \
+-v ./deploy/migrations/:/migrations/ --network godassinn_app_net \
+--name migrator migrator
+```
+Если потребуется запустить уже существующий контейнер для миграций из консоли:
+```shell
+docker start migrator
+```
+Как только ваша миграция успешно накатилась, проверьте, сработает ли откат - вернется ли база данных в изначальный статус.
+
+Подробнее про текущий механизм миграций [![goose](https://github.com/pressly/goose).
