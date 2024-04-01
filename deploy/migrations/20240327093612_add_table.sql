@@ -54,7 +54,7 @@ create index ix_offer ON bookings using btree (offer_id);
 create index ix_owner ON bookings using btree (user_id);
 
 create user otelcol with password 'otelcolpassword';
-grant SELECT on pg_stat_database to otelcol;
+grant select on pg_stat_database to otelcol;
 
 insert into offers (name, cost, city,street,house,rating,type,beds_count,short_description) values('продам гараж', 4800, 'Москва', 'Пушкина', 88, 5, 'гараж', 4, 'отдам в хорошие руки');
 insert into offers (name, cost, city,street,house,rating,type,beds_count,short_description) values('загородный дом', 8000, 'Москва', 'Подольская', 90, 5, 'дом', 8, 'красивый домик');
@@ -64,3 +64,5 @@ insert into offers (name, cost, city,street,house,rating,type,beds_count,short_d
 drop table bookings;
 drop table users;
 drop table offers;
+revoke select on pg_stat_database from otelcol;
+drop user otelcol;

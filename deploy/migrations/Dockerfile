@@ -8,6 +8,11 @@ RUN apk update && \
 ADD https://github.com/pressly/goose/releases/download/v3.5.3/goose_linux_x86_64 /bin/goose
 RUN chmod +x /bin/goose
 
-ADD *.sql /deploy/migrations/
+WORKDIR /migrations
 
-ENTRYPOINT [ "/bin/sh","-c","sleep 2 && goose -dir ${MIGRATION_DIR} up -v" ]
+ADD *.sql migrations/
+ADD migration.sh .
+
+RUN chmod +x migration.sh
+
+ENTRYPOINT [ "bash","migration.sh" ]

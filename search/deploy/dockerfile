@@ -1,0 +1,15 @@
+FROM maven:3.8-jdk-11 as maven_build
+
+COPY ./search /search/
+
+WORKDIR /search/
+
+RUN mvn clean package
+
+FROM openjdk:23-slim-bullseye
+
+WORKDIR /root/
+
+COPY --from=maven_build /search/target/*.jar ./app.jar
+
+ENTRYPOINT ["java","-jar","app.jar"]

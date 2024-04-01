@@ -101,13 +101,16 @@ services:
   # Goose migrations manager
   migrator:
     container_name: migrator
-    build: $MIGRATION_DIR
+    build: 
+      context: ./deploy/migrations/
+      dockerfile: Dockerfile
     restart: on-failure
     image: nikitads9/booking-schedule:migrator
     environment:
       - 'GOOSE_DRIVER=postgres'
       - 'GOOSE_DBSTRING=host=${DB_HOST} port=${DB_PORT} dbname=${DB_NAME} user=${DB_USER} password=${DB_PASSWORD} sslmode=${DB_SSL}'
-      - 'MIGRATION_DIR=${MIGRATION_DIR}'
+    volumes:
+      - ./deploy/migrations/:/migrations/  
     depends_on:
       - db
     networks:
@@ -125,7 +128,7 @@ services:
       - 'DB_NAME=${DB_NAME}'
       - 'DB_USERNAME=${DB_USER}'
       - 'DB_PASSWORD=${DB_PASSWORD}'
-      - 'DB_HOST=${DB_HOST}'
+      - 'DB_HOST=${DB_HOST}' 
     depends_on:
       - db
       - queue
@@ -262,8 +265,6 @@ services:
       - jaeger
     networks:
       - app_net
-<<<<<<< HEAD
-=======
     deploy:
       resources:
         limits:
@@ -272,8 +273,8 @@ services:
   search:
     container_name: search
     build:
-      context: ./search
-      dockerfile: ./dockerfile
+      context: .
+      dockerfile: ./search/deploy/dockerfile
     restart: unless-stopped
     environment:
       - SPRING_DATASOURCE_URL=jdbc:posygtresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
@@ -284,4 +285,3 @@ services:
       - booking
     networks:
       - app_net
->>>>>>> main
