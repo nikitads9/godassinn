@@ -27,6 +27,7 @@ docker-compose up -d
 set -o allexport && source ./.env && set +o allexport
 docker-compose -f docker-compose-elk.yml  up setup -d
 docker-compose -f docker-compose-elk.yml  up -d
+docker-compose up -d
 ```
 Команду `docker-compose-elk up setup -d` нужно применять только при первоначальной настройке.
 
@@ -49,7 +50,12 @@ docker-compose -f docker-compose-elk.yml  up -d
     docker-compose exec elasticsearch bin/elasticsearch-reset-password --batch --user kibana_system
     ```
 
-2. Заменяем пароли в конфигурационном файле `.env` на сгенерированные ранее.
+2. Заменяем пароли в конфигурационном файле `.env` на сгенерированные ранее. И выполняем:
+```sh
+set -o allexport && source ./.env && set +o allexport
+
+```   
+3. Останавливаем и перезапускаем  контейнеры elasticsearch, logstash, kibana, jaeger чтобы применить изменения.
 </details>
 
 ## Инструкция по изменению структуры базы данных
