@@ -55,7 +55,7 @@ docker-compose up -d
 set -o allexport && source ./.env && set +o allexport
 
 ```   
-3. Останавливаем и перезапускаем  контейнеры elasticsearch, logstash, kibana, jaeger чтобы применить изменения.
+3. Останавливаем и перезапускаем  контейнеры elasticsearch, logstash, kibana, jaeger, чтобы применить изменения.
 </details>
 
 ## Инструкция по изменению структуры базы данных
