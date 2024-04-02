@@ -1,4 +1,4 @@
-# godassinn
+# godasinn
 
 Букинг сервис.
 
