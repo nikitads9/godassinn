@@ -1,10 +1,10 @@
-# godassinn
+# godasinn
 
 Букинг сервис.
 
 ## Инструкция по запуску
 
-Конфигурационный файл **.env.example** переименовываем в **.env** <br />
+Конфигурационный файл `.env.example` переименовываем в `.env` <br />
 В классическом случае (без ELK-стека) для запуска применяем:
 
 ```
@@ -15,7 +15,7 @@ docker-compose up -d
 <summary> 
 Запуск с сбором логов в ELK
 </summary>
-В случае, если хотим запустить версию с ELK,то необходимо раскомментировать следующие строчки в файле **docker-compose.yml** в конфигурации Jaeger:
+В случае, если хотим запустить версию с ELK,то необходимо раскомментировать следующие строчки в файле `docker-compose.yml` в конфигурации Jaeger:
     
 - `- SPAN_STORAGE_TYPE=elasticsearch`
 - `- ES_TAGS_AS_FIELDS_ALL=true`
@@ -27,11 +27,12 @@ docker-compose up -d
 set -o allexport && source ./.env && set +o allexport
 docker-compose -f docker-compose-elk.yml  up setup -d
 docker-compose -f docker-compose-elk.yml  up -d
+docker-compose up -d
 ```
 Команду `docker-compose-elk up setup -d` нужно применять только при первоначальной настройке.
 
 
-Пароль _"changeme"_ , установленный по умолчанию в **.env** файле **небезопасен**. Для того, чтобы сгенерировать случайные пароли, нужно выполнить следующие шаги:
+Пароль _"changeme"_ , установленный по умолчанию в `.env` файле **небезопасен**. Для того, чтобы сгенерировать случайные пароли, нужно выполнить следующие шаги:
 
 1. Сбросить пароли для встроенных пользователей
 
@@ -49,7 +50,12 @@ docker-compose -f docker-compose-elk.yml  up -d
     docker-compose exec elasticsearch bin/elasticsearch-reset-password --batch --user kibana_system
     ```
 
-2. Заменяем пароли в конфигурационном файле **.env** на сгенерированные ранее.
+2. Заменяем пароли в конфигурационном файле `.env` на сгенерированные ранее. И выполняем:
+```sh
+set -o allexport && source ./.env && set +o allexport
+
+```   
+3. Останавливаем и перезапускаем  контейнеры elasticsearch, logstash, kibana, jaeger, чтобы применить изменения.
 </details>
 
 ## Инструкция по изменению структуры базы данных
@@ -64,11 +70,12 @@ docker-compose -f docker-compose-elk.yml  up -d
 Также необходимо прописать и откат этих изменений (обратные операции), предварив их ` -- +goose Down `. <br />
 
 Чтобы применить изменения, просто пропишите, хотите ли вы накатить миграцию (up) или откатить миграцию (down) в скрипте ` deploy/migrations/migration.sh ` и запустите ранее созданный контейнер **migrator**. В логах контейнера вы увидите статус исполнения миграции.
-В идеале лучше пользоваться **docker-compose** или приложением Docker Desktop. Но  можно и из консоли: собрать образ (если еще не создан) с помощью команды:
+В идеале лучше пользоваться **docker-compose** или приложением Docker Desktop. <br />
+Можно и из консоли. Чтобы собрать образ (если еще не создан) есть команда:
 ```shell
 docker build -t migrator -f ./deploy/migrations/Dockerfile  ./deploy/migrations
 ```
-Запустить контейнер на основании образа можно командой:
+Запустить контейнер на основании образа можно вот так:
 ```shell
 set -o allexport && source ./.env && set +o allexport
 docker run -d -e GOOSE_DRIVER=postgres \
@@ -83,4 +90,4 @@ docker start migrator
 ```
 Как только ваша миграция успешно накатилась, проверьте, сработает ли откат - вернется ли база данных в изначальный статус.
 
-Подробнее про текущий механизм миграций [![goose](https://github.com/pressly/goose).
+Подробнее про текущий механизм миграций [goose](https://github.com/pressly/goose).
