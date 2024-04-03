@@ -22,7 +22,7 @@ import (
 // SignUp godoc
 //
 //	@Summary		Sign up
-//	@Description	Creates user with given tg id, nickname, name and password hashed by bcrypto. Every parameter is required. Returns jwt token.
+//	@Description	Creates user with given login, name, phone number and password hashed by bcrypto. Every parameter is required. Returns jwt token.
 //	@ID				signUpUserJson
 //	@Tags			auth
 //	@Accept			json
@@ -87,7 +87,7 @@ func (i *Implementation) SignUp(logger *slog.Logger) http.HandlerFunc {
 		}
 
 		span.AddEvent("user created")
-		log.Info("user created", slog.Any("login: ", req.Nickname))
+		log.Info("user created", slog.Any("login: ", req.Login))
 
 		render.Status(r, http.StatusCreated)
 		api.WriteWithStatus(w, http.StatusOK, api.AuthResponse{

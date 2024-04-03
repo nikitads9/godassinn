@@ -29,7 +29,7 @@ paths:
       - auth
       summary: Sign in
       description: Get auth token to access user restricted api methods. Requires
-        nickname and password passed via basic auth.
+        login and password passed via basic auth.
       operationId: getOauthToken
       responses:
         "200":
@@ -63,8 +63,8 @@ paths:
       tags:
       - auth
       summary: Sign up
-      description: "Creates user with given tg id, nickname, name and password hashed\
-        \ by bcrypto. Every parameter is required. Returns jwt token."
+      description: "Creates user with given login, name, phone number and password hashed by bcrypto.\
+      \ Every parameter is required. Returns jwt token."
       operationId: signUpUserJson
       requestBody:
         description: User
@@ -597,12 +597,16 @@ components:
           example: 400
     SignUpRequest:
       required:
+      - login
       - name
       - password
-      - telegramID
-      - telegramNickname
+      - phoneNumber
       type: object
       properties:
+        login:
+          type: string
+          description: Логин пользователя
+          example: pavel_durov
         name:
           type: string
           description: Имя пользователя
@@ -611,14 +615,10 @@ components:
           type: string
           description: Пароль
           example: "12345"
-        telegramID:
-          type: integer
-          description: Телеграм ID пользователя
-          example: 1235678
-        telegramNickname:
+        phoneNumber:
           type: string
-          description: Никнейм пользователя в телеграме
-          example: pavel_durov
+          description: Телефонный номер пользователя
+          example: "89771384545"
     AddBookingRequest:
       required:
       - endDate
@@ -749,49 +749,49 @@ components:
           type: string
           description: Номер свободен с
           example: 2024-03-10T15:04:05Z
-    offer:
-    type: object
-    properties:
-      beds_count:
-        description: Количество кроватей
-        type: integer
-        example: 4
-      city:
-        description: Город
-        type: string
-        example: Москва
-      cost:
-        description: Стоимость за ночь
-        type: integer
-        example: 4800
-      house:
-        description: Номер дома
-        type: integer
-        example: 88
-      name:
-        description: Имя объявления
-        type: string
-        example: Продам гараж
-      offerID:
-        description: Номер объявления
-        type: integer
-        example: 1
-      rating:
-        description: Оценка объявления
-        type: integer
-        example: 5
-      short_description:
-        description: Краткое описание
-        type: string
-        example: продам в хорошие руки
-      street:
-        description: Улица
-        type: string
-        example: Пушкина
-      type:
-        description: Тип помещения
-        type: string
-        example: гараж
+    Offer:
+      type: object
+      properties:
+        beds_count:
+          description: Количество кроватей
+          type: integer
+          example: 4
+        city:
+          description: Город
+          type: string
+          example: Москва
+        cost:
+          description: Стоимость за ночь
+          type: integer
+          example: 4800
+        house:
+          description: Номер дома
+          type: integer
+          example: 88
+        name:
+          description: Имя объявления
+          type: string
+          example: Продам гараж
+        offerID:
+          description: Номер объявления
+          type: integer
+          example: 1
+        rating:
+          description: Оценка объявления
+          type: integer
+          example: 5
+        short_description:
+          description: Краткое описание
+          type: string
+          example: продам в хорошие руки
+        street:
+          description: Улица
+          type: string
+          example: Пушкина
+        type:
+          description: Тип помещения
+          type: string
+          example: гараж
     UpdateBookingRequest:
       required:
       - endDate

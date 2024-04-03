@@ -39,9 +39,12 @@ func (r *repository) EditUser(ctx context.Context, user *model.UpdateUserInfo) e
 		builder = builder.Set(t.Name, user.Name.String)
 	}
 
-	if user.Nickname.Valid && user.TelegramID.Valid {
-		builder = builder.Set(t.TelegramNickname, user.Nickname.String).
-			Set(t.TelegramID, user.TelegramID.Int64)
+	if user.Login.Valid {
+		builder = builder.Set(t.Login, user.Login.String)
+	}
+
+	if user.PhoneNumber.Valid {
+		builder = builder.Set(t.PhoneNumber, user.PhoneNumber.String)
 	}
 
 	if user.Password.Valid {

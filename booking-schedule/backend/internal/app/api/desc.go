@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 	"reflect"
+	"regexp"
 	"strings"
 	"time"
 
@@ -123,10 +124,10 @@ type AuthResponse struct {
 } //@name AuthResponse
 
 type SignUpRequest struct {
-	// Телеграм ID пользователя
-	TelegramID int64 `json:"telegramID" validate:"required,notblank" example:"1235678"`
-	// Никнейм пользователя в телеграме
-	Nickname string `json:"telegramNickname" validate:"required,notblank" example:"pavel_durov"`
+	// Логин пользователя
+	Login string `json:"login" validate:"required,notblank" example:"pavel_durov"`
+	// Телефонный номер пользователя
+	PhoneNumber string `json:"phoneNumber" validate:"required,notblank" example:"89771384545"`
 	// Имя пользователя
 	Name string `json:"name" validate:"required,notblank" example:"Pavel Durov"`
 	// Пароль
@@ -136,12 +137,12 @@ type SignUpRequest struct {
 type UserInfo struct {
 	//ID пользователя в системе
 	ID int64 `json:"id"`
-	// Телеграм ID пользователя
-	TelegramID int64 `json:"telegramID"`
-	// Никнейм пользователя в телеграме
-	Nickname string `json:"telegramNickname"`
+	// Логин пользователя
+	Login string `json:"login"`
 	// Имя пользователя
 	Name string `json:"name"`
+	// Телефонный номер пользователя
+	PhoneNumber string `json:"phoneNumber"`
 	// Дата и время регистрации
 	CreatedAt time.Time `json:"createdAt"`
 	// Дата и время обновления профиля
@@ -156,10 +157,10 @@ type GetMyProfileResponse struct {
 type EditMyProfileRequest struct {
 	// Имя пользователя
 	Name null.String `json:"name" swaggertype:"primitive,string" validate:"notblank" example:"Kolya Durov"`
-	// Телеграм ID пользователя
-	TelegramID null.Int `json:"telegramID" swaggertype:"primitive,integer" validate:"notblank" example:"1235678"`
-	// Никнейм пользователя в телеграме
-	Nickname null.String `json:"telegramNickname" swaggertype:"primitive,string" validate:"notblank" example:"kolya_durov"`
+	// Логин пользователя
+	Login null.String `json:"login" swaggertype:"primitive,string" validate:"notblank" example:"kolya_durov"`
+	// Телефонный номер пользователя
+	PhoneNumber null.String `json:"phoneNumber" swaggertype:"primitive,string" validate:"notblank" example:"89771374545"`
 	// Пароль
 	Password null.String `json:"password" swaggertype:"primitive,string" validate:"notblank" example:"123456"`
 } // @name EditMyProfileRequest
@@ -194,6 +195,15 @@ func (srq *SignUpRequest) Bind(req *http.Request) error {
 		return err
 	}
 
+	matched, err := regexp.Match("(8|(\\+7))\\d{10}$", []byte(srq.PhoneNumber))
+	if err != nil {
+		return err
+	}
+
+	if !matched {
+		return ErrInvalidPhone
+	}
+
 	return nil
 }
 
@@ -209,8 +219,13 @@ func (empr *EditMyProfileRequest) Bind(req *http.Request) error {
 		return err
 	}
 
-	if (empr.TelegramID.Valid && !empr.Nickname.Valid) || (!empr.TelegramID.Valid && empr.Nickname.Valid) {
-		return ErrIncompleteRequest
+	matched, err := regexp.Match("(8|(\\+7))\\d{10}$", []byte(empr.PhoneNumber.String))
+	if err != nil {
+		return err
+	}
+
+	if !matched {
+		return ErrInvalidPhone
 	}
 
 	return nil

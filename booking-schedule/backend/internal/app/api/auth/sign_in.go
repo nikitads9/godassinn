@@ -16,7 +16,7 @@ import (
 // SignIn godoc
 //
 //	@Summary		Sign in
-//	@Description	Get auth token to access user restricted api methods. Requires nickname and password passed via basic auth.
+//	@Description	Get auth token to access user restricted api methods. Requires login and password passed via basic auth.
 //	@ID				getOauthToken
 //	@Tags			auth
 //	@Produce		json

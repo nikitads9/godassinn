@@ -68,6 +68,10 @@ definitions:
     type: object
   EditMyProfileRequest:
     properties:
+      login:
+        description: Логин пользователя
+        example: kolya_durov
+        type: string
       name:
         description: Имя пользователя
         example: Kolya Durov
@@ -76,13 +80,9 @@ definitions:
         description: Пароль
         example: "123456"
         type: string
-      telegramID:
-        description: Телеграм ID пользователя
-        example: 1235678
-        type: integer
-      telegramNickname:
-        description: Никнейм пользователя в телеграме
-        example: kolya_durov
+      phoneNumber:
+        description: Телефонный номер пользователя
+        example: "89771374545"
         type: string
     type: object
   Error:
@@ -212,14 +212,14 @@ definitions:
       id:
         description: ID пользователя в системе
         type: integer
+      login:
+        description: Логин пользователя
+        type: string
       name:
         description: Имя пользователя
         type: string
-      telegramID:
-        description: Телеграм ID пользователя
-        type: integer
-      telegramNickname:
-        description: Никнейм пользователя в телеграме
+      phoneNumber:
+        description: Телефонный номер пользователя
         type: string
       updatedAt:
         description: Дата и время обновления профиля

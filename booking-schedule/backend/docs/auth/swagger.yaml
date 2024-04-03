@@ -17,6 +17,10 @@ definitions:
     type: object
   SignUpRequest:
     properties:
+      login:
+        description: Логин пользователя
+        example: pavel_durov
+        type: string
       name:
         description: Имя пользователя
         example: Pavel Durov
@@ -25,19 +29,15 @@ definitions:
         description: Пароль
         example: "12345"
         type: string
-      telegramID:
-        description: Телеграм ID пользователя
-        example: 1235678
-        type: integer
-      telegramNickname:
-        description: Никнейм пользователя в телеграме
-        example: pavel_durov
+      phoneNumber:
+        description: Телефонный номер пользователя
+        example: "89771384545"
         type: string
     required:
+    - login
     - name
     - password
-    - telegramID
-    - telegramNickname
+    - phoneNumber
     type: object
 host: 127.0.0.1:5000
 info:
@@ -55,7 +55,7 @@ paths:
   /sign-in:
     get:
       description: Get auth token to access user restricted api methods. Requires
-        nickname and password passed via basic auth.
+        login and password passed via basic auth.
       operationId: getOauthToken
       produces:
       - application/json
@@ -85,8 +85,8 @@ paths:
     post:
       consumes:
       - application/json
-      description: Creates user with given tg id, nickname, name and password hashed
-        by bcrypto. Every parameter is required. Returns jwt token.
+      description: Creates user with given login, name, phone number and password
+        hashed by bcrypto. Every parameter is required. Returns jwt token.
       operationId: signUpUserJson
       parameters:
       - description: User

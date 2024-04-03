@@ -7,19 +7,19 @@ import (
 )
 
 type User struct {
-	ID         int64      `db:"id"`
-	TelegramID int64      `db:"telegram_id"`
-	Nickname   string     `db:"telegram_nickname"`
-	Name       string     `db:"name"`
-	Password   string     `db:"password"`
-	CreatedAt  time.Time  `db:"created_at"`
-	UpdatedAt  *time.Time `db:"updated_at"`
+	ID          int64      `db:"id"`
+	Login       string     `db:"login"`
+	Name        string     `db:"name"`
+	PhoneNumber string     `db:"phone_number"`
+	Password    string     `db:"password"`
+	CreatedAt   time.Time  `db:"created_at"`
+	UpdatedAt   *time.Time `db:"updated_at"`
 }
 
 type UpdateUserInfo struct {
-	ID         int64       `db:"id"`
-	TelegramID null.Int    `db:"telegram_id"`
-	Nickname   null.String `db:"telegram_nickname"`
-	Name       null.String `db:"name"`
-	Password   null.String `db:"password"`
+	ID          int64       `db:"id"`
+	Login       null.String `db:"login"`
+	Name        null.String `db:"name"`
+	PhoneNumber null.String `db:"phone_number"`
+	Password    null.String `db:"password"`
 }

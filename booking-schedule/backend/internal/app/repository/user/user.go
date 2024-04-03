@@ -26,7 +26,7 @@ var (
 		Severity:       "ERROR",
 		Code:           "23505",
 		Message:        "duplicate key value violates unique constraint",
-		ConstraintName: "users_telegram_id_key",
+		ConstraintName: "users_login_key",
 	}
 
 	ErrNotFound       = errors.New("no user with this id")

@@ -704,6 +704,11 @@ const docTemplate = `{
         "EditMyProfileRequest": {
             "type": "object",
             "properties": {
+                "login": {
+                    "description": "Логин пользователя",
+                    "type": "string",
+                    "example": "kolya_durov"
+                },
                 "name": {
                     "description": "Имя пользователя",
                     "type": "string",
@@ -714,15 +719,10 @@ const docTemplate = `{
                     "type": "string",
                     "example": "123456"
                 },
-                "telegramID": {
-                    "description": "Телеграм ID пользователя",
-                    "type": "integer",
-                    "example": 1235678
-                },
-                "telegramNickname": {
-                    "description": "Никнейм пользователя в телеграме",
+                "phoneNumber": {
+                    "description": "Телефонный номер пользователя",
                     "type": "string",
-                    "example": "kolya_durov"
+                    "example": "89771374545"
                 }
             }
         },
@@ -904,16 +904,16 @@ const docTemplate = `{
                     "description": "ID пользователя в системе",
                     "type": "integer"
                 },
+                "login": {
+                    "description": "Логин пользователя",
+                    "type": "string"
+                },
                 "name": {
                     "description": "Имя пользователя",
                     "type": "string"
                 },
-                "telegramID": {
-                    "description": "Телеграм ID пользователя",
-                    "type": "integer"
-                },
-                "telegramNickname": {
-                    "description": "Никнейм пользователя в телеграме",
+                "phoneNumber": {
+                    "description": "Телефонный номер пользователя",
                     "type": "string"
                 },
                 "updatedAt": {

@@ -33,7 +33,7 @@ func (r *repository) GetUser(ctx context.Context, userID int64) (*model.User, er
 	ctx, span := r.tracer.Start(ctx, op, trace.WithAttributes(attribute.String("request_id", requestID)))
 	defer span.End()
 
-	builder := sq.Select(t.ID, t.TelegramID, t.Name, t.TelegramNickname, t.CreatedAt, t.UpdatedAt).
+	builder := sq.Select(t.ID, t.Login, t.Name, t.PhoneNumber, t.CreatedAt, t.UpdatedAt).
 		From(t.UserTable).
 		Where(sq.Eq{t.ID: userID}).
 		PlaceholderFormat(sq.Dollar)

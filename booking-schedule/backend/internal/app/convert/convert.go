@@ -152,22 +152,22 @@ func ToUserInfo(user *api.SignUpRequest) (*model.User, error) {
 	}
 
 	mod := &model.User{
-		TelegramID: user.TelegramID,
-		Nickname:   user.Nickname,
-		Name:       user.Name,
-		Password:   user.Password,
-		CreatedAt:  time.Now(),
+		Login:       user.Login,
+		Name:        user.Name,
+		PhoneNumber: user.PhoneNumber,
+		Password:    user.Password,
+		CreatedAt:   time.Now(),
 	}
 	return mod, nil
 }
 
 func ToApiUserInfo(user *model.User) *api.UserInfo {
 	res := &api.UserInfo{
-		ID:         user.ID,
-		TelegramID: user.TelegramID,
-		Nickname:   user.Nickname,
-		Name:       user.Name,
-		CreatedAt:  time.Now(),
+		ID:          user.ID,
+		Login:       user.Login,
+		Name:        user.Name,
+		PhoneNumber: user.PhoneNumber,
+		CreatedAt:   time.Now(),
 	}
 
 	if user.UpdatedAt != nil {
@@ -179,11 +179,11 @@ func ToApiUserInfo(user *model.User) *api.UserInfo {
 
 func ToUpdateUserInfo(user *api.EditMyProfileRequest, userID int64) *model.UpdateUserInfo {
 	mod := &model.UpdateUserInfo{
-		ID:         userID,
-		TelegramID: user.TelegramID,
-		Nickname:   user.Nickname,
-		Name:       user.Name,
-		Password:   user.Password,
+		ID:          userID,
+		Login:       user.Login,
+		Name:        user.Name,
+		PhoneNumber: user.PhoneNumber,
+		Password:    user.Password,
 	}
 
 	return mod

@@ -27,7 +27,7 @@ var (
 	ErrExpiredDate        = errors.New("date is expired")
 	ErrIncompleteInterval = errors.New("received no start date or no end date")
 	ErrNoUserID           = errors.New("received no user id")
-	ErrIncompleteRequest  = errors.New("in case telegram account is changed, both id and nickname should be set")
+	ErrInvalidPhone       = errors.New("phone number must start with either 8 or +7 with following 10 digits")
 
 	ValidateErr = new(validator.ValidationErrors)
 )

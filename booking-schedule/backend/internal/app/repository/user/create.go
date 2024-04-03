@@ -34,8 +34,8 @@ func (r *repository) CreateUser(ctx context.Context, user *model.User) (int64, e
 	defer span.End()
 
 	builder := sq.Insert(t.UserTable).
-		Columns(t.TelegramID, t.TelegramNickname, t.Name, t.Password, t.CreatedAt).
-		Values(user.TelegramID, user.Nickname, user.Name, user.Password, time.Now())
+		Columns(t.Login, t.PhoneNumber, t.Name, t.Password, t.CreatedAt).
+		Values(user.Login, user.PhoneNumber, user.Name, user.Password, time.Now())
 
 	query, args, err := builder.PlaceholderFormat(sq.Dollar).Suffix("returning id").ToSql()
 	if err != nil {
@@ -60,7 +60,7 @@ func (r *repository) CreateUser(ctx context.Context, user *model.User) (int64, e
 			log.Error("no connection to database host", sl.Err(err))
 			return 0, ErrNoConnection
 		}
-		if errors.As(err, &ErrDuplicate) {
+		if errors.Is(err, ErrDuplicate) {
 			log.Error("this user already exists", sl.Err(err))
 			return 0, ErrAlreadyExists
 		}

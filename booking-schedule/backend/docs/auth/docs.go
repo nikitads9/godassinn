@@ -30,7 +30,7 @@ const docTemplate = `{
                         "BasicAuth": []
                     }
                 ],
-                "description": "Get auth token to access user restricted api methods. Requires nickname and password passed via basic auth.",
+                "description": "Get auth token to access user restricted api methods. Requires login and password passed via basic auth.",
                 "produces": [
                     "application/json"
                 ],
@@ -69,7 +69,7 @@ const docTemplate = `{
         },
         "/sign-up": {
             "post": {
-                "description": "Creates user with given tg id, nickname, name and password hashed by bcrypto. Every parameter is required. Returns jwt token.",
+                "description": "Creates user with given login, name, phone number and password hashed by bcrypto. Every parameter is required. Returns jwt token.",
                 "consumes": [
                     "application/json"
                 ],
@@ -141,12 +141,17 @@ const docTemplate = `{
         "SignUpRequest": {
             "type": "object",
             "required": [
+                "login",
                 "name",
                 "password",
-                "telegramID",
-                "telegramNickname"
+                "phoneNumber"
             ],
             "properties": {
+                "login": {
+                    "description": "Логин пользователя",
+                    "type": "string",
+                    "example": "pavel_durov"
+                },
                 "name": {
                     "description": "Имя пользователя",
                     "type": "string",
@@ -157,15 +162,10 @@ const docTemplate = `{
                     "type": "string",
                     "example": "12345"
                 },
-                "telegramID": {
-                    "description": "Телеграм ID пользователя",
-                    "type": "integer",
-                    "example": 1235678
-                },
-                "telegramNickname": {
-                    "description": "Никнейм пользователя в телеграме",
+                "phoneNumber": {
+                    "description": "Телефонный номер пользователя",
                     "type": "string",
-                    "example": "pavel_durov"
+                    "example": "89771384545"
                 }
             }
         }

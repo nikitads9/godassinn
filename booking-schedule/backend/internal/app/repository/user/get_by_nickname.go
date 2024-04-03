@@ -35,7 +35,7 @@ func (r *repository) GetUserByNickname(ctx context.Context, nickName string) (*m
 
 	builder := sq.Select("*").
 		From(t.UserTable).
-		Where(sq.Eq{t.TelegramNickname: nickName}).
+		Where(sq.Eq{t.Login: nickName}).
 		PlaceholderFormat(sq.Dollar)
 
 	query, args, err := builder.ToSql()
@@ -63,7 +63,7 @@ func (r *repository) GetUserByNickname(ctx context.Context, nickName string) (*m
 			return nil, ErrNoConnection
 		}
 		if errors.Is(err, pgx.ErrNoRows) {
-			log.Error("user with this id not found", sl.Err(err))
+			log.Error("user with this login not found", sl.Err(err))
 			return nil, ErrNotFound
 		}
 		log.Error("query execution error", sl.Err(err))
