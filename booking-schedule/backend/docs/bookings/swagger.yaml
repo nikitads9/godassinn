@@ -156,6 +156,10 @@ definitions:
         description: Номер дома
         example: 88
         type: integer
+      landlordID:
+        description: ID арендодателя
+        example: 2
+        type: integer
       name:
         description: Имя объявления
         example: Продам гараж

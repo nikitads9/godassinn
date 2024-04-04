@@ -34,6 +34,7 @@ type Offer struct {
 	TypeOfHousing    string `db:"type_of_housing"`
 	BedsCount        uint8  `db:"beds_count"`
 	ShortDescription string `db:"short_description"`
+	LandlordID       int64  `db:"landlord_id"`
 }
 
 type Availibility struct {

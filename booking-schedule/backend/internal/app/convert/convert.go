@@ -81,6 +81,7 @@ func ToApiOffers(mod []*model.Offer) []*api.Offer {
 			TypeOfHousing:    elem.TypeOfHousing,
 			BedsCount:        elem.BedsCount,
 			ShortDescription: elem.ShortDescription,
+			LandlordID:       elem.LandlordID,
 		})
 	}
 

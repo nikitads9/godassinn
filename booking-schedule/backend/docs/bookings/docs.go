@@ -831,6 +831,11 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 88
                 },
+                "landlordID": {
+                    "description": "ID арендодателя",
+                    "type": "integer",
+                    "example": 2
+                },
                 "name": {
                     "description": "Имя объявления",
                     "type": "string",

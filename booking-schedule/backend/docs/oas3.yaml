@@ -792,6 +792,10 @@ components:
           type: string
           description: Тип помещения
           example: гараж
+        landlordID:
+          type: integer
+          description: ID арендодателя
+          example: 1
     UserInfo:
       type: object
       properties:
@@ -822,4 +826,3 @@ components:
       description: Type "Bearer" followed by a space and JWT token.
       name: Authorization
       in: header
-x-original-swagger-version: "2.0"

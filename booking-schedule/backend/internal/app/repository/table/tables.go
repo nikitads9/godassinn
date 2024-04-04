@@ -28,4 +28,6 @@ const (
 	Cost             = `cost`
 	Type             = `type`
 	TypeOfHousingID  = `type_of_housing_id`
+	Landlord         = `landlord`
+	LandlordID       = `landlord_id`
 )

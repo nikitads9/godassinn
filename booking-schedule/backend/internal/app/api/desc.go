@@ -112,6 +112,8 @@ type Offer struct {
 	BedsCount uint8 `json:"bedsCount"  example:"4"`
 	// Краткое описание
 	ShortDescription string `json:"shortDescription"  example:"продам в хорошие руки"`
+	// ID арендодателя
+	LandlordID int64 `json:"landlordID" example:"2"`
 } //@name Offer
 
 type GetVacantOffersResponse struct {
