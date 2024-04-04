@@ -78,7 +78,7 @@ func ToApiOffers(mod []*model.Offer) []*api.Offer {
 			Street:           elem.Street,
 			House:            elem.House,
 			Rating:           elem.Rating,
-			Type:             elem.Type,
+			TypeOfHousing:    elem.TypeOfHousing,
 			BedsCount:        elem.BedsCount,
 			ShortDescription: elem.ShortDescription,
 		})

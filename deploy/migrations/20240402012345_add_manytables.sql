@@ -30,9 +30,21 @@ ADD COLUMN type_of_housing_id BIGINT NOT NULL,
 DROP COLUMN city,
 DROP COLUMN street,
 DROP COLUMN type,
-ADD CONSTRAINT fk_city FOREIGN KEY (city_id) REFERENCES city(id),
-ADD CONSTRAINT fk_street FOREIGN KEY (street_id) REFERENCES street(id),
-ADD CONSTRAINT fk_type_of_housing FOREIGN KEY (type_of_housing_id) REFERENCES type_of_housing(id);
+ADD CONSTRAINT fk_city 
+    FOREIGN KEY (city_id) 
+        REFERENCES city(id)
+        on delete cascade
+        on update cascade,
+ADD CONSTRAINT fk_street 
+    FOREIGN KEY (street_id) 
+        REFERENCES street(id)
+        on delete cascade
+        on update cascade,
+ADD CONSTRAINT fk_type_of_housing 
+    FOREIGN KEY (type_of_housing_id) 
+        REFERENCES type_of_housing(id)
+        on delete cascade
+        on update cascade;
 
 CREATE TABLE landlord (
    	id bigserial primary key,   
@@ -40,7 +52,11 @@ CREATE TABLE landlord (
     reviews_count INTEGER DEFAULT 0,
     deals_count INTEGER DEFAULT 0,
     user_id bigint NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    constraint fk_users
+        FOREIGN KEY (user_id) 
+            REFERENCES users(id)
+                on delete cascade
+                on update cascade
 );
 
 create table reviews (

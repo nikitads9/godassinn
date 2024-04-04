@@ -31,8 +31,6 @@ func GetErrorCode(err error) int {
 		return http.StatusNotFound
 	case userRepo.ErrAlreadyExists:
 		return http.StatusBadRequest
-	case userRepo.ErrDuplicate:
-		return http.StatusUnauthorized
 	default:
 		return http.StatusInternalServerError
 	}

@@ -16,6 +16,7 @@ services:
   # Frontend for Booking service
   booking_frontend:
     build: ./booking-schedule/frontend
+    image: chopas11/booking-schedule:frontend
     ports:
       - '80:80'
       - '443:443'
@@ -280,6 +281,7 @@ services:
     build:
       context: .
       dockerfile: ./search/deploy/dockerfile
+    image: PriestSexist/search:search
     restart: unless-stopped
     environment:
       - SPRING_DATASOURCE_URL=jdbc:posygtresql://${DB_HOST}:${DB_PORT}/${DB_NAME}

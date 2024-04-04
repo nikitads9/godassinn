@@ -811,7 +811,7 @@ const docTemplate = `{
         "Offer": {
             "type": "object",
             "properties": {
-                "beds_count": {
+                "bedsCount": {
                     "description": "Количество кроватей",
                     "type": "integer",
                     "example": 4
@@ -846,7 +846,7 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 5
                 },
-                "short_description": {
+                "shortDescription": {
                     "description": "Краткое описание",
                     "type": "string",
                     "example": "продам в хорошие руки"
@@ -856,7 +856,7 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Пушкина"
                 },
-                "type": {
+                "typeOfHousing": {
                     "description": "Тип помещения",
                     "type": "string",
                     "example": "гараж"

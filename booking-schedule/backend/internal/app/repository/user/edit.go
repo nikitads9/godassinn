@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"log/slog"
+	"strings"
 	"time"
 
 	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
@@ -74,7 +75,7 @@ func (r *repository) EditUser(ctx context.Context, user *model.UpdateUserInfo) e
 			log.Error("no connection to database host", sl.Err(err))
 			return ErrNoConnection
 		}
-		if errors.As(err, &ErrDuplicate) {
+		if strings.EqualFold(err.Error(), ErrDuplicate) {
 			log.Error("this user already exists", sl.Err(err))
 			return ErrAlreadyExists
 		}

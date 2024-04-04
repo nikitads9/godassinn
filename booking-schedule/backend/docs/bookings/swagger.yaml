@@ -140,7 +140,7 @@ definitions:
     type: object
   Offer:
     properties:
-      beds_count:
+      bedsCount:
         description: Количество кроватей
         example: 4
         type: integer
@@ -168,7 +168,7 @@ definitions:
         description: Оценка объявления
         example: 5
         type: integer
-      short_description:
+      shortDescription:
         description: Краткое описание
         example: продам в хорошие руки
         type: string
@@ -176,7 +176,7 @@ definitions:
         description: Улица
         example: Пушкина
         type: string
-      type:
+      typeOfHousing:
         description: Тип помещения
         example: гараж
         type: string

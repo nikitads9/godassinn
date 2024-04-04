@@ -32,9 +32,12 @@ func (r *repository) GetVacantOffers(ctx context.Context, startDate time.Time, e
 	ctx, span := r.tracer.Start(ctx, op, trace.WithAttributes(attribute.String("request_id", requestID)))
 	defer span.End()
 
-	builder := sq.Select("*").
+	builder := sq.Select(t.OfferTable+"."+t.ID, t.OfferTable+"."+t.Name, t.OfferTable+"."+t.Cost, t.City+"."+t.Name+" AS "+t.City, t.Street+"."+t.Name+" AS "+t.Street, t.OfferTable+"."+t.House, t.OfferTable+"."+t.Rating, t.TypeOfHousing+"."+t.Type+" AS "+t.TypeOfHousing, t.OfferTable+"."+t.BedsCount, t.OfferTable+"."+t.ShortDescription).
 		Distinct().
 		From(t.OfferTable).
+		Join(t.City + " ON " + t.OfferTable + "." + t.CityID + "=" + t.City + "." + t.ID).
+		Join(t.Street + " ON " + t.OfferTable + "." + t.StreetID + "=" + t.Street + "." + t.ID).
+		Join(t.TypeOfHousing + " ON " + t.OfferTable + "." + t.TypeOfHousingID + "=" + t.TypeOfHousing + "." + t.ID).
 		PlaceholderFormat(sq.Dollar)
 	subQuery, subQueryArgs, err := sq.Select("1").
 		From(t.BookingTable + " AS e").

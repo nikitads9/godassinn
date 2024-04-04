@@ -299,8 +299,8 @@ paths:
       - users
       summary: Modify profile
       description: "Updates user's profile with provided values. If no values provided,\
-        \ an error is returned. If new telegram id is set, the telegram nickname is\
-        \ also to be provided and vice versa. All provided body parameters should\
+        \ an error is returned. Phone number should be in format +79991234567 or 89991234567\
+        \ All provided body parameters should\
         \ not be blank (i.e. empty string)."
       operationId: modifyUserByJSON
       requestBody:
@@ -696,14 +696,14 @@ components:
           type: string
           description: Пароль
           example: "123456"
-        telegramID:
-          type: integer
-          description: Телеграм ID пользователя
-          example: 1235678
-        telegramNickname:
+        login:
           type: string
-          description: Никнейм пользователя в телеграме
+          description: Логин пользователя
           example: kolya_durov
+        phoneNumber:
+          type: string
+          description: Телефонный номер пользователя
+          example: "89771384545"
     GetBookingResponse:
       type: object
       properties:
@@ -752,69 +752,46 @@ components:
     Offer:
       type: object
       properties:
-        beds_count:
-          description: Количество кроватей
+        bedsCount:
           type: integer
+          description: Количество кроватей
           example: 4
         city:
-          description: Город
           type: string
+          description: Город
           example: Москва
         cost:
-          description: Стоимость за ночь
           type: integer
+          description: Стоимость за ночь
           example: 4800
         house:
-          description: Номер дома
           type: integer
+          description: Номер дома
           example: 88
         name:
-          description: Имя объявления
           type: string
+          description: Имя объявления
           example: Продам гараж
         offerID:
-          description: Номер объявления
           type: integer
+          description: Номер объявления
           example: 1
         rating:
-          description: Оценка объявления
           type: integer
+          description: Оценка объявления
           example: 5
-        short_description:
-          description: Краткое описание
+        shortDescription:
           type: string
+          description: Краткое описание
           example: продам в хорошие руки
         street:
+          type: string
           description: Улица
-          type: string
           example: Пушкина
-        type:
+        typeOfHousing:
+          type: string
           description: Тип помещения
-          type: string
           example: гараж
-    UpdateBookingRequest:
-      required:
-      - endDate
-      - startDate
-      - offerID
-      type: object
-      properties:
-        endDate:
-          type: string
-          description: Дата и время окончания бронировании
-          example: 2024-03-29T17:43:00Z
-        notifyAt:
-          type: string
-          description: Интервал времени для предварительного уведомления о бронировании
-          example: 24h
-        startDate:
-          type: string
-          description: Дата и время начала бронировании
-          example: 2024-03-28T17:43:00Z
-        offerID:
-          type: integer
-          description: Номер апаратаментов
-          example: 1
     UserInfo:
       type: object
       properties:
@@ -827,12 +804,12 @@ components:
         name:
           type: string
           description: Имя пользователя
-        telegramID:
-          type: integer
-          description: Телеграм ID пользователя
-        telegramNickname:
+        phoneNumber:
           type: string
-          description: Никнейм пользователя в телеграме
+          description: Телефонный номер пользователя
+        login:
+          type: string
+          description: Логин пользователя
         updatedAt:
           type: string
           description: Дата и время обновления профиля

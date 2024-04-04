@@ -107,11 +107,11 @@ type Offer struct {
 	// Оценка объявления
 	Rating int64 `json:"rating"  example:"5"`
 	// Тип помещения
-	Type string `json:"type"  example:"гараж"`
+	TypeOfHousing string `json:"typeOfHousing"  example:"гараж"`
 	// Количество кроватей
-	BedsCount uint8 `json:"beds_count"  example:"4"`
+	BedsCount uint8 `json:"bedsCount"  example:"4"`
 	// Краткое описание
-	ShortDescription string `json:"short_description"  example:"продам в хорошие руки"`
+	ShortDescription string `json:"shortDescription"  example:"продам в хорошие руки"`
 } //@name Offer
 
 type GetVacantOffersResponse struct {
@@ -162,7 +162,7 @@ type EditMyProfileRequest struct {
 	// Телефонный номер пользователя
 	PhoneNumber null.String `json:"phoneNumber" swaggertype:"primitive,string" validate:"notblank" example:"89771374545"`
 	// Пароль
-	Password null.String `json:"password" swaggertype:"primitive,string" validate:"notblank" example:"123456"`
+	Password null.String `json:"password" swaggertype:"primitive,string" example:"123456"`
 } // @name EditMyProfileRequest
 
 func (arq *AddBookingRequest) Bind(req *http.Request) error {

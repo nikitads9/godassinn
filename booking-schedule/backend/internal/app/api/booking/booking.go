@@ -19,7 +19,6 @@ var (
 	errNoBookingID = errors.New("received no booking id")
 	errNoInterval  = errors.New("received no time period")
 	errNoOfferID   = errors.New("received no offer id")
-	//ErrBookingNotFound = errors.New("no booking with this id")
 )
 
 func NewImplementation(booking *booking.Service, tracer trace.Tracer) *Implementation {

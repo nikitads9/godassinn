@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"log/slog"
+	"strings"
 	"time"
 
 	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/model"
@@ -68,6 +69,10 @@ func (r *repository) UpdateBooking(ctx context.Context, mod *model.BookingInfo) 
 		if errors.As(err, pgNoConnection) {
 			log.Error("no connection to database host", sl.Err(err))
 			return ErrNoConnection
+		}
+
+		if strings.EqualFold(err.Error(), ErrNoSuchUser) {
+			return ErrUnauthorized
 		}
 		log.Error("query execution error", sl.Err(err))
 		return ErrQuery

@@ -22,12 +22,7 @@ type Repository interface {
 
 var (
 	ErrAlreadyExists = errors.New("this user already exists")
-	ErrDuplicate     = &pgconn.PgError{
-		Severity:       "ERROR",
-		Code:           "23505",
-		Message:        "duplicate key value violates unique constraint",
-		ConstraintName: "users_login_key",
-	}
+	ErrDuplicate     = "ERROR: duplicate key value violates unique constraint \"users_login_key\" (SQLSTATE 23505)"
 
 	ErrNotFound       = errors.New("no user with this id")
 	ErrNoRowsAffected = errors.New("no database entries affected by this operation")

@@ -39,11 +39,7 @@ var (
 	ErrUuid         = errors.New("failed to generate uuid")
 
 	pgNoConnection = new(*pgconn.ConnectError)
-	ErrNoSuchUser  = &pgconn.PgError{
-		Severity:       "ERROR",
-		Code:           "23503",
-		Message:        "violates foreign key constraint",
-		ConstraintName: "fk_users"}
+	ErrNoSuchUser  = "ERROR: violates foreign key constraint \"fk_users\" (SQLSTATE 23503)"
 )
 
 type repository struct {

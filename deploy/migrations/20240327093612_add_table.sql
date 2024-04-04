@@ -47,12 +47,9 @@ create table bookings (
 
 create index ix_uuid ON bookings using btree (id);
 create index ix_start ON bookings using brin (start_date);
-
 create index ix_end ON bookings using brin (end_date);
-
 create index ix_offer ON bookings using btree (offer_id);
 create index ix_owner ON bookings using btree (user_id);
-
 create user otelcol with password 'otelcolpassword';
 grant select on pg_stat_database to otelcol;
 
@@ -62,3 +59,4 @@ drop table users;
 drop table offers;
 revoke select on pg_stat_database from otelcol;
 drop user otelcol;
+
