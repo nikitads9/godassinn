@@ -17,8 +17,8 @@ services:
     #  args:
     #    ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./booking-schedule/backend/deploy/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
-      - ./booking-schedule/backend/deploy/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./deploy/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./deploy/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
     ports:
       - 12201:12201/udp
       - 5044:5044
@@ -47,7 +47,7 @@ services:
     #  args:
     #    ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./booking-schedule/backend/deploy//elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./deploy//elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
       - elasticsearch:/usr/share/elasticsearch/data:Z
     ports:
       - 9200:9200
@@ -74,7 +74,7 @@ services:
     #  args:
     #    ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./booking-schedule/backend/deploy//kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+      - ./deploy/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
     ports:
       - 5601:5601
     environment:
@@ -104,14 +104,14 @@ services:
     profiles:
       - setup
     build:
-      context: ./booking-schedule/backend/deploy/elksetup/
+      context: ./deploy/elksetup/
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     init: true
     volumes:
-      - ./booking-schedule/backend/deploy/elksetup/entrypoint.sh:/entrypoint.sh:ro,Z
-      - ./booking-schedule/backend/deploy/elksetup/lib.sh:/lib.sh:ro,Z
-      - ./booking-schedule/backend/deploy/elksetup/roles:/roles:ro,Z
+      - ./deploy/elksetup/entrypoint.sh:/entrypoint.sh:ro,Z
+      - ./deploy/elksetup/lib.sh:/lib.sh:ro,Z
+      - ./deploy/elksetup/roles:/roles:ro,Z
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}

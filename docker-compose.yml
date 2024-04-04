@@ -244,7 +244,7 @@ services:
       - '--storage.tsdb.retention.size=1GB'
       - '--enable-feature=otlp-write-receiver'
     volumes:
-      - ./booking-schedule/backend/deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./deploy/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-volume:/prometheus
     ports:
       - '9090:9090'
@@ -262,7 +262,7 @@ services:
       - DB_MONITOR_PASSWORD=${DB_MONITOR_PASSWORD}
       - DB_NAME=${DB_NAME}
     volumes:
-      - ./booking-schedule/backend/deploy/otelcollector/otelcol-config.yml:/etc/otelcol-config.yml
+      - ./deploy/otelcollector/otelcol-config.yml:/etc/otelcol-config.yml
     expose:
       - '4318'
     ports:
@@ -281,7 +281,7 @@ services:
     build:
       context: .
       dockerfile: ./search/deploy/dockerfile
-    image: PriestSexist/search:search
+    image: priestsexist/search:search
     restart: unless-stopped
     environment:
       - SPRING_DATASOURCE_URL=jdbc:posygtresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
