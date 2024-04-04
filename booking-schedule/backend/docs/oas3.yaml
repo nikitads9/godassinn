@@ -299,7 +299,7 @@ paths:
       - users
       summary: Modify profile
       description: "Updates user's profile with provided values. If no values provided,\
-        \ an error is returned. Phone number should be in format +79991234567 or 89991234567\
+        \ an error is returned. Phone number should be in format +79991234567 or 89991234567.\
         \ All provided body parameters should\
         \ not be blank (i.e. empty string)."
       operationId: modifyUserByJSON
@@ -640,7 +640,7 @@ components:
           example: 2024-03-28T17:43:00Z
         offerID:
           type: integer
-          description: Номер апаратаментов
+          description: ID объявления
           example: 1
     AddBookingResponse:
       type: object
@@ -675,7 +675,7 @@ components:
           example: 2024-03-28T17:43:00Z
         offerID:
           type: integer
-          description: Номер апартаментов
+          description: ID Объявления
           example: 1
         updatedAt:
           type: string

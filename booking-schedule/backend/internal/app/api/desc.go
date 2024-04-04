@@ -17,7 +17,7 @@ type Booking struct {
 	BookingID uuid.UUID
 	// Идентификатор пользователя
 	UserID int64
-	// Номер апартаментов
+	// ID объявления
 	OfferID int64
 	// Дата и время начала бронировании
 	StartDate time.Time
@@ -28,7 +28,7 @@ type Booking struct {
 }
 
 type AddBookingRequest struct {
-	// Номер апаратаментов
+	// ID объявления
 	OfferID int64 `json:"offerID" validate:"required" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" validate:"required" example:"2024-03-28T17:43:00Z"`
@@ -45,7 +45,7 @@ type AddBookingResponse struct {
 type BookingInfo struct {
 	// Уникальный идентификатор бронирования
 	ID uuid.UUID `json:"BookingID" example:"550e8400-e29b-41d4-a716-446655440000" format:"uuid"`
-	// Номер апартаментов
+	// ID объявления
 	OfferID int64 `json:"offerID" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" example:"2024-03-28T17:43:00Z"`
@@ -70,7 +70,7 @@ type GetBookingsResponse struct {
 } //@name GetBookingsResponse
 
 type UpdateBookingRequest struct {
-	// Номер апаратаментов
+	// ID объявления
 	OfferID int64 `json:"offerID" validate:"required" example:"1"`
 	//Дата и время начала бронировании
 	StartDate time.Time `json:"startDate" validate:"required" example:"2024-03-28T17:43:00Z"`
@@ -162,7 +162,7 @@ type EditMyProfileRequest struct {
 	// Телефонный номер пользователя
 	PhoneNumber null.String `json:"phoneNumber" swaggertype:"primitive,string" validate:"notblank" example:"89771374545"`
 	// Пароль
-	Password null.String `json:"password" swaggertype:"primitive,string" example:"123456"`
+	Password null.String `json:"password" swaggertype:"primitive,string" validate:"notblank" example:"123456"`
 } // @name EditMyProfileRequest
 
 func (arq *AddBookingRequest) Bind(req *http.Request) error {
