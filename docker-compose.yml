@@ -46,12 +46,12 @@ services:
       - app_net
 
   # Booking service
-  booking:
-    container_name: booking
+  bookings:
+    container_name: bookings
     build:
       context: .
       dockerfile: ./booking-schedule/backend/deploy/bookings/Dockerfile
-    image: nikitads9/booking-schedule:booking
+    image: nikitads9/booking-schedule:bookings
     volumes:
       - certificates-volume:/etc/ssl/certs
     ports:
@@ -207,11 +207,11 @@ services:
       - COLLECTOR_OTLP_ENABLED=true
       - METRICS_STORAGE_TYPE=prometheus
       - PROMETHEUS_SERVER_URL=${PROMETHEUS_ADDR}
-      #- SPAN_STORAGE_TYPE=elasticsearch
-      #- ES_TAGS_AS_FIELDS_ALL=true
-      #- ES_SERVER_URLS=http://elasticsearch:9200
-      #- ES_USERNAME=elastic
-      #- ES_PASSWORD=${ELASTIC_PASSWORD}
+    #  - SPAN_STORAGE_TYPE=elasticsearch
+    #  - ES_TAGS_AS_FIELDS_ALL=true
+    #  - ES_SERVER_URLS=http://elasticsearch:9200
+    #  - ES_USERNAME=elastic
+    #  - ES_PASSWORD=${ELASTIC_PASSWORD}
     ports:
       #- "5775:5775/udp" # agent accept zipkin.thrift over compact thrift protocol (deprecated, used by legacy clients only)
       #- "6831:6831/udp" # agent accept jaeger.thrift over compact thrift protocol
@@ -287,8 +287,10 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:posygtresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
       - SPRING_DATASOURCE_USER=${DB_USER}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    ports:
+      - '14881:8080'
     depends_on: 
       - db
-      - booking
+      - bookings
     networks:
       - app_net
