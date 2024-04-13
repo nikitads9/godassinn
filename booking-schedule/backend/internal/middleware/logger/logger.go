@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/go-chi/chi/v5"
+
 	"log/slog"
 
 	"github.com/go-chi/chi/middleware"
@@ -17,26 +19,19 @@ func New(logger *slog.Logger) func(next http.Handler) http.Handler {
 
 		log.Info("logger middleware enabled")
 
-		// код самого обработчика
 		fn := func(w http.ResponseWriter, r *http.Request) {
-			// собираем исходную информацию о запросе
 			entry := log.With(
 				slog.String("http_method", r.Method),
-				slog.String("path", r.URL.Path),
+				slog.String("path", chi.RouteContext(r.Context()).RoutePattern()),
 				slog.String("remote_addr", r.RemoteAddr),
 				slog.String("user_agent", r.UserAgent()),
 				slog.String("request_id", middleware.GetReqID(r.Context())),
 			)
 
-			// создаем обертку вокруг `http.ResponseWriter`
-			// для получения сведений об ответе
 			ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
 
-			// Момент получения запроса, чтобы вычислить время обработки
 			t1 := time.Now()
 
-			// Запись отправится в лог в defer
-			// в этот момент запрос уже будет обработан
 			defer func() {
 				entry.Info("request processed",
 					slog.Int("status", ww.Status()),
@@ -45,11 +40,9 @@ func New(logger *slog.Logger) func(next http.Handler) http.Handler {
 				)
 			}()
 
-			// Передаем управление следующему обработчику в цепочке middleware
 			next.ServeHTTP(ww, r)
 		}
 
-		// Возвращаем созданный выше обработчик, приведя его к типу http.HandlerFunc
 		return http.HandlerFunc(fn)
 	}
 }

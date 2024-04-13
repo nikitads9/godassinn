@@ -17,12 +17,10 @@ RUN chown -R root ./bin/bookings
 
 FROM alpine:latest
 
+WORKDIR /root/
 
 RUN apk add nginx
-ADD ./booking-schedule/backend/deploy/nginx/nginx.conf /etc/nginx/nginx.conf
-
-
-WORKDIR /root/
+ADD ./deploy/nginx/nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=builder /github.com/nikitads9/godassinn/booking-schedule/backend/bin .
 COPY --from=builder /github.com/nikitads9/godassinn/booking-schedule/backend/configs/booking_config.yml .

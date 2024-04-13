@@ -18,7 +18,7 @@ RUN chown -R root ./bin/auth
 FROM alpine:latest
 
 RUN apk add nginx
-ADD ./booking-schedule/backend/deploy/nginx/nginx.conf /etc/nginx/nginx.conf
+ADD ./deploy/nginx/nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /root/
 

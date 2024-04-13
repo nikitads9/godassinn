@@ -21,7 +21,7 @@ import (
 // EditMyProfile godoc
 //
 //	@Summary		Modify profile
-//	@Description	Updates user's profile with provided values. If no values provided, an error is returned. If new telegram id is set, the telegram nickname is also to be provided and vice versa. All provided body parameters should not be blank (i.e. empty string).
+//	@Description	Updates user's profile with provided values. If no values provided, an error is returned. Phone number should be in format +79991234567 or 89991234567. All provided body parameters should not be blank (i.e. empty string).
 //	@ID				modifyUserByJSON
 //	@Tags			users
 //	@Accept			json

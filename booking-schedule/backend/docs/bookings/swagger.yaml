@@ -11,7 +11,7 @@ definitions:
         example: 24h
         type: string
       offerID:
-        description: Номер апаратаментов
+        description: ID объявления
         example: 1
         type: integer
       startDate:
@@ -50,7 +50,7 @@ definitions:
         example: 24h00m00s
         type: string
       offerID:
-        description: Номер апартаментов
+        description: ID объявления
         example: 1
         type: integer
       startDate:
@@ -156,6 +156,10 @@ definitions:
         description: Номер дома
         example: 88
         type: integer
+      landlordID:
+        description: ID арендодателя
+        example: 2
+        type: integer
       name:
         description: Имя объявления
         example: Продам гараж
@@ -192,7 +196,7 @@ definitions:
         example: 24h
         type: string
       offerID:
-        description: Номер апаратаментов
+        description: ID объявления
         example: 1
         type: integer
       startDate:
@@ -576,9 +580,8 @@ paths:
       consumes:
       - application/json
       description: Updates user's profile with provided values. If no values provided,
-        an error is returned. If new telegram id is set, the telegram nickname is
-        also to be provided and vice versa. All provided body parameters should not
-        be blank (i.e. empty string).
+        an error is returned. Phone number should be in format +79991234567 or 89991234567.
+        All provided body parameters should not be blank (i.e. empty string).
       operationId: modifyUserByJSON
       parameters:
       - description: EditMyProfileRequest

@@ -41,11 +41,8 @@ public class OfferController {
 
     @GetMapping("/MyBookings/time")
     public ResponseEntity<Object> getBookingsWithTime(@RequestParam(required = false, defaultValue = "#{T(java.time.LocalDateTime).now()}") @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeStart,
-                                                      @RequestParam(required = false) @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeEnd) {
+                                                      @RequestParam(required = false, defaultValue = "#{T(java.time.LocalDateTime).now().plusDays(14)}") @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeEnd) {
         log.debug("Вызван метод getBookingsWithTime");
-        if (rangeEnd == null) {
-            rangeEnd = rangeStart.plusDays(14);
-        }
         return otherServiceClient.getBookingsWithTime(rangeStart, rangeEnd);
     }
 

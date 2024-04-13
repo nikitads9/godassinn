@@ -25,20 +25,14 @@ func NewMetricMiddleware(meter metric.Meter) func(next http.Handler) http.Handle
 			"http.server.latency",
 			metric.WithUnit("ms"),
 			metric.WithDescription("Measures the duration of inbound HTTP requests."),
-			//metric.WithExplicitBucketBoundaries(0, 1, 2, 3, 4, 5, 8, 10, 14, 20, 25, 30, 35, 40, 50, 75, 100, 125, 150, 175, 200, 300, 400, 500, 1000, 1200, 1300, 1500, 2000, 2200, 3000, 4000, 5000, 6000, 7000, 8000, 10000),
 		)
 		handleErr(err)
 
 		requestCounter, err := meter.Int64Counter(
 			"http.server.requests",
-			metric.WithDescription("Measures the amount of HTTP requests received within minute"),
+			metric.WithDescription("Measures the amount of HTTP requests received"),
 		)
 		handleErr(err)
-
-		/* 		errorRate, err := meter.Float64ObservableGauge("http.server.error_rate",
-		   			metric.WithDescription("Measures the amount of api errors per minute"),
-		   		)
-		   		handleErr(err) */
 
 		return &httpMetricMiddleware{
 			next:                     next,
@@ -73,17 +67,6 @@ func (m *httpMetricMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	)
 
 	m.requestCounter.Add(r.Context(), 1, metric.WithAttributeSet(metricAttributes))
-
-	/* 	if _, err := m.meter.RegisterCallback(
-	   		func(ctx context.Context, o metric.Observer) error {
-	   			o.ObserveFloat64(m.errorRate, rand.Float64())
-	   			return nil
-	   		},
-	   		errorRate,
-	   	); err != nil {
-	   		panic(err)
-	   	} */
-
 	m.requestDurationHistogram.Record(
 		r.Context(),
 		float64(duration.Milliseconds()),

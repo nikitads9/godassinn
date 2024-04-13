@@ -270,7 +270,7 @@ const docTemplate = `{
                         "Bearer": []
                     }
                 ],
-                "description": "Updates user's profile with provided values. If no values provided, an error is returned. If new telegram id is set, the telegram nickname is also to be provided and vice versa. All provided body parameters should not be blank (i.e. empty string).",
+                "description": "Updates user's profile with provided values. If no values provided, an error is returned. Phone number should be in format +79991234567 or 89991234567. All provided body parameters should not be blank (i.e. empty string).",
                 "consumes": [
                     "application/json"
                 ],
@@ -634,7 +634,7 @@ const docTemplate = `{
                     "example": "24h"
                 },
                 "offerID": {
-                    "description": "Номер апаратаментов",
+                    "description": "ID объявления",
                     "type": "integer",
                     "example": 1
                 },
@@ -680,7 +680,7 @@ const docTemplate = `{
                     "example": "24h00m00s"
                 },
                 "offerID": {
-                    "description": "Номер апартаментов",
+                    "description": "ID объявления",
                     "type": "integer",
                     "example": 1
                 },
@@ -831,6 +831,11 @@ const docTemplate = `{
                     "type": "integer",
                     "example": 88
                 },
+                "landlordID": {
+                    "description": "ID арендодателя",
+                    "type": "integer",
+                    "example": 2
+                },
                 "name": {
                     "description": "Имя объявления",
                     "type": "string",
@@ -882,7 +887,7 @@ const docTemplate = `{
                     "example": "24h"
                 },
                 "offerID": {
-                    "description": "Номер апаратаментов",
+                    "description": "ID объявления",
                     "type": "integer",
                     "example": 1
                 },

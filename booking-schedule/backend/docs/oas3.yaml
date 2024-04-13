@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
-  title: booking-schedule API
-  description: This is a service for writing and reading booking entries.
+  title: API сервиса бронирования
+  description: Сервис для записи и чтения записей о бронированиях
   termsOfService: http://swagger.io/terms/
   contact:
-    name: Nikita Denisenok
+    name: Никита Денисёнок
     url: https://vk.com/ndenisenok
   license:
     name: GNU 3.0
@@ -16,20 +16,19 @@ servers:
 - url: http://localhost:5000/auth
 - url: https://localhost:5000/auth
 tags:
-- name: bookings
-  description: "operations with bookings, offers and intervals"
-- name: users
-  description: service for viewing profile editing or deleting it
-- name: auth
-  description: sign in and sign up operations
+- name: Бронирования
+  description: "операции с бронированиями, объявлениями и интервалами"
+- name: Пользователи
+  description: "сервис для просмотра и изменения своего профиля"
+- name: Авторизация
+  description: "операции регистрации и авторизации"
 paths:
   /sign-in:
     get:
       tags:
-      - auth
-      summary: Sign in
-      description: Get auth token to access user restricted api methods. Requires
-        login and password passed via basic auth.
+      - Авторизация
+      summary: вход
+      description: "Получение токена авторизации для действий, доступных только авторизованным пользователям. Требуется логин и пароль, полученные через basic auth"
       operationId: getOauthToken
       responses:
         "200":
@@ -39,19 +38,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -61,13 +60,12 @@ paths:
   /sign-up:
     post:
       tags:
-      - auth
-      summary: Sign up
-      description: "Creates user with given login, name, phone number and password hashed by bcrypto.\
-      \ Every parameter is required. Returns jwt token."
+      - Авторизация
+      summary: регистрация
+      description: "Создание пользователя с указанным логином, паролем, именем и телефоном. Пароль хэшируется bcrypto. Все параметры обязательны. Возвращает jwt токен."
       operationId: signUpUserJson
       requestBody:
-        description: User
+        description: Профиль пользователя
         content:
           application/json:
             schema:
@@ -81,13 +79,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -96,17 +94,16 @@ paths:
   /add:
     post:
       tags:
-      - bookings
-      summary: Adds booking
-      description: "Adds an  associated with user with given parameters. NotificationPeriod\
-        \ is optional and must look like {number}s,{number}m or {number}h. Implemented\
-        \ with the use of transaction: first offers availibility is checked. In case\
-        \ one's new booking request intersects with and old one(even if belongs to\
-        \ him), the request is considered erratic. startDate is to be before endDate\
-        \ and both should not be expired."
+      - Бронирования
+      summary: добавление брони
+      description: "Добавляет нового пользователя с соответстсвующими параметрами. NotificationPeriod
+         это необязательнный параметр тела запроса, который при наличии должен быть в формате {число}s,{число}m или  {число}h. Операция реализована с использованием транзакций сначала првоеряется доступность объявления. 
+         В случае, если бронь пересекается с другой (даже если она принадлежит автору запроса),
+        запрос является неудачным. Параметр startDate дне должен быть датой до параметра endDate
+         и ОБЕ даты должны быть актуальными."
       operationId: addByBookingJSON
       requestBody:
-        description: BookingEntry
+        description: Данные о бронировании
         content:
           application/json:
             schema:
@@ -120,25 +117,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/AddBookingResponse'
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -149,29 +146,27 @@ paths:
   /get-bookings:
     get:
       tags:
-      - bookings
-      summary: Get several bookings info
-      description: Responds with series of booking info objects within given time
-        period. The query parameters are start date and end date (start is to be before
-        end and both should not be expired).
+      - Бронирования
+      summary: получение нескольких бронирований
+      description: "Метод возвращает несколько бронирований пользователя в рамках заданного интервала. Параметры запроса (query) это даты start и end (первая должна быть раньше второй и обе должны быть актуальны)."
       operationId: getMultipleBookingsByTag
       parameters:
       - name: start
         in: query
-        description: start
+        description: от сих
         required: true
         schema:
           type: string
           format: time.Time
-          default: 2024-03-28T17:43:00
+          default: 2024-04-28T17:43:00
       - name: end
         in: query
-        description: end
+        description: до сих
         required: true
         schema:
           type: string
           format: time.Time
-          default: 2024-03-29T17:43:00
+          default: 2024-04-29T17:43:00
       responses:
         "200":
           description: OK
@@ -180,25 +175,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetBookingsResponse'
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -208,29 +203,27 @@ paths:
   /get-vacant-offers:
     get:
       tags:
-      - bookings
-      summary: Get list of vacant offers
-      description: Receives two dates as query parameters. start is to be before end
-        and both should not be expired. Responds with list of vacant offers and their
-        parameters for given interval.
+      - Бронирования
+      summary: получить список доступных объявлений
+      description: "Получает две даты в качестве параметров запроса. начало должно быть раньше окончания, и срок действия обоих параметров не должен истечь. В ответ выдает список доступных в течение заданного нтервала для брони объявлений и и информацию о них."
       operationId: getOffersByDates
       parameters:
       - name: start
         in: query
-        description: start
+        description: "от сих"
         required: true
         schema:
           type: string
           format: time.Time
-          default: 2024-03-28T17:43:00
+          default: 2024-04-28T17:43:00
       - name: end
         in: query
-        description: end
+        description: "до сих"
         required: true
         schema:
           type: string
           format: time.Time
-          default: 2024-03-29T17:43:00
+          default: 2024-04-29T17:43:00
       responses:
         "200":
           description: OK
@@ -239,19 +232,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetVacantOffersResponse'
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -259,34 +252,34 @@ paths:
   /user/delete:
     delete:
       tags:
-      - users
-      summary: Delete my profile
-      description: Deletes user and all bookings associated with him
+      - Пользователи
+      summary: удалить свой профиль
+      description: "Удаляет пользователя и все связанные с ним брони."
       operationId: deleteMyInfo
       responses:
         "200":
           description: OK
           content: {}
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -296,15 +289,12 @@ paths:
   /user/edit:
     patch:
       tags:
-      - users
-      summary: Modify profile
-      description: "Updates user's profile with provided values. If no values provided,\
-        \ an error is returned. Phone number should be in format +79991234567 or 89991234567\
-        \ All provided body parameters should\
-        \ not be blank (i.e. empty string)."
+      - Пользователи
+      summary: изменить данные своего профиля
+      description: "Обновляет профиль пользователя с введенными значениями. Если значения не указаны, возвращается сообщение об ошибке. Номер телефона должен быть в формате +79991234567 или 89991234567. Все указанные параметры тела обязательны и не должны быть пустыми (т.е. пустой строкой), так как значения проверяются на пустоту."
       operationId: modifyUserByJSON
       requestBody:
-        description: EditMyProfileRequest
+        description: Запрос на изменение профиля
         content:
           application/json:
             schema:
@@ -315,25 +305,25 @@ paths:
           description: OK
           content: {}
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -344,9 +334,9 @@ paths:
   /user/me:
     get:
       tags:
-      - users
-      summary: Get info for current user
-      description: Responds with account info for signed in user.
+      - Пользователи
+      summary: получить информацию о своем профиле
+      description: "Операция возвращает данные о профиле текущего пользователя."
       operationId: getMyUserAuth
       responses:
         "200":
@@ -356,25 +346,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetMyProfileResponse'
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -384,14 +374,14 @@ paths:
   /{booking_id}/delete:
     delete:
       tags:
-      - bookings
-      summary: Deletes an booking
-      description: Deletes an booking with given UUID.
+      - Бронирования
+      summary: отменить бронь
+      description: "Удаляет бронь по ее указанному UUID. Разрешено удалять только свои бронирования."
       operationId: removeByBookingID
       parameters:
       - name: booking_id
         in: path
-        description: booking_id
+        description: Идентификатор брони
         required: true
         schema:
           type: string
@@ -402,25 +392,25 @@ paths:
           description: OK
           content: {}
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -430,9 +420,9 @@ paths:
   /{booking_id}/get:
     get:
       tags:
-      - bookings
-      summary: Get booking info
-      description: Responds with booking info for booking with given BookingID.
+      - Бронирования
+      summary: получить информацию о брони
+      description: "Возвращает информацию о бронировании по указанному идентификатору."
       operationId: getBookingbyTag
       parameters:
       - name: booking_id
@@ -451,25 +441,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetBookingResponse'
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -479,27 +469,21 @@ paths:
   /{booking_id}/update:
     patch:
       tags:
-      - bookings
-      summary: Updates booking info
-      description: "Updates an existing booking with given BookingID, offerID, startDate,\
-        \ endDate values (notificationPeriod being optional). Implemented with the\
-        \ use of transaction: first offer availibility is checked. In case one attempts\
-        \ to alter his previous booking (i.e. widen or tighten its' limits) the booking\
-        \ is updated.  If it overlaps with smb else's booking or with clients' another\
-        \ booking the request is considered unsuccessful. startDate parameter  is\
-        \ to be before endDate and both should not be expired."
+      - Бронирования
+      summary: обновить информацию о бронировании
+      description: "Обновляет существующую бронь, задавая BookingID, идентификатор объявления и дату начала, конечную дату (период уведомления необязателен). Операция реализована с помощью использования транзакции проверяется наличие объявления. В случае попытки изменить свое предыдущее бронирование (т.е. расширить или сузить его период), бронирование обновляется. Если оно совпадает с бронированием кого-то другого или с другим заказом клиента запрос на бронирование считается неудачным. Параметр StartDate должен быть раньше параметра EndDate, и срок действия обоих параметров не должен истечь."
       operationId: modifyBookingByJSON
       parameters:
       - name: booking_id
         in: path
-        description: booking_id
+        description: Идентификатор бронирования
         required: true
         schema:
           type: string
           format: uuid
           default: 550e8400-e29b-41d4-a716-446655440000
       requestBody:
-        description: BookingEntry
+        description: Изменяемая информация о бронировании
         content:
           application/json:
             schema:
@@ -510,25 +494,25 @@ paths:
           description: OK
           content: {}
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "401":
-          description: Unauthorized
+          description: Отказано в доступе
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -539,15 +523,14 @@ paths:
   /{offer_id}/get-vacant-dates:
     get:
       tags:
-      - bookings
-      summary: Get vacant intervals
-      description: Responds with list of vacant intervals within month for selected
-        offer.
+      - Бронирования
+      summary: получить доступные периоды бронирования
+      description: "Возвращает доступные периоды бронирования для объявления с указанным id."
       operationId: getDatesByOfferID
       parameters:
       - name: offer_id
         in: path
-        description: offer_id
+        description: Идентификатор объявления
         required: true
         schema:
           type: integer
@@ -561,19 +544,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetVacantDateResponse'
         "400":
-          description: Bad Request
+          description: Некорректный запрос
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "404":
-          description: Not Found
+          description: Не найдено
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         "503":
-          description: Service Unavailable
+          description: Сервис недоступен
           content:
             application/json:
               schema:
@@ -591,7 +574,7 @@ components:
       properties:
         message:
           type: string
-          example: some error message
+          example: Сообщение об ошибке
         status:
           type: integer
           example: 400
@@ -629,7 +612,7 @@ components:
         endDate:
           type: string
           description: Дата и время окончания бронировании
-          example: 2024-03-29T17:43:00Z
+          example: 2024-04-29T17:43:00Z
         notifyAt:
           type: string
           description: Интервал времени для предварительного уведомления о бронировании
@@ -637,10 +620,10 @@ components:
         startDate:
           type: string
           description: Дата и время начала бронировании
-          example: 2024-03-28T17:43:00Z
+          example: 2024-04-28T17:43:00Z
         offerID:
           type: integer
-          description: Номер апаратаментов
+          description: ID объявления
           example: 1
     AddBookingResponse:
       type: object
@@ -660,11 +643,11 @@ components:
         createdAt:
           type: string
           description: Дата и время создания
-          example: 2024-03-27T17:43:00Z
+          example: 2024-04-27T17:43:00Z
         endDate:
           type: string
           description: Дата и время окончания бронировании
-          example: 2024-03-29T17:43:00Z
+          example: 2024-04-29T17:43:00Z
         notifyAt:
           type: string
           description: Интервал времени для уведомления о бронировании
@@ -672,15 +655,15 @@ components:
         startDate:
           type: string
           description: Дата и время начала бронировании
-          example: 2024-03-28T17:43:00Z
+          example: 2024-04-28T17:43:00Z
         offerID:
           type: integer
-          description: Номер апартаментов
+          description: ID Объявления
           example: 1
         updatedAt:
           type: string
           description: Дата и время обновления
-          example: 2024-03-27T18:43:00Z
+          example: 2024-04-27T18:43:00Z
         userID:
           type: integer
           description: Идентификатор владельца бронирования
@@ -744,11 +727,11 @@ components:
         end:
           type: string
           description: Номер свободен по
-          example: 2024-04-10T15:04:05Z
+          example: 2024-06-10T15:04:05Z
         start:
           type: string
           description: Номер свободен с
-          example: 2024-03-10T15:04:05Z
+          example: 2024-05-10T15:04:05Z
     Offer:
       type: object
       properties:
@@ -792,6 +775,10 @@ components:
           type: string
           description: Тип помещения
           example: гараж
+        landlordID:
+          type: integer
+          description: ID арендодателя
+          example: 1
     UserInfo:
       type: object
       properties:
@@ -813,13 +800,35 @@ components:
         updatedAt:
           type: string
           description: Дата и время обновления профиля
+    UpdateBookingRequest:
+      type: object
+      required:
+      - endDate
+      - offerID
+      - startDate
+      properties:
+          endDate:
+            type: string
+            description: Дата и время окончания бронировании
+            example: 2024-04-29T17:43:00Z
+          notifyAt:
+            type: string
+            description: Интервал времени для предварительного уведомления о бронировании
+            example: 24h
+          offerID:
+            type: integer
+            description: Номер апаратаментов
+            example: 1
+          startDate:
+            type: string
+            description: Дата и время начала бронировании
+            example: 2024-04-28T17:43:00Z
   securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
-    Bearer:
-      type: apiKey
-      description: Type "Bearer" followed by a space and JWT token.
-      name: Authorization
-      in: header
-x-original-swagger-version: "2.0"
+      BasicAuth:
+        type: http
+        scheme: basic
+      Bearer:
+        type: apiKey
+        description: Type "Bearer" followed by a space and JWT token.
+        name: Authorization
+        in: header
