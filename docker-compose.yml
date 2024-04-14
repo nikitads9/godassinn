@@ -20,8 +20,8 @@ services:
     ports:
       - '80:80'
       - '443:443'
-    #    volumes:
-    #      - ./dist:/usr/share/nginx/html
+    volumes:
+      - ./booking-schedule/frontend/dist:/usr/share/nginx/html
     restart: unless-stopped
     container_name: booking-frontend
 
