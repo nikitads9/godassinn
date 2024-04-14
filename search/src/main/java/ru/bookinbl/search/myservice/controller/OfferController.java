@@ -31,6 +31,7 @@ public class OfferController {
     public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATETIME_FORMAT);
 
+    @CrossOrigin
     @GetMapping("/MyBookings")
     public List<Offer> getBookings(@RequestParam(required = false) Integer streetId,
                                    @RequestParam(required = false, defaultValue = "0") Integer rating,
