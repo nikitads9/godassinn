@@ -31,17 +31,17 @@ public class OfferController {
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(DATETIME_FORMAT);
 
     @GetMapping("/MyBookings")
-    public List<Offer> getBookings(@RequestParam(required = false, defaultValue = "") String city,
+    public List<Offer> getBookings(@RequestParam(required = false) Integer streetId,
                                    @RequestParam(required = false, defaultValue = "0") Integer rating,
                                    @RequestParam(defaultValue = "0") @PositiveOrZero int from,
                                    @RequestParam(defaultValue = "10") @Positive int size) {
         log.debug("Вызван метод getBookings");
-        return offerService.getBookings(city, rating, from, size);
+        return offerService.getBookings(streetId, rating, from, size);
     }
 
     @GetMapping("/MyBookings/time")
-    public ResponseEntity<Object> getBookingsWithTime(@RequestParam(required = false, defaultValue = "#{T(java.time.LocalDateTime).now()}") @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeStart,
-                                                      @RequestParam(required = false, defaultValue = "#{T(java.time.LocalDateTime).now().plusDays(14)}") @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeEnd) {
+    public ResponseEntity<Object> getBookingsWithTime(@RequestParam @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeStart,
+                                                      @RequestParam @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeEnd) {
         log.debug("Вызван метод getBookingsWithTime");
         return otherServiceClient.getBookingsWithTime(rangeStart, rangeEnd);
     }
