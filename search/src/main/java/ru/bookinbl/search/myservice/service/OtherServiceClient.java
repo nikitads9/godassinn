@@ -33,15 +33,12 @@ public class OtherServiceClient extends BaseClient {
 
     public ResponseEntity<Object> getBookingsWithTime(LocalDateTime rangeStart, LocalDateTime rangeEnd) {
 
-        String stringStart = rangeStart.format(FORMATTER);
-        String stringEnd = rangeEnd.format(FORMATTER);
-
         Map<String, Object> parameters = Map.of(
-                START, stringStart,
-                END, stringEnd
+                START, rangeStart,
+                END, rangeEnd
         );
 
-        StringJoiner pathBuilder = new StringJoiner("&", "/bookings?start={start}&end={end}\"", "");
+        StringJoiner pathBuilder = new StringJoiner("&", "/bookings/get-vacant-offers?start={start}&end={end}\"", "");
 
         String path = pathBuilder.toString();
         return makeAndSendRequest(HttpMethod.GET, path, null, parameters, null);

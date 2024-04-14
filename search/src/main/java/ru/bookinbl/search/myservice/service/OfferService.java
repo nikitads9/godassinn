@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface OfferService {
 
-    List<Offer> getBookings(String city, int rating, int from, int size);
+    List<Offer> getBookings(Integer streetId, int rating, int from, int size);
 }
