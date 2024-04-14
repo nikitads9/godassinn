@@ -67,17 +67,6 @@ func (m *httpMetricMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request)
 	)
 
 	m.requestCounter.Add(r.Context(), 1, metric.WithAttributeSet(metricAttributes))
-
-	/* 	if _, err := m.meter.RegisterCallback(
-	   		func(ctx context.Context, o metric.Observer) error {
-	   			o.ObserveFloat64(m.errorRate, rand.Float64())
-	   			return nil
-	   		},
-	   		errorRate,
-	   	); err != nil {
-	   		panic(err)
-	   	} */
-
 	m.requestDurationHistogram.Record(
 		r.Context(),
 		float64(duration.Milliseconds()),

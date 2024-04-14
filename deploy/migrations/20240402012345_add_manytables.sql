@@ -15,12 +15,29 @@ CREATE TABLE street (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     city_id bigint NOT NULL,
-    FOREIGN KEY (city_id) REFERENCES city(id)
+    constraint fk_city
+        FOREIGN KEY (city_id) 
+            REFERENCES city(id)
+                on delete cascade
+                on update cascade
 );
 
 CREATE TABLE type_of_housing (
     id SERIAL PRIMARY KEY,
     type TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE landlord (
+   	id bigserial primary key,   
+    rating DECIMAL(3, 2),
+    reviews_count INTEGER DEFAULT 0,
+    deals_count INTEGER DEFAULT 0,
+    user_id bigint NOT NULL,
+    constraint fk_users
+        FOREIGN KEY (user_id) 
+            REFERENCES users(id)
+                on delete cascade
+                on update cascade
 );
 
 ALTER TABLE offers
@@ -30,6 +47,7 @@ ADD COLUMN type_of_housing_id BIGINT NOT NULL,
 DROP COLUMN city,
 DROP COLUMN street,
 DROP COLUMN type,
+ADD COLUMN landlord_id bigint NOT NULL,
 ADD CONSTRAINT fk_city 
     FOREIGN KEY (city_id) 
         REFERENCES city(id)
@@ -44,20 +62,12 @@ ADD CONSTRAINT fk_type_of_housing
     FOREIGN KEY (type_of_housing_id) 
         REFERENCES type_of_housing(id)
         on delete cascade
+        on update cascade,
+ADD CONSTRAINT fk_landlord 
+    FOREIGN KEY (landlord_id) 
+        REFERENCES landlord(id)
+        on delete cascade
         on update cascade;
-
-CREATE TABLE landlord (
-   	id bigserial primary key,   
-    rating DECIMAL(3, 2),
-    reviews_count INTEGER DEFAULT 0,
-    deals_count INTEGER DEFAULT 0,
-    user_id bigint NOT NULL,
-    constraint fk_users
-        FOREIGN KEY (user_id) 
-            REFERENCES users(id)
-                on delete cascade
-                on update cascade
-);
 
 create table reviews (
     id bigserial primary key,

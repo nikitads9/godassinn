@@ -5,7 +5,8 @@ import axios from 'axios';
 function App() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [tgName, setTgName] = useState('');
+  const [phone, setphone] = useState('');
+  const [login, setLogin] = useState('');
 
   const API_AUTH_SERVER_URI = 'http://localhost:5000';
   const $authApi = axios.create({
@@ -21,8 +22,8 @@ function App() {
     const formData = {
       name: name,
       password: password,
-      telegramID: Date.now(),
-      telegramNickname: tgName,
+      login: login,
+      phoneNumber: phone,
     };
 
     $authApi
@@ -37,18 +38,17 @@ function App() {
       })
       .then((res) => {
         console.log(res.data);
-        localStorage.setItem('_a', res.data.token), console.log('Ауф сука!');
+        localStorage.setItem('_a', res.data.token); /*console.log('Ауф сука!'); **/
       })
       .catch((e) => {
         console.log(e);
-        console.log('Не нихуя!');
       });
   };
 
   const getInfo = () => {
     $bookingApi
       .get(
-        '/bookings/get-bookings?start=2024-04-01T00%3A00%3A00&end=2024-04-05T17%3A43%3A00',
+        '/bookings/user/me',
         {
           // withCredentials: true,
           headers: {
@@ -79,16 +79,23 @@ function App() {
       <br />
       <input
         type="text"
+        value={login}
+        placeholder="Логин"
+        onChange={(e) => setLogin(e.target.value)}
+      /><br />
+      <input
+        type="text"
         value={password}
         placeholder="Пароль"
         onChange={(e) => setPassword(e.target.value)}
       />
+      
       <br />
       <input
         type="text"
-        value={tgName}
-        placeholder="Имя В ТГ"
-        onChange={(e) => setTgName(e.target.value)}
+        value={phone}
+        placeholder="Телефон"
+        onChange={(e) => setphone(e.target.value)}
       />
       <br />
       <button onClick={() => auth()}>Зарегистрироваться</button>
