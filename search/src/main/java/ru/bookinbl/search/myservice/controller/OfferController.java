@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +40,7 @@ public class OfferController {
         return offerService.getBookings(streetId, rating, from, size);
     }
 
+    @CrossOrigin
     @GetMapping("/MyBookings/time")
     public ResponseEntity<Object> getBookingsWithTime(@RequestParam @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeStart,
                                                       @RequestParam @DateTimeFormat(pattern = DATETIME_FORMAT) LocalDateTime rangeEnd) {
