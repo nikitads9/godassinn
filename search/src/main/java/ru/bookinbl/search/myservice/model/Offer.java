@@ -35,7 +35,7 @@ public class Offer {
     private Integer bedsCount;
 
     @Column(name = "short_description")
-    private Integer shortDescription;
+    private String shortDescription;
 
     @ManyToOne
     @JoinColumn(name = "street_id")
