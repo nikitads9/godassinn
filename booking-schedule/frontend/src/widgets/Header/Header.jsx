@@ -2,6 +2,7 @@ import { Col, Row } from 'antd';
 import s from './Header.module.css';
 import Button from '../../shared/ui/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,7 +16,10 @@ const Header = () => {
           xs={{ span: 22, offset: 1 }}
         >
           <div className={s.header_content}>
-            <div className={s.header_logo}>Booking-service</div>
+            <div className={s.header_logo}>
+              {' '}
+              <Link to="/">Booking-service</Link>
+            </div>
             {/* <div>456</div> */}
             <div className={s.header_auth}>
               <Button callback={() => navigate('/auth')}>Войти</Button>
