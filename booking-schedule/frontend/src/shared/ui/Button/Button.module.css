@@ -1,0 +1,18 @@
+.button {
+  outline: none;
+  background: var(--dark-blue-color);
+  color: var(--white-color);
+  border: 0;
+  padding: 10px 6px;
+  font-weight: 700;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--blue-color);
+}
+
+.button:active {
+  background: #ff7366;
+}

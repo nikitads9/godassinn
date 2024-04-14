@@ -1,0 +1,22 @@
+html {
+  --white-color: #ffffff;
+  --lil-color: #c4d1f3;
+  --background-color: #e7edfd;
+  --blue-color: #7bace5;
+  --dark-blue-color: #688ed9;
+  --red-color: #d06868;
+  --yellow-color: #f1c644;
+}
+
+body {
+  margin: 0;
+  background: var(--background-color);
+}
+
+#root {
+  margin: 0;
+}
+
+h1 {
+  margin: 0;
+}
