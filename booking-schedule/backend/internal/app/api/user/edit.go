@@ -7,6 +7,7 @@ import (
 
 	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/api"
 	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/convert"
+	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/app/service/user/security"
 	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/logger/sl"
 	"github.com/nikitads9/godassinn/booking-schedule/backend/internal/middleware/auth"
 
@@ -81,6 +82,18 @@ func (i *Implementation) EditMyProfile(logger *slog.Logger) http.HandlerFunc {
 
 		span.AddEvent("request body decoded")
 		log.Info("request body decoded", slog.Any("req", req))
+
+		if req.Password.Valid {
+			passwd, err := security.HashPassword(req.Password.String)
+			if err != nil {
+				span.RecordError(err)
+				span.SetStatus(codes.Error, err.Error())
+				log.Error("failed to hash password", sl.Err(err))
+				api.WriteWithError(w, http.StatusBadRequest, err.Error())
+				return
+			}
+			req.Password.String = passwd
+		}
 
 		mod := convert.ToUpdateUserInfo(req, userID)
 

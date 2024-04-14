@@ -25,6 +25,7 @@ func NewMetricMiddleware(meter metric.Meter) func(next http.Handler) http.Handle
 			"http.server.latency",
 			metric.WithUnit("ms"),
 			metric.WithDescription("Measures the duration of inbound HTTP requests."),
+			metric.WithExplicitBucketBoundaries(0, 1, 2, 3, 4, 5, 8, 10, 14, 20, 25, 30, 35, 40, 50, 75, 100, 125, 150, 175, 200, 300, 400, 500, 1000, 1200, 1300, 1500, 2000, 2200, 3000, 4000, 5000, 6000, 7000, 8000, 10000),
 		)
 		handleErr(err)
 
