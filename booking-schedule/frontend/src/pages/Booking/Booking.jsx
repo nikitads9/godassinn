@@ -38,6 +38,8 @@ const Booking = () => {
   const [end, setEnd] = React.useState(null);
   const [intervals, setIntervals] = React.useState([]);
 
+  const [notify, setNotify] = React.useState('');
+
   const getOffer = () => {
     $searchApi
       .get('/MyBookings', {

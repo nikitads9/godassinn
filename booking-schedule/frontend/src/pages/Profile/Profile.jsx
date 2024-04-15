@@ -169,7 +169,7 @@ const Profile = () => {
                     <hr />
                     <p>Дата начала бронирования: {booking.startDate}</p>
                     <p>Дата окончания бронирования: {booking.endDate}</p>
-                    <p>Уведомить через: {booking.notifyAt}</p>
+                    <p>Уведомить за: {booking.notifyAt}</p>
                     <p>ID Объявления: {booking.offerID}</p>
                     <Button callback={() => deleteBooking(booking.BookingID)}>
                       Отменить
