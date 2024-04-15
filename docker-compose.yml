@@ -284,7 +284,7 @@ services:
     image: priestsexist/search:search
     restart: unless-stopped
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:posygtresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
       - SPRING_DATASOURCE_USER=${DB_USER}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     ports:
