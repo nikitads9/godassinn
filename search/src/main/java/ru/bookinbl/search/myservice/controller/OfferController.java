@@ -18,7 +18,7 @@ import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @Slf4j

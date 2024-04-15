@@ -158,13 +158,13 @@ type GetMyProfileResponse struct {
 
 type EditMyProfileRequest struct {
 	// Имя пользователя
-	Name null.String `json:"name" swaggertype:"primitive,string" validate:"notblank" example:"Kolya Durov"`
+	Name null.String `json:"name,omitempty" swaggertype:"primitive,string" example:"Kolya Durov"`
 	// Логин пользователя
-	Login null.String `json:"login" swaggertype:"primitive,string" validate:"notblank" example:"kolya_durov"`
+	Login null.String `json:"login,omitempty" swaggertype:"primitive,string" example:"kolya_durov"`
 	// Телефонный номер пользователя
-	PhoneNumber null.String `json:"phoneNumber" swaggertype:"primitive,string" validate:"notblank" example:"89771374545"`
+	PhoneNumber null.String `json:"phoneNumber,omitempty" swaggertype:"primitive,string" example:"89771374545"`
 	// Пароль
-	Password null.String `json:"password" swaggertype:"primitive,string" validate:"notblank" example:"123456"`
+	Password null.String `json:"password,omitempty" swaggertype:"primitive,string" example:"123456"`
 } // @name EditMyProfileRequest
 
 func (arq *AddBookingRequest) Bind(req *http.Request) error {
@@ -210,15 +210,9 @@ func (srq *SignUpRequest) Bind(req *http.Request) error {
 }
 
 func (empr *EditMyProfileRequest) Bind(req *http.Request) error {
-	v := validator.New()
-	err := v.RegisterValidation("notblank", NotBlank)
-	if err != nil {
-		return err
-	}
 
-	err = v.Struct(empr)
-	if err != nil {
-		return err
+	if !empr.Login.Valid && !empr.Name.Valid && !empr.PhoneNumber.Valid && !empr.Password.Valid {
+		return ErrEmptyRequest
 	}
 
 	matched, err := regexp.Match("(8|(\\+7))\\d{10}$", []byte(empr.PhoneNumber.String))
