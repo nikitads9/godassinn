@@ -31,8 +31,8 @@ const Booking = () => {
       city: {},
     },
   });
-  const [start, setStart] = React.useState(dayjs('2024-04-15T00:00'));
-  const [end, setEnd] = React.useState(dayjs('2024-04-20T00:00'));
+  const [start, setStart] = React.useState(null);
+  const [end, setEnd] = React.useState(null);
   const [intervals, setIntervals] = React.useState([]);
 
   const getOffer = () => {
@@ -63,12 +63,13 @@ const Booking = () => {
 
   const bookOffer = () => {
     const formData = {
-      endDate: '2024-04-23T00:00:00Z',
+      endDate: end.toJSON(),
       notifyAt: '24h',
       offerID: +searchParams.get('id'),
-      startDate: '2024-04-22T00:00:00Z',
+      startDate: start.toJSON(),
     };
 
+    console.log('Бронирование на даты:', start.toJSON(), ' и ', end.toJSON());
     $bookingApi
       .post('/bookings/add', formData, {
         withCredentials: true,
@@ -79,13 +80,7 @@ const Booking = () => {
       })
       .then((res) => {
         console.log(res.data);
-        console.log(
-          'Бронирование на даты:',
-          start.toJSON(),
-          ' и ',
-          end.toJSON()
-        );
-        // navigate('/profile');
+        getVacantDates();
       })
       .catch((e) => {
         console.log(e);
@@ -207,16 +202,27 @@ const Booking = () => {
             <h2>Список вакантных дат</h2>
             {intervals.map((interval) => {
               return (
-                <>
+                <div key={interval.id}>
                   <hr />
-                  <p>Начало: {interval.start}</p>
-                  <p>Конец: {interval.end}</p>
-                </>
+                  <p
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => setStart(dayjs(interval.start))}
+                  >
+                    Начало: {new Date(interval.start).toLocaleString('ru')}
+                  </p>
+                  <p
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => setEnd(dayjs(interval.end))}
+                  >
+                    Конец: {new Date(interval.end).toLocaleString('ru')}
+                  </p>
+                </div>
               );
             })}
           </Block>
         </Col>
       </Row>
+      <br />
     </div>
   );
 };

@@ -40,6 +40,9 @@ const Profile = () => {
         setName(res.data.profile.name);
         setLogin(res.data.profile.login);
         setPhoneNumber(res.data.profile.phoneNumber);
+        setNewName(res.data.profile.name);
+        setNewLogin(res.data.profile.login);
+        setNewPhone(res.data.profile.phoneNumber);
         console.log('Инфа о пользователе');
       })
       .catch((e) => {
@@ -81,6 +84,39 @@ const Profile = () => {
       .then((res) => {
         console.log(res.data);
         console.log('Бронирование успешно удалено');
+        getBookings();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const showEditProfile = () => {
+    const editBlock = document.getElementById('profile');
+    editBlock.style.display = 'block';
+  };
+
+  const editProfile = () => {
+    const formData = {
+      login: newLogin,
+      name: newName,
+      password: newPassword,
+      phoneNumber: newPhone,
+    };
+
+    $bookingApi
+      .patch('/bookings/user/edit', formData, {
+        withCredentials: true,
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('_a'),
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        console.log('Профиль успешно изменен');
+        setNewPassword('');
+        getInfo();
       })
       .catch((e) => {
         console.log(e);
@@ -148,27 +184,51 @@ const Profile = () => {
         </Col>
         <Col xl={{ span: 7 }}>
           <Block>
-            <Input
-              label="Редактировать Имя"
-              value={newName}
-              callback={(e) => setNewName(e.target.value)}
-            />
-            <Input
-              label="Редактировать телефон"
-              value={newPhone}
-              callback={(e) => setNewPhone(e.target.value)}
-            />
-            <Input
-              label="Редактировать Логин"
-              value={newLogin}
-              callback={(e) => setNewLogin(e.target.value)}
-            />
-            <Input
-              label="Редактировать Пароль"
-              value={newPassword}
-              callback={(e) => setNewPassword(e.target.value)}
-            />
-            <Button>Изменить учетные данные</Button>
+            <h2>
+              Редактирование личной информации:{' '}
+              <span onClick={() => showEditProfile()}>
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 29 27"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4 8C4 8 12.9362 19 14.7234 19C16.5106 19 25 8 25 8"
+                    stroke="black"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+            </h2>
+
+            <div id="profile" style={{ display: 'none' }}>
+              <Input
+                label="Редактировать Имя"
+                value={newName}
+                callback={(e) => setNewName(e.target.value)}
+              />
+              <Input
+                label="Редактировать телефон"
+                value={newPhone}
+                callback={(e) => setNewPhone(e.target.value)}
+              />
+              <Input
+                label="Редактировать Логин"
+                value={newLogin}
+                callback={(e) => setNewLogin(e.target.value)}
+              />
+              <Input
+                label="Редактировать Пароль"
+                value={newPassword}
+                callback={(e) => setNewPassword(e.target.value)}
+              />
+              <Button callback={() => editProfile()}>
+                Изменить учетные данные
+              </Button>
+            </div>
           </Block>
           <br />
         </Col>
