@@ -22,8 +22,13 @@ const Header = () => {
             </div>
             {/* <div>456</div> */}
             <div className={s.header_auth}>
-              <Button callback={() => navigate('/auth')}>Войти</Button>
-              <Button callback={() => navigate('/profile')}>ЛК</Button>
+              {localStorage.getItem('_a') ? (
+                <Button callback={() => navigate('/profile')}>
+                  Личный кабинет
+                </Button>
+              ) : (
+                <Button callback={() => navigate('/auth')}>Войти</Button>
+              )}
             </div>
           </div>
         </Col>
