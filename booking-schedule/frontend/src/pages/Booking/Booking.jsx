@@ -11,6 +11,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import StarIcon from '../../shared/ui/StarIcon/StarIcon';
+//
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 
 const Booking = () => {
   const [searchParams] = useSearchParams();
@@ -81,9 +84,15 @@ const Booking = () => {
       .then((res) => {
         console.log(res.data);
         getVacantDates();
+        const successBlock = document.getElementById('success');
+        successBlock.style.display = 'block';
+        setTimeout(() => (successBlock.style.display = 'none'), 5000);
       })
       .catch((e) => {
         console.log(e);
+        const errorBlock = document.getElementById('error');
+        errorBlock.style.display = 'block';
+        setTimeout(() => (errorBlock.style.display = 'none'), 5000);
       });
   };
 
@@ -114,6 +123,14 @@ const Booking = () => {
 
   return (
     <div>
+      <div id="success" style={{ display: 'none' }}>
+        <Alert severity="success">Бронирование успешно</Alert>
+        <br />
+      </div>
+      <div id="error" style={{ display: 'none' }}>
+        <Alert severity="error">Данное бронирование недоступно.</Alert>
+        <br />
+      </div>
       <Row gutter={[12, 12]}>
         <Col xl={{ span: 7 }}>
           <Block>
