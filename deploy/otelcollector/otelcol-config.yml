@@ -9,7 +9,7 @@ receivers:
       - job_name: 'otel-collector'
         scrape_interval: 15s
         static_configs:
-        - targets: ['booking:3000','auth:5000']
+        - targets: ['bookings:3000','auth:5000']
   postgresql:
     endpoint: db:5433
     transport: tcp
